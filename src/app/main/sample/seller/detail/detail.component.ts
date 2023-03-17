@@ -18,6 +18,9 @@ export class DetailComponent implements OnInit {
   public outletForm: FormGroup;
   public outletFormSubmitted = false;
   public imageData: any;
+  public openingHourdata = { hour: 13, minute: 30 };
+  public closingHourdata = { hour: 13, minute: 30 };
+  public meridianTP = true;
   public uploader: FileUploader = new FileUploader({
     url: URL,
   });
@@ -87,12 +90,15 @@ export class DetailComponent implements OnInit {
 
   ReactiveUDFormOnSubmit() {
     this.outletFormSubmitted = true;
+    this.outletForm.value.openingHour=this.formatTime(this.outletForm.value.openingHour)
+    this.outletForm.value.closingHour=this.formatTime(this.outletForm.value.closingHour)
+    console.table(this.outletForm.value);
     // stop here if form is invalid
     if (this.outletForm.invalid) {
       return;
     }
     let bodyData = { sellerId: this.sellerDetail.sellerId, ...this.outletForm.value };
-    console.log(event);
+    console.table(bodyData);
 
     alert("SUCCESS!! :-)");
   }
@@ -109,5 +115,19 @@ export class DetailComponent implements OnInit {
         this.sellerOutlet = response.items;
       }
     });
+  }
+
+  formatTime(dateObject:any):any{
+    let {hour,minute} = dateObject
+    let timeSet = "AM"
+    if (hour>=12) {
+      timeSet = "PM"
+      hour = hour - 12
+    }
+    if (hour==0) {
+      hour = 12
+    }
+    minute=minute==0?`0${minute}`:minute
+    return`${hour}:${minute} ${timeSet}`
   }
 }

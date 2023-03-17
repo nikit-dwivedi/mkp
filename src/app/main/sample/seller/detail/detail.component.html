@@ -170,13 +170,17 @@
                           </div>
                         </div>
                       </div>
-
                       <div class="col-6">
                         <div class="form-group">
                           <label for="area">Area</label>
-                          <input type="text" id="area" [(ngModel)]="addOutletForm.area" formControlName="area" class="form-control" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.area.errors }" />
+                          <select id="area" formControlName="area" class="form-control" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.area.errors }">
+                            <option value="Vijay Nagar">Vijay Nagar</option>
+                            <option value="Palasia">Palasia</option>
+                            <option value="Geeta Bhavan">Geeta Bhavan</option>
+                            <option value="LIG">LIG</option>
+                          </select>
                           <div *ngIf="outletFormSubmitted && ReactiveUDForm.area.errors" class="invalid-feedback">
-                            <div *ngIf="ReactiveUDForm.area.errors.required">First Name is required</div>
+                            <div *ngIf="ReactiveUDForm.area.errors.required">area is required</div>
                           </div>
                         </div>
                       </div>
@@ -195,12 +199,8 @@
                       <div class="col-6">
                         <div class="form-group">
                           <label for="openingHour">Opening Hour</label>
-                          <select id="openingHour" formControlName="openingHour" class="form-control" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.openingHour.errors }">
-                            <option value="USA">USA</option>
-                            <option value="Germany">Germany</option>
-                            <option value="Russia">Russia</option>
-                            <option value="UK">UK</option>
-                          </select>
+                          <ngb-timepicker id="openingHour" [(ngModel)]="openingHourdata"  formControlName="openingHour" [meridian]="meridianTP" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.openingHour.errors }"></ngb-timepicker>
+                          <hr>
                           <div *ngIf="outletFormSubmitted && ReactiveUDForm.openingHour.errors" class="invalid-feedback">
                             <div *ngIf="ReactiveUDForm.openingHour.errors.required">openingHour is required</div>
                           </div>
@@ -209,12 +209,7 @@
                       <div class="col-6">
                         <div class="form-group">
                           <label for="closingHour">Closing Hours</label>
-                          <select id="closingHour" formControlName="closingHour" class="form-control" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.closingHour.errors }">
-                            <option selected value="English">English</option>
-                            <option value="Germany">Germany</option>
-                            <option value="French">French</option>
-                            <option value="Portuguese">Portuguese</option>
-                          </select>
+                          <ngb-timepicker id="closingHour"  [(ngModel)]="closingHourdata" formControlName="closingHour" [meridian]="meridianTP" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.closingHour.errors }"></ngb-timepicker>
                           <div *ngIf="outletFormSubmitted && ReactiveUDForm.closingHour.errors" class="invalid-feedback">
                             <div *ngIf="ReactiveUDForm.closingHour.errors.required">language is required</div>
                           </div>
@@ -223,7 +218,10 @@
                       <div class="col-6">
                         <div class="form-group">
                           <label for="isVeg">Veg/NonVeg</label>
-                          <input type="text" id="isVeg" formControlName="isVeg" [(ngModel)]="addOutletForm.isVeg" class="form-control" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.isVeg.errors }" />
+                          <div class="custom-control custom-control-success custom-switch">
+                            <input type="checkbox" checked class="form-control custom-control-input" id="customSwitch4" formControlName="isVeg" [(ngModel)]="addOutletForm.isVeg" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.isVeg.errors }" />
+                            <label class="custom-control-label" for="customSwitch4"></label>
+                          </div>
                           <div *ngIf="outletFormSubmitted && ReactiveUDForm.isVeg.errors" class="invalid-feedback">
                             <div *ngIf="ReactiveUDForm.isVeg.errors.required">Last Name is required</div>
                           </div>
@@ -241,7 +239,9 @@
                       <div class="col-6">
                         <div class="form-group">
                           <label for="type">Outlet Type</label>
-                          <input type="text" id="type" formControlName="type" [(ngModel)]="addOutletForm.type" class="form-control" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.type.errors }" />
+                          <select id="type" formControlName="type" class="form-control" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.type.errors }">
+                            <option value="Vijay Nagar">Food</option>
+                          </select>
                           <div *ngIf="outletFormSubmitted && ReactiveUDForm.type.errors" class="invalid-feedback">
                             <div *ngIf="ReactiveUDForm.type.errors.required">Password is required</div>
                             <div *ngIf="ReactiveUDForm.type.errors.minlength">Password must be at least 6 characters</div>
