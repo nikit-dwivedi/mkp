@@ -10,19 +10,11 @@ export const menu: CoreMenu[] = [
     url: 'home'
   },
   {
-    id: 'sample',
-    title: 'Sample',
-    translate: 'MENU.SAMPLE',
-    type: 'item',
-    icon: 'file',
-    url: 'sample'
-  },
-  {
     id: 'seller',
     title: 'Seller',
     translate: 'MENU.SELLER',
     type: 'item',
-    icon: 'home',
+    icon: 'users',
     url: 'seller'
   },
   {
@@ -30,7 +22,7 @@ export const menu: CoreMenu[] = [
     title: 'Order',
     translate: 'MENU.ORDER',
     type: 'item',
-    icon: 'home',
+    icon: 'package',
     url: 'order'
   },
 ]

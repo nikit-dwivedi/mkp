@@ -1,21 +1,58 @@
 <div class="content-wrapper container-xxl p-0">
   <div class="content-body">
-    <!-- content-header component -->
     <!-- ngx-datatables responsive -->
     <section id="ngx-datatable-Responsive">
-        <div class="order-status-pill">
-            <h4 class="card-title">Order List</h4>
-            <!-- pills -->
-            <a class="badge badge-pill text-light badge-glow badge-primary" (click)="changeStatus('all')">all</a>
-            <a class="badge badge-pill text-light badge-glow badge-warning" (click)="changeStatus('pending')">pending</a>
-            <a class="badge badge-pill text-light badge-glow badge-info" (click)="changeStatus('preparing')">preparing</a>
-            <a class="badge badge-pill text-light badge-glow badge-secondary" (click)="changeStatus('ready')">ready</a>
-            <a class="badge badge-pill text-light badge-glow badge-dark" (click)="changeStatus('dispatched')">dispatched</a>
-            <a class="badge badge-pill text-light badge-glow badge-success" (click)="changeStatus('delivered')">delivered</a>
-            <a class="badge badge-pill text-light badge-glow badge-danger" (click)="changeStatus('cancelled')">cancelled</a>
-            <!-- pills -->
+      <div class="order-status-pill">
+        <!-- pills -->
+        <h4 class="card-title justify-content">Order List</h4>
+        <ul ngbNav #navEnd="ngbNav" class="nav order-status-tab nav-pills justify-content-end">
+          <li ngbNavItem>
+            <a ngbNavLink (click)="changeStatus('all')">All</a>
+          </li>
+          <li ngbNavItem>
+            <a ngbNavLink (click)="changeStatus('pending')">Pending</a>
+          </li>
+          <li ngbNavItem>
+            <a ngbNavLink (click)="changeStatus('preparing')">Preparing</a>
+          </li>
+          <li ngbNavItem>
+            <a ngbNavLink (click)="changeStatus('ready')">Ready</a>
+          </li>
+          <li ngbNavItem>
+            <a ngbNavLink (click)="changeStatus('dispatched')">Dispatched</a>
+          </li>
+          <li ngbNavItem>
+            <a ngbNavLink (click)="changeStatus('delivered')">Delivered</a>
+          </li>
+          <li ngbNavItem>
+            <a ngbNavLink (click)="changeStatus('cancelled')">Cancelled</a>
+          </li>
+        </ul>
       </div>
-      <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force" [headerHeight]="60" [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="10" [rows]="rows" [scrollbarH]="true">
+      <div class="row">
+        <div class="col-12 mb-50"></div>
+        <div class="col-md-6 col-12">
+          <div class="d-flex justify-content-between align-items-center m-1">
+            <label class="d-flex align-items-center"
+              >Show
+              <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                <option value="5" selected="selected">05</option>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+              entries</label
+            >
+          </div>
+        </div>
+        <div class="col-md-6 col-12 d-flex justify-content-md-end">
+          <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+            <label class="d-flex align-items-center">Search<input type="search" placeholder="Search" class="form-control ml-25" (keyup)="filterUpdate($event)" (search)="filterUpdate($event)" /></label>
+          </div>
+        </div>
+      </div>
+      <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force" [headerHeight]="60" [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="basicSelectedOption" [rows]="kitchenSinkRows" [scrollbarH]="true">
         <ngx-datatable-column name="Outlet" prop="outlet.outletName" [width]="50">
           <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
             <div class="d-flex align-items-center">

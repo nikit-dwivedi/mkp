@@ -31,7 +31,7 @@ export class AdminService {
   }
 
   getSellersOutlet(sellerId: String): Observable<any> {
-    sellerId = "9e4b1001";
+    // sellerId = "9e4b1001";
     return this.http.get<any>(this.apiUrl + `/v1/outlet/seller?sellerId=${sellerId}&mode=2`, this.httpOptions).pipe(
       map((data: any) => {
         return data;

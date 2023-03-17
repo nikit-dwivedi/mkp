@@ -1,9 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { AdminService } from "../../../services/admin.service";
-import { NgbActiveModal, NgbModal, NgbModalConfig, NgbModalOptions } from "@ng-bootstrap/ng-bootstrap";
-import { ColumnMode, DatatableComponent, SelectionType } from "@swimlane/ngx-datatable";
-import { takeUntil } from "rxjs/operators";
-import { Subject } from "rxjs";
+import { ColumnMode } from "@swimlane/ngx-datatable";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-seller",
@@ -11,41 +9,68 @@ import { Subject } from "rxjs";
   styleUrls: ["./seller.component.scss"],
 })
 export class SellerComponent implements OnInit {
-  private _unsubscribeAll: Subject<any>;
+  public contentHeader: object;
   public rows: any;
   public sellerOutlet: any;
   public sellerDetail: any;
   private tempData = [];
   public ColumnMode = ColumnMode;
   // config: NgbModalOptions;
-  constructor(private adminService: AdminService, private modalService: NgbModal) {
-    this._unsubscribeAll = new Subject();
+  public basicSelectedOption: number = 5;
+  public kitchenSinkRows = [];
+  // config: NgbModalOptions;
+  @ViewChild(SellerComponent) table: SellerComponent | any;
+  @ViewChild("tableRowDetails") tableRowDetails: any;
+  constructor(private adminService: AdminService, private router: Router) {}
+
+  /**
+   * Search (filter)
+   *
+   * @param event
+   */
+  filterUpdate(event: any) {
+    const val = event.target.value.toLowerCase();
+
+    // filter our data
+    const temp = this.tempData.filter(function (d) {
+
+      return d.basicDetails.sellerName?.toLowerCase().indexOf(val) !== -1 || d.basicDetails.phone?.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+
+    // update the rows
+    this.kitchenSinkRows = temp;
+    // Whenever the filter changes, always go back to the first page
+    
   }
 
   ngOnInit(): void {
     this.sellerList();
-  }
-
-  showDetails(content: any, row: any): any {
-    this.sellerDetail = row;
-    this.sellersOutletList(row.sellerId);
-    this.modalService.open(content, { size: "xl", centered: true });
+    this.contentHeader = {
+      headerTitle: "Seller",
+      actionButton: true,
+      breadcrumb: {
+        type: "",
+        links: [
+          {
+            name: "List",
+            isLink: false,
+          },
+        ],
+      },
+    };
   }
 
   sellerList(): any {
     this.adminService.getAllSeller().subscribe((response) => {
       if (response.status) {
         this.rows = response.items;
+        this.kitchenSinkRows = this.rows;
         this.tempData = this.rows;
       }
     });
   }
 
-  sellersOutletList(sellerId: String): any {
-    this.adminService.getSellersOutlet(sellerId).subscribe((response) => {
-      if (response.status) {
-        this.sellerOutlet = response.items;
-      }
-    });
+  navigateToDetail(sellerDetail: any): any {
+    this.router.navigate(["seller/detail"], { state: { sellerDetail } });
   }
 }

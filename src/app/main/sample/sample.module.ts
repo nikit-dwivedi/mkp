@@ -1,3 +1,4 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { TranslateModule } from "@ngx-translate/core";
@@ -12,13 +13,9 @@ import { HomeComponent } from "./home.component";
 import { SellerComponent } from "./seller/seller.component";
 import { OutletComponent } from "./outlet/outlet.component";
 import { OrderComponent } from "./order/order.component";
+import { DetailComponent } from "./seller/detail/detail.component";
 
 const routes = [
-  {
-    path: "sample",
-    component: SampleComponent,
-    data: { animation: "sample" },
-  },
   {
     path: "home",
     component: HomeComponent,
@@ -30,6 +27,11 @@ const routes = [
     data: { animation: "seller" },
   },
   {
+    path: "seller/detail",
+    component: DetailComponent,
+    data: { animation: "detail" },
+  },
+  {
     path: "order",
     component: OrderComponent,
     data: { animation: "order" },
@@ -37,8 +39,8 @@ const routes = [
 ];
 
 @NgModule({
-  declarations: [SampleComponent, HomeComponent, SellerComponent, OutletComponent, OrderComponent],
-  imports: [RouterModule.forChild(routes), ContentHeaderModule, TranslateModule, NgxDatatableModule, NgbModule, CoreCommonModule],
-  exports: [SampleComponent, HomeComponent, OrderComponent, SampleComponent],
+  declarations: [SampleComponent, HomeComponent, SellerComponent, OutletComponent, OrderComponent, DetailComponent],
+  imports: [RouterModule.forChild(routes), ContentHeaderModule, TranslateModule, NgxDatatableModule, NgbModule, CoreCommonModule,ReactiveFormsModule],
+  exports: [SellerComponent, HomeComponent,  DetailComponent],
 })
 export class SampleModule {}
