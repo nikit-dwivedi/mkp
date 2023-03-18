@@ -1,8 +1,11 @@
 import { AdminService } from "./../../../../services/admin.service";
+import { InventoryService } from "./../../../../services/inventory.service";
 import { Navigation, Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, UntypedFormBuilder, Validators } from "@angular/forms";
 import { FileUploader } from "ng2-file-upload";
+import { Observable } from "rxjs";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 const URL = "localhost:4019/";
 
@@ -21,6 +24,10 @@ export class DetailComponent implements OnInit {
   public openingHourdata = { hour: 13, minute: 30 };
   public closingHourdata = { hour: 13, minute: 30 };
   public meridianTP = true;
+  public selectBasic: any= [];
+  public selectedCuisineId : any
+  public selectBasicLoading = false;
+
   public uploader: FileUploader = new FileUploader({
     url: URL,
   });
@@ -39,7 +46,7 @@ export class DetailComponent implements OnInit {
     address: "",
   };
 
-  constructor(private router: Router, private adminService: AdminService, private formBuilder: UntypedFormBuilder) {
+  constructor(private router: Router, private adminService: AdminService, private inventoryService: InventoryService,private formBuilder: UntypedFormBuilder, private modalService: NgbModal) {
     let nav: Navigation = this.router.getCurrentNavigation();
     if (nav.extras && nav.extras.state && nav.extras.state.sellerDetail) {
       this.sellerDetail = nav.extras.state.sellerDetail;
@@ -47,6 +54,25 @@ export class DetailComponent implements OnInit {
       this.router.navigate(["seller"]);
     }
   }
+
+  modalSelectOpen(modalSelect) {
+    this.selectBasicMethod()
+    this.modalService.open(modalSelect, {
+      windowClass: 'modal'
+    });
+  }
+
+  private selectBasicMethod() {
+    this.selectBasicLoading = true;
+    this.inventoryService.getAllCuisine().subscribe(x => {
+      this.selectBasic = x;
+      this.selectBasicLoading = false;
+    });
+    console.log(this.selectBasicLoading);
+    console.log(this.selectBasic);
+    
+  }
+
 
   ngOnInit(): void {
     // Reactive form initialization

@@ -230,6 +230,37 @@
                       <div class="col-6">
                         <div class="form-group">
                           <label for="cuisine">Cuisine</label>
+                          <div class="col-sm-6 col-12">
+                            <!-- Button trigger modal -->
+                            <button
+                              type="button"
+                              (click)="modalSelectOpen(modalSelect)"
+                              class="btn btn-outline-primary btn-block"
+                              rippleEffect
+                            >
+                              Cuisine
+                            </button>
+          
+                            <!-- Modal -->
+                            <ng-template #modalSelect let-modal>
+                              <div class="modal-header">
+                                <h4 class="modal-title" id="myModalLabel1">Please select cuisines</h4>
+                                <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body" tabindex="0" ngbAutofocus>
+                                <p>This is <code>ng-select</code> example in Modal.</p>
+                                <ng-select [items]="selectBasic" bindLabel="cuisineName" autofocus bindValue="cuisineId" [(ngModel)]="addOutletForm.cuisine" [loading]="selectBasicLoading"></ng-select>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" (click)="modal.close('Accept click')" rippleEffect>
+                                  Accept
+                                </button>
+                              </div>
+                            </ng-template>
+                            <!-- / Modal -->
+                          </div>
                           <input type="text" id="cuisine" formControlName="cuisine" [(ngModel)]="addOutletForm.cuisine" class="form-control" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.cuisine.errors }" />
                           <div *ngIf="outletFormSubmitted && ReactiveUDForm.cuisine.errors" class="invalid-feedback">
                             <div *ngIf="ReactiveUDForm.cuisine.errors.required">Age is required</div>
