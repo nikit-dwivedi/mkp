@@ -6,6 +6,7 @@ export const locale = {
       SAMPLE: "Sample",
       SELLER: "Seller",
       ORDER: "Order",
+      TICKET:"Ticket"
     },
   },
 };

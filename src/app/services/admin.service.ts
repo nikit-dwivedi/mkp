@@ -47,6 +47,24 @@ export class AdminService {
       })
     );
   }
+
+  changeOrderStatus(bodyData: any, from?: any, to?: any): Observable<any> {
+    const url = `${this.apiUrl}/v1/order/status`;
+    return this.http.post<any>(url, bodyData, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
+  getAllTickets(status: any): Observable<any> {
+    const url = status ? `${this.apiUrl}/v1/support?status=${status}` : `${this.apiUrl}/v1/order/outlets?status=All`;
+    return this.http.get<any>(url, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
   // changeStatus(bodyData: any): Observable<any> {
   //   return this.http.post<any>(this.apiUrl + "/v1/user/sub", bodyData).pipe(
   //     map((data: any) => {

@@ -52,7 +52,7 @@
           </div>
         </div>
       </div>
-      <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force" [headerHeight]="60" [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="basicSelectedOption" [rows]="kitchenSinkRows" [scrollbarH]="true">
+      <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force" [headerHeight]="60" [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="basicSelectedOption" [rows]="kitchenSinkRows" [scrollbarH]="true" [messages]="{emptyMessage: 'No Orders to display'}">
         <ngx-datatable-column name="Outlet" prop="outlet.outletName" [width]="50">
           <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
             <div class="d-flex align-items-center">
@@ -89,11 +89,17 @@
                 <a ngbDropdownToggle href="javascript:void(0);" class="hide-arrow" id="dropdownBrowserState" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i data-feather="more-vertical" class="text-primary cursor-pointer mr-50"></i>
                 </a>
-                <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState">
+                <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState" *ngIf="row.status != 'delivered' && row.status !='cancelled'; else elseBlock">
                   <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="showDetails(content, row)"><i data-feather="file-text" class="mr-50"></i> Details</a>
-                  <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"><i data-feather="archive" class="mr-50"></i> Archive</a>
+                  <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="statusChange(row,modalSM)"><i data-feather="archive" class="mr-50"></i> Change Status</a>
                   <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"><i data-feather="trash-2" class="mr-50"></i> Delete</a>
                 </div>
+                <ng-template #elseBlock>
+                  <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState" >
+                    <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="showDetails(content, row)"><i data-feather="file-text" class="mr-50"></i> Details</a>
+                    <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"><i data-feather="trash-2" class="mr-50"></i> Delete</a>
+                  </div>
+                </ng-template>
               </div>
 
               <i data-feather="edit" class="text-primary cursor-pointer"></i>
@@ -105,3 +111,23 @@
     </section>
   </div>
 </div>
+
+ <!-- Modal -->
+ <ng-template #modalSM let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Change Order Status</h5>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    Are You Sure?
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success"
+      (click)="modalClick(orderId,status[0])">{{status[0]}}</button>
+      <button type="button" class="btn btn-danger" *ngIf="status[1]"
+      (click)="modalClick(orderId,status[1])">{{status[1]}}</button>
+  </div>
+</ng-template>
+<!-- / Modal -->

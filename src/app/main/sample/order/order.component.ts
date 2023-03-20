@@ -6,7 +6,6 @@ import { takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
 import PubNub from "pubnub";
 
-
 @Component({
   selector: "app-order",
   templateUrl: "./order.component.html",
@@ -29,6 +28,8 @@ export class OrderComponent implements OnInit {
   public orderStatus = "all";
   public basicSelectedOption: number = 5;
   public kitchenSinkRows = [];
+  public orderId: any;
+  public status: any;
   public pubnub = new PubNub({
     publishKey: "pub-c-40e1c3cd-397d-449b-9a06-2e0505653027",
     subscribeKey: "sub-c-e240b078-b657-4d79-84e1-0504adfe3cf8",
@@ -47,7 +48,7 @@ export class OrderComponent implements OnInit {
     this.pubnub.addListener({
       message: (m) => {
         console.log(m.message);
-        this.ngOnInit()
+        this.ngOnInit();
       },
     });
   }
@@ -73,12 +74,20 @@ export class OrderComponent implements OnInit {
     this.table.offset = 0;
   }
 
+  modalOpenSM(modalSM) {
+    this.modalService.open(modalSM, {
+      centered: true,
+      size: "sm", // size: 'xs' | 'sm' | 'lg' | 'xl'
+    });
+  }
+
   ngOnInit(): void {
     this.orderList(this.orderStatus);
-    
   }
 
   orderList(status: string): any {
+    console.log();
+
     this.adminService.getAllOrder(status).subscribe((response) => {
       if (response.status) {
         this.rows = response.items;
@@ -87,7 +96,9 @@ export class OrderComponent implements OnInit {
         this.tempData = this.kitchenSinkRows;
       } else {
         this.rows = [];
-        this.tempData = this.rows;
+        this.kitchenSinkRows = this.rows;
+        this.page.totalElements = this.rows.length;
+        this.tempData = this.kitchenSinkRows;
       }
     });
   }
@@ -117,7 +128,35 @@ export class OrderComponent implements OnInit {
     this.page.pageNumber = event.offset;
     this.ngOnInit();
   }
-  hi(): any {
-    console.log("hiii");
+  statusChange(row: any, modalData: any): any {
+    this.orderId = row.orderId;
+    this.status = this.getNextStatus(row.status);
+    if (this.status[0]) {
+      this.modalOpenSM(modalData);
+    }
+  }
+  getNextStatus(currentStatus: any) {
+    switch (currentStatus) {
+      case "pending":
+        return ["accepted", "cancelled"];
+      case "preparing":
+        return ["ready"];
+      case "ready":
+        return ["dispatched"];
+      case "dispatched":
+        return ["delivered"];
+      case "delivered":
+        return [];
+      case "cancelled":
+        return [];
+    }
+  }
+  modalClick(orderId: any, orderStatus: any) {
+    const bodyData = { orderId, orderStatus };
+    this.adminService.changeOrderStatus(bodyData).subscribe((response) => {
+      if (response.status) {
+        this.modalService.dismissAll()
+      }
+    });
   }
 }

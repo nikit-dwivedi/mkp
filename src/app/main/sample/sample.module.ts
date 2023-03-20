@@ -14,6 +14,8 @@ import { SellerComponent } from "./seller/seller.component";
 import { OutletComponent } from "./outlet/outlet.component";
 import { OrderComponent } from "./order/order.component";
 import { DetailComponent } from "./seller/detail/detail.component";
+import { TicketComponent } from './ticket/ticket.component';
+import { CommonModule } from '@angular/common';
 
 const routes = [
   {
@@ -36,11 +38,16 @@ const routes = [
     component: OrderComponent,
     data: { animation: "order" },
   },
+  {
+    path: "ticket",
+    component: TicketComponent,
+    data: { animation: "ticket" },
+  },
 ];
 
 @NgModule({
-  declarations: [SampleComponent, HomeComponent, SellerComponent, OutletComponent, OrderComponent, DetailComponent],
-  imports: [RouterModule.forChild(routes), ContentHeaderModule, TranslateModule, NgxDatatableModule, NgbModule, CoreCommonModule,ReactiveFormsModule],
-  exports: [SellerComponent, HomeComponent,  DetailComponent],
+  declarations: [SampleComponent, HomeComponent, SellerComponent, OutletComponent, OrderComponent, DetailComponent, TicketComponent],
+  imports: [RouterModule.forChild(routes), ContentHeaderModule, TranslateModule, NgxDatatableModule, NgbModule, CoreCommonModule,ReactiveFormsModule,CommonModule],
+  exports: [SellerComponent, HomeComponent,  DetailComponent,TicketComponent,OrderComponent],
 })
 export class SampleModule {}

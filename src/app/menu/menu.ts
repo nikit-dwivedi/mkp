@@ -25,4 +25,12 @@ export const menu: CoreMenu[] = [
     icon: 'package',
     url: 'order'
   },
+  {
+    id: 'ticket',
+    title: 'Ticket',
+    translate: 'MENU.ORDER',
+    type: 'item',
+    icon: 'package',
+    url: 'ticket'
+  },
 ]
