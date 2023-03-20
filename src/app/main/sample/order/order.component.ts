@@ -4,6 +4,8 @@ import { NgbActiveModal, NgbModal, NgbModalConfig, NgbModalOptions } from "@ng-b
 import { ColumnMode, DatatableComponent, SelectionType } from "@swimlane/ngx-datatable";
 import { takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
+import PubNub from "pubnub";
+
 
 @Component({
   selector: "app-order",
@@ -27,12 +29,27 @@ export class OrderComponent implements OnInit {
   public orderStatus = "all";
   public basicSelectedOption: number = 5;
   public kitchenSinkRows = [];
+  public pubnub = new PubNub({
+    publishKey: "pub-c-40e1c3cd-397d-449b-9a06-2e0505653027",
+    subscribeKey: "sub-c-e240b078-b657-4d79-84e1-0504adfe3cf8",
+    userId: "clientId",
+  });
+
   // config: NgbModalOptions;
   @ViewChild(OrderComponent) table: OrderComponent | any;
   @ViewChild("tableRowDetails") tableRowDetails: any;
 
   constructor(private adminService: AdminService, private modalService: NgbModal) {
     this._unsubscribeAll = new Subject();
+    this.pubnub.subscribe({
+      channels: ["order-admin"],
+    });
+    this.pubnub.addListener({
+      message: (m) => {
+        console.log(m.message);
+        this.ngOnInit()
+      },
+    });
   }
 
   /**
@@ -46,8 +63,8 @@ export class OrderComponent implements OnInit {
     // filter our data
     const temp = this.tempData.filter(function (d) {
       console.log(d);
-      
-      return d.client.clientName.toLowerCase().indexOf(val) !== -1 || d.outlet.outletName.toLowerCase().indexOf(val) !== -1 ||  !val;
+
+      return d.client.clientName.toLowerCase().indexOf(val) !== -1 || d.outlet.outletName.toLowerCase().indexOf(val) !== -1 || !val;
     });
 
     // update the rows
@@ -58,6 +75,7 @@ export class OrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.orderList(this.orderStatus);
+    
   }
 
   orderList(status: string): any {
@@ -98,5 +116,8 @@ export class OrderComponent implements OnInit {
     console.log(event);
     this.page.pageNumber = event.offset;
     this.ngOnInit();
+  }
+  hi(): any {
+    console.log("hiii");
   }
 }
