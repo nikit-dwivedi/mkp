@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { BehaviorSubject, Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
-import { environment } from 'environments/environment';
-import { User, Role } from 'app/auth/models';
-import { ToastrService } from 'ngx-toastr';
+import { environment } from "environments/environment";
+import { User, Role } from "app/auth/models";
+import { ToastrService } from "ngx-toastr";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class AuthenticationService {
   //public
   public currentUser: Observable<User>;
@@ -21,28 +21,29 @@ export class AuthenticationService {
    * @param {ToastrService} _toastrService
    */
   constructor(private _http: HttpClient, private _toastrService: ToastrService) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem("authToken")));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
   // getter: currentUserValue
   public get currentUserValue(): User {
+
     return this.currentUserSubject.value;
   }
 
   /**
    *  Confirms if user is admin
    */
-  get isAdmin() {
-    return this.currentUser && this.currentUserSubject.value.role === Role.Admin;
-  }
+  // get isAdmin() {
+  //   return this.currentUser && this.currentUserSubject.value.role === Role.Admin;
+  // }
 
   /**
    *  Confirms if user is client
    */
-  get isClient() {
-    return this.currentUser && this.currentUserSubject.value.role === Role.Client;
-  }
+  // get isClient() {
+  //   return this.currentUser && this.currentUserSubject.value.role === Role.Client;
+  // }
 
   /**
    * User login
@@ -52,33 +53,25 @@ export class AuthenticationService {
    * @returns user
    */
   login(email: string, password: string) {
-    return this._http
-      .post<any>(`${environment.apiUrl}/users/authenticate`, { email, password })
-      .pipe(
-        map(user => {
-          // login successful if there's a jwt token in the response
-          if (user && user.token) {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify(user));
+    return this._http.post<any>(`${environment.apiUrl}/v1/auth/login`, { email, password }).pipe(
+      map((user) => {
+        // login successful if there's a jwt token in the response
+        if (user.status && user.items.token) {
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.setItem("authToken", JSON.stringify(user.items));
 
-            // Display welcome toast!
-            setTimeout(() => {
-              this._toastrService.success(
-                'You have successfully logged in as an ' +
-                  user.role +
-                  ' user to Vuexy. Now you can start to explore. Enjoy! 🎉',
-                '👋 Welcome, ' + user.firstName + '!',
-                { toastClass: 'toast ngx-toastr', closeButton: true }
-              );
-            }, 2500);
+          // Display welcome toast!
+          setTimeout(() => {
+            this._toastrService.success("You have successfully logged in as an "  + " user to Vuexy. Now you can start to explore. Enjoy! 🎉", "👋 Welcome, " + user.firstName + "!", { toastClass: "toast ngx-toastr", closeButton: true });
+          }, 2500);
 
-            // notify
-            this.currentUserSubject.next(user);
-          }
+          // notify
+          this.currentUserSubject.next(user);
+        }
 
-          return user;
-        })
-      );
+        return user;
+      })
+    );
   }
 
   /**
@@ -87,7 +80,8 @@ export class AuthenticationService {
    */
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+    
+    localStorage.removeItem("authToken");
     // notify
     this.currentUserSubject.next(null);
   }

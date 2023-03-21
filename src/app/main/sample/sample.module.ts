@@ -1,3 +1,4 @@
+import { AuthGuard } from './../../auth/helpers/auth.guards';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
@@ -21,26 +22,31 @@ const routes = [
   {
     path: "home",
     component: HomeComponent,
+    canActivate: [AuthGuard],
     data: { animation: "home" },
   },
   {
     path: "seller",
     component: SellerComponent,
+    canActivate: [AuthGuard],
     data: { animation: "seller" },
   },
   {
     path: "seller/detail",
     component: DetailComponent,
+    canActivate: [AuthGuard],
     data: { animation: "detail" },
   },
   {
     path: "order",
     component: OrderComponent,
+    canActivate: [AuthGuard],
     data: { animation: "order" },
   },
   {
     path: "ticket",
     component: TicketComponent,
+    canActivate: [AuthGuard],
     data: { animation: "ticket" },
   },
 ];
