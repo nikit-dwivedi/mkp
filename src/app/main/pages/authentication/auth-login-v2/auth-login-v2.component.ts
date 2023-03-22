@@ -35,7 +35,7 @@ export class AuthLoginV2Component implements OnInit {
     this._unsubscribeAll = new Subject();
     // redirect to home if already logged in
     if (this._authenticationService.currentUserValue) {
-      this._router.navigate(["/"]);
+      this._router.navigate(["/home"]);
     }
 
     // Configure the layout
@@ -70,7 +70,6 @@ export class AuthLoginV2Component implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
     // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
@@ -81,22 +80,22 @@ export class AuthLoginV2Component implements OnInit {
     this._authenticationService.login(this.f.email.value, this.f.password.value).subscribe(
       (data) => {
         if (!data.status) {
+          this.error = data.message;
           this.loading = false;
-          return;
-          // this.error = data;
+          return
         }
+        window.location.reload(); 
         this.loading = false;
-        this._router.navigate([this.returnUrl]);
+
       },
       (error) => {
         this.error = error;
         this.loading = false;
       }
     );
+    
     // redirect to home page
-    setTimeout(() => {
-      this._router.navigate(["/"]);
-    }, 100);
+    
   }
 
   // Lifecycle Hooks
