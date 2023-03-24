@@ -18,6 +18,14 @@ export const menu: CoreMenu[] = [
     url: 'seller'
   },
   {
+    id: 'all outlet',
+    title: 'All Outlet',
+    translate: 'MENU.ALLOUTLET',
+    type: 'item',
+    icon: 'users',
+    url: 'allOutlet'
+  },
+  {
     id: 'order',
     title: 'Order',
     translate: 'MENU.ORDER',

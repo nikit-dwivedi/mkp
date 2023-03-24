@@ -17,6 +17,7 @@ import { OrderComponent } from "./order/order.component";
 import { DetailComponent } from "./seller/detail/detail.component";
 import { TicketComponent } from './ticket/ticket.component';
 import { CommonModule } from '@angular/common';
+import { AllOutletComponent } from './all-outlet/all-outlet.component';
 
 const routes = [
   {
@@ -38,6 +39,12 @@ const routes = [
     data: { animation: "detail" },
   },
   {
+    path: "allOutlet",
+    component: AllOutletComponent,
+    canActivate: [AuthGuard],
+    data: { animation: "allOutlet" },
+  },
+  {
     path: "order",
     component: OrderComponent,
     canActivate: [AuthGuard],
@@ -52,7 +59,7 @@ const routes = [
 ];
 
 @NgModule({
-  declarations: [SampleComponent, HomeComponent, SellerComponent, OutletComponent, OrderComponent, DetailComponent, TicketComponent],
+  declarations: [SampleComponent, HomeComponent, SellerComponent, OutletComponent, OrderComponent, DetailComponent, TicketComponent, AllOutletComponent],
   imports: [RouterModule.forChild(routes), ContentHeaderModule, TranslateModule, NgxDatatableModule, NgbModule, CoreCommonModule,ReactiveFormsModule,CommonModule],
   exports: [SellerComponent, HomeComponent,  DetailComponent,TicketComponent,OrderComponent],
 })
