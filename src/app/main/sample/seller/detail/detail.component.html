@@ -250,14 +250,34 @@
                                 </button>
                               </div>
                               <div class="modal-body" tabindex="0" ngbAutofocus>
-                                <p>This is <code>ng-select</code> example in Modal.</p>
-                                <ng-select [items]="selectBasic" bindLabel="cuisineName" autofocus bindValue="cuisineId" [(ngModel)]="addOutletForm.cuisine" [loading]="selectBasicLoading"></ng-select>
+                                <form [formGroup]="addCuisineForm" class="form form-vertical" >
+                                  <div class="row">
+                                      <div class="col-3 text-secondary" *ngFor="let cuisine of cuisineList">
+                                          <div class="cuisine">
+                                              <div class="cuisine-img">
+                                                  <img src="{{cuisine.cuisineImage}}" alt="" width="50px">
+                                                  <p>{{cuisine.cuisineName}}</p>
+                                              </div>
+                                              <span><input type="checkbox" id="checkbox" (click)="onCuisineSelect(cuisine)"></span>
+              
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-12 text-right">
+                                          <button type="button" class="btn btn-submit btn-primary mr-2"
+                                              (click)="modal.dismiss('Cross click')" aria-label="Close">Submit</button>
+                                          <!-- <button type="button" class="btn btn-outline-primary close"
+                                          (click)="modal.dismiss('Cross click')" aria-label="Close">Close</button> -->
+                                      </div>
+                                  </div>
+                              </form>
                               </div>
-                              <div class="modal-footer">
+                              <!-- <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" (click)="modal.close('Accept click')" rippleEffect>
                                   Accept
                                 </button>
-                              </div>
+                              </div> -->
                             </ng-template>
                             <!-- / Modal -->
                           </div>

@@ -2,7 +2,7 @@ import { AdminService } from "./../../../../services/admin.service";
 import { InventoryService } from "./../../../../services/inventory.service";
 import { Navigation, Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, UntypedFormBuilder, Validators } from "@angular/forms";
+import { FormControl, FormGroup, UntypedFormBuilder, Validators } from "@angular/forms";
 import { FileUploader } from "ng2-file-upload";
 import { Observable } from "rxjs";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -32,6 +32,10 @@ export class DetailComponent implements OnInit {
     url: URL,
   });
 
+  cuisineList:any;
+  addCuisineForm:FormGroup;
+  selectedCusine:any;
+  cuisineArray = [];
   // Reactive User Details form data
   public addOutletForm = {
     outletName: "",
@@ -56,22 +60,32 @@ export class DetailComponent implements OnInit {
   }
 
   modalSelectOpen(modalSelect) {
-    this.selectBasicMethod()
+    // this.selectBasicMethod()
     this.modalService.open(modalSelect, {
       windowClass: 'modal'
     });
+    this.allCuisineList();
   }
 
-  private selectBasicMethod() {
-    this.selectBasicLoading = true;
-    this.inventoryService.getAllCuisine().subscribe(x => {
-      this.selectBasic = x;
-      this.selectBasicLoading = false;
+  allCuisineList(){
+    this.adminService.getAllCuisine().subscribe((data:any) => {
+      this.cuisineList = data.items;
+      console.log("Cuisine List=============>",this.cuisineList);
+      
     });
-    console.log(this.selectBasicLoading);
-    console.log(this.selectBasic);
-    
   }
+
+
+  // private selectBasicMethod() {
+  //   this.selectBasicLoading = true;
+  //   this.inventoryService.getAllCuisine().subscribe(x => {
+  //     this.selectBasic = x;
+  //     this.selectBasicLoading = false;
+  //   });
+  //   console.log(this.selectBasicLoading);
+  //   console.log(this.selectBasic);
+    
+  // }
 
 
   ngOnInit(): void {
@@ -88,6 +102,13 @@ export class DetailComponent implements OnInit {
       cuisine: ["", [Validators.required]],
       address: ["", [Validators.required]],
     });
+
+
+    this.addCuisineForm = this.formBuilder.group({
+      cuisineName: new FormControl(''),
+    });
+
+    
 
     this.sellersOutletList(this.sellerDetail.sellerId);
     this.contentHeader = {
@@ -108,6 +129,18 @@ export class DetailComponent implements OnInit {
         ],
       },
     };
+    
+    
+  }
+
+  onCuisineSelect(cuisine:any){
+    if (this.cuisineArray.includes(cuisine.cuisineId)) {
+      let index = this.cuisineArray.indexOf(cuisine.cuisineId)
+      this.cuisineArray.splice(index, 1);
+    } else {
+      this.cuisineArray.push(cuisine.cuisineId)
+    }
+    console.log("Selected====>",this.cuisineArray);
   }
 
   get ReactiveUDForm() {
@@ -118,13 +151,15 @@ export class DetailComponent implements OnInit {
     this.outletFormSubmitted = true;
     this.outletForm.value.openingHour=this.formatTime(this.outletForm.value.openingHour)
     this.outletForm.value.closingHour=this.formatTime(this.outletForm.value.closingHour)
-    console.table(this.outletForm.value);
+    this.outletForm.value.cuisine = this.cuisineArray;
+    // console.table(this.outletForm.value);
     // stop here if form is invalid
     if (this.outletForm.invalid) {
       return;
     }
+    
     let bodyData = { sellerId: this.sellerDetail.sellerId, ...this.outletForm.value };
-    console.table(bodyData);
+    console.log("Body Ka Data===================>",bodyData);
 
     alert("SUCCESS!! :-)");
   }
@@ -143,6 +178,7 @@ export class DetailComponent implements OnInit {
     });
   }
 
+ 
   formatTime(dateObject:any):any{
     let {hour,minute} = dateObject
     let timeSet = "AM"
