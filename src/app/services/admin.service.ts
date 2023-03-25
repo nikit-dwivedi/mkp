@@ -65,6 +65,12 @@ export class AdminService {
       })
     );
   }
+
+  getAllOutlet() {
+  return this.http.get(this.apiUrl + '/v1/outlet/' ,this.httpOptions).pipe(map((data:any) => {
+      return data;
+    }))
+  }
   // changeStatus(bodyData: any): Observable<any> {
   //   return this.http.post<any>(this.apiUrl + "/v1/user/sub", bodyData).pipe(
   //     map((data: any) => {

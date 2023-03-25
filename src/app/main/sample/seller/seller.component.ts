@@ -34,7 +34,7 @@ export class SellerComponent implements OnInit {
     // filter our data
     const temp = this.tempData.filter(function (d) {
 
-      return d.basicDetails.sellerName?.toLowerCase().indexOf(val) !== -1 || d.basicDetails.phone?.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.basicDetails.sellerName?.toLowerCase().indexOf(val) !== -1 || d.basicDetails.phone?.toLowerCase().indexOf(val) !== -1 || d.sellerId?.toLowerCase().indexOf(val) !== -1 || !val;
     });
 
     // update the rows

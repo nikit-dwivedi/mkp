@@ -1,1 +1,110 @@
-<p>all-outlet works!</p>
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+      <app-content-header [contentHeader]="contentHeader"></app-content-header>
+  
+      <section id="ngx-datatable-kitchen-sink">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12 mb-50"></div>
+              <div class="col-md-6 col-12">
+                <div class="d-flex justify-content-between align-items-center m-1">
+                  <label class="d-flex align-items-center"
+                    >Show
+                    <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                      <option value="5" selected="selected">05</option>
+                      <option value="10">10</option>
+                      <option value="25">25</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                    </select>
+                    entries</label
+                  >
+                </div>
+              </div>
+              <div class="col-md-6 col-12 d-flex justify-content-md-end">
+                <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+                  <label class="d-flex align-items-center">Search<input type="search" placeholder="Search" class="form-control ml-25" (keyup)="filterUpdate($event)" (search)="filterUpdate($event)" /></label>
+                </div>
+              </div>
+            </div>
+            <!-- ngx-datatables responsive -->
+            <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force" [headerHeight]="40" [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="basicSelectedOption" [rows]="kitchenSinkRows" [scrollbarH]="true" >
+              <!-- <ngx-datatable-column name="Name" prop="full_name" [width]="200">
+                <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                  <div class="d-flex align-items-center">
+                    <div *ngIf="row?.avatar?.length > 0; else customAvatar">
+                      <img class="rounded-circle mr-1" src="assets/images/portrait/small/{{ row.avatar }}" height="32" width="32" alt="datatable-avatar" />
+                    </div>
+                    <ng-template #customAvatar>
+                      <div
+                        class="avatar mr-1 ml-0"
+                        [ngClass]="{
+                          'bg-light-primary': row.isVerfied == '1',
+                          'bg-light-success': row.isVerfied == true,
+                          'bg-light-danger': row.isVerfied == false,
+                          'bg-light-warning': row.isVerfied == '4',
+                          'bg-light-info': row.isVerfied == '5'
+                        }"
+                      >
+                        <div class="avatar-content"></div>
+                      </div>
+                    </ng-template>
+                    <div class="cell-line-height">
+                      <p class="font-medium-1 line-height-1 mb-0">{{ row.basicDetails.sellerName }}</p>
+                      <span class="text-muted font-small-2"> {{ row.basicDetails.tradeName }}</span>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column> -->
+              <ngx-datatable-column name="Seller Id" prop="sellerId" [width]="50"></ngx-datatable-column>
+              <ngx-datatable-column name="Outlet Name" prop="outletName" [width]="50"></ngx-datatable-column>
+              <ngx-datatable-column name="Is Closed" prop="isClosed" [width]="50">
+                <ng-template let-closeStatus="value" ngx-datatable-cell-template>
+                    <div class="badge badge-pill" [ngClass]="selectButtonClass(closeStatus)">
+                      {{ closeStatus }}
+                    </div>
+                  </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Is Verified" prop="isVerified" [width]="50"></ngx-datatable-column>
+              <ngx-datatable-column name="Is Featured" prop="isFeatured" [width]="50"></ngx-datatable-column>
+              <!-- <ngx-datatable-column name="Status" prop="verificationStatus" [width]="50">
+                <ng-template let-status="value" ngx-datatable-cell-template>
+                  <div
+                    class="badge badge-pill"
+                    [ngClass]="{
+                      'badge-light-warning': status == 'pending',
+                      'badge-light-success': status == 'approved',
+                      'badge-light-danger': status == 'rejected'
+                    }"
+                  >
+                    {{ status }}
+                  </div>
+                </ng-template>
+              </ngx-datatable-column> -->
+              <ngx-datatable-column name="Action" [width]="120" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div class="d-flex align-items-center">
+                    <div ngbDropdown container="body">
+                      <a ngbDropdownToggle href="javascript:void(0);" class="hide-arrow" id="dropdownBrowserState" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i data-feather="more-vertical" class="text-primary cursor-pointer mr-50"></i>
+                      </a>
+                      <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState">
+                        <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="navigateToDetail(row)"><i data-feather="file-text" class="mr-50"></i> Details</a>
+                        <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"><i data-feather="archive" class="mr-50"></i> Archive</a>
+                        <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"><i data-feather="trash-2" class="mr-50"></i> Delete</a>
+                      </div>
+                    </div>
+  
+                    <i data-feather="edit" class="text-primary cursor-pointer"></i>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+            <!--/ ngx-datatables responsive -->
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  
