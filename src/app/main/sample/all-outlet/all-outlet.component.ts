@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdminService } from "../../../services/admin.service";
+// import {  ToastrserviceService} from "../../../services/toastrservice.service";
 import { ColumnMode } from "@swimlane/ngx-datatable";
 import { Router } from "@angular/router";
+import { NgbModal,NgbModalConfig } from '@ng-bootstrap/ng-bootstrap'; 
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-all-outlet',
@@ -20,10 +23,11 @@ export class AllOutletComponent implements OnInit {
   public basicSelectedOption: number = 5;
   public kitchenSinkRows = [];
   allOutletList:any;
+  status:any;
   // config: NgbModalOptions;
   @ViewChild(AllOutletComponent) table: AllOutletComponent | any;
   @ViewChild("tableRowDetails") tableRowDetails: any;
-  constructor(private adminService: AdminService, private router: Router) { }
+  constructor(private adminService: AdminService, private router: Router, private toastr: ToastrService ,private modalService: NgbModal,config: NgbModalConfig) { }
 
   ngOnInit(): void {
     this.allOutlet();
@@ -51,6 +55,31 @@ export class AllOutletComponent implements OnInit {
     }
   }
 
+  // change outlet status
+  changeOutletStatus(data:any,seller:any){
+    this.modalService.open(data,{
+      centered:true,
+      scrollable:true,
+      size:'lg'
+    });
+    this.status = seller.outletId;
+   
+    
+  }
+
+  onOffstatus(){
+
+    this.adminService.changeStatus(this.status).subscribe((data:any)=>{
+    
+      if(data.status){
+      this.toastr.success(data.message,"Succes!");
+        this.allOutlet();
+      }
+      else{
+    this.toastr.error(data.message,"error!");
+  }
+    })
+  }
   filterUpdate(event: any) {
     const val = event.target.value.toLowerCase();
 

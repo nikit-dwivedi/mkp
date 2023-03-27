@@ -12,12 +12,14 @@ import { ContentHeaderModule } from "app/layout/components/content-header/conten
 import { SampleComponent } from "./sample.component";
 import { HomeComponent } from "./home.component";
 import { SellerComponent } from "./seller/seller.component";
-import { OutletComponent } from "./outlet/outlet.component";
+
 import { OrderComponent } from "./order/order.component";
 import { DetailComponent } from "./seller/detail/detail.component";
 import { TicketComponent } from './ticket/ticket.component';
 import { CommonModule } from '@angular/common';
 import { AllOutletComponent } from './all-outlet/all-outlet.component';
+
+
 
 const routes = [
   {
@@ -59,7 +61,7 @@ const routes = [
 ];
 
 @NgModule({
-  declarations: [SampleComponent, HomeComponent, SellerComponent, OutletComponent, OrderComponent, DetailComponent, TicketComponent, AllOutletComponent],
+  declarations: [SampleComponent, HomeComponent, SellerComponent,  OrderComponent, DetailComponent, TicketComponent, AllOutletComponent],
   imports: [RouterModule.forChild(routes), ContentHeaderModule, TranslateModule, NgxDatatableModule, NgbModule, CoreCommonModule,ReactiveFormsModule,CommonModule],
   exports: [SellerComponent, HomeComponent,  DetailComponent,TicketComponent,OrderComponent],
 })

@@ -73,11 +73,22 @@ export class AdminService {
     }))
   }
 
+  // get all cuisine
   getAllCuisine(){
     return this.http.get(this.menuUrl + '/v1/outlet/cuisine' , this.httpOptions).pipe(map((data:any) => {
       return data;
     }))
   }
+
+  // change outlet status
+  changeStatus(outletId:any){
+    return this.http.get(this.menuUrl + '/v1/outlet/status/' + outletId , this.httpOptions).pipe(map((data:any) => {
+      console.log(data);
+      return data;
+      
+    }))
+  }
+  // 
   // changeStatus(bodyData: any): Observable<any> {
   //   return this.http.post<any>(this.apiUrl + "/v1/user/sub", bodyData).pipe(
   //     map((data: any) => {

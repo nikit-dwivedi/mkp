@@ -21,7 +21,7 @@ export class SellerComponent implements OnInit {
   // config: NgbModalOptions;
   @ViewChild(SellerComponent) table: SellerComponent | any;
   @ViewChild("tableRowDetails") tableRowDetails: any;
-  constructor(private adminService: AdminService, private router: Router) {}
+  constructor(private adminService: AdminService, private router:Router) {}
 
   /**
    * Search (filter)
@@ -73,4 +73,6 @@ export class SellerComponent implements OnInit {
   navigateToDetail(sellerDetail: any): any {
     this.router.navigate(["seller/detail"], { state: { sellerDetail } });
   }
+
+  
 }

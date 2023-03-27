@@ -54,12 +54,14 @@
               "./node_modules/@fullcalendar/common/main.css",
               "./node_modules/@fullcalendar/daygrid/main.css",
               "./node_modules/@fullcalendar/timegrid/main.css",
-              "./node_modules/@fullcalendar/list/main.css"
+              "./node_modules/@fullcalendar/list/main.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "./node_modules/ngx-toastr/toastr.css"
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["node_modules", "src/assets/"]
             },
-            "scripts": ["./node_modules/katex/dist/katex.min.js", "./node_modules/quill/dist/quill.min.js"],
+            "scripts": ["./node_modules/katex/dist/katex.min.js", "./node_modules/quill/dist/quill.min.js","./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"],
             "vendorChunk": true,
             "extractLicenses": false,
             "buildOptimizer": false,

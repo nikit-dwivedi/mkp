@@ -43,7 +43,7 @@ export class DetailComponent implements OnInit {
     type: "",
     preparationTime: "",
     area: "",
-    isVeg: "",
+    isVeg: false,
     openingHour: "",
     closingHour: "",
     cuisine: "",
@@ -92,11 +92,11 @@ export class DetailComponent implements OnInit {
     // Reactive form initialization
     this.outletForm = this.formBuilder.group({
       outletName: ["", Validators.required],
-      outletImage: ["", Validators.required],
+      outletImage: ["", Validators.required], 
       type: ["", Validators.required],
       preparationTime: ["", [Validators.required]],
       area: ["", [Validators.required]],
-      isVeg: ["", [Validators.required]],
+      isVeg: [false, [Validators.required]],
       openingHour: ["", [Validators.required]],
       closingHour: ["", [Validators.required]],
       cuisine: ["", [Validators.required]],
@@ -140,7 +140,7 @@ export class DetailComponent implements OnInit {
     } else {
       this.cuisineArray.push(cuisine.cuisineId)
     }
-    console.log("Selected====>",this.cuisineArray);
+    // console.log("Selected====>",this.cuisineArray);
   }
 
   get ReactiveUDForm() {
@@ -148,28 +148,48 @@ export class DetailComponent implements OnInit {
   }
 
   ReactiveUDFormOnSubmit() {
+    console.log("hdshdsdsdsdddds");
+    
     this.outletFormSubmitted = true;
     this.outletForm.value.openingHour=this.formatTime(this.outletForm.value.openingHour)
     this.outletForm.value.closingHour=this.formatTime(this.outletForm.value.closingHour)
     this.outletForm.value.cuisine = this.cuisineArray;
-    // console.table(this.outletForm.value);
+
+
+    
     // stop here if form is invalid
     if (this.outletForm.invalid) {
       return;
     }
     
+    
     let bodyData = { sellerId: this.sellerDetail.sellerId, ...this.outletForm.value };
-    console.log("Body Ka Data===================>",bodyData);
+    // console.log();
+    console.log("Body Ka Data===================>",this.outletForm.value);
 
     alert("SUCCESS!! :-)");
+
   }
 
   getImage(event: any): any {
     this.imageData = event.target.files[0];
-    this.outletForm.value.outletImage = this.imageData;
+   
+    // console.log(this.imageData);
     
+    // const formData = new FormData();
+    // formData.append("image",this.imageData)
+
+    
+    // this.outletForm.value.outletImage = this.imageData;
+    
+    
+    
+    // console.log(formData.get('image'));
   }
 
+  getimage(){
+    
+  }
   sellersOutletList(sellerId: String): any {
     this.adminService.getSellersOutlet(sellerId).subscribe((response) => {
       if (response.status) {

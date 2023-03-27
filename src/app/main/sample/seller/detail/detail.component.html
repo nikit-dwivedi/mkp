@@ -235,7 +235,8 @@
                             <button
                               type="button"
                               (click)="modalSelectOpen(modalSelect)"
-                              class="btn btn-outline-primary btn-block"
+                              class="btn btn-outline-primary btn-block form-control"
+                              [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.cuisine.errors }" 
                               rippleEffect
                             >
                               Cuisine
@@ -250,7 +251,8 @@
                                 </button>
                               </div>
                               <div class="modal-body" tabindex="0" ngbAutofocus>
-                                <form [formGroup]="addCuisineForm" class="form form-vertical" >
+                                <!-- <form [formGroup]="addCuisineForm" class="form form-vertical" > -->
+                                  
                                   <div class="row">
                                       <div class="col-3 text-secondary" *ngFor="let cuisine of cuisineList">
                                           <div class="cuisine">
@@ -258,11 +260,12 @@
                                                   <img src="{{cuisine.cuisineImage}}" alt="" width="50px">
                                                   <p>{{cuisine.cuisineName}}</p>
                                               </div>
-                                              <span><input type="checkbox" id="checkbox" (click)="onCuisineSelect(cuisine)"></span>
-              
+                                              <span><input type="checkbox" id="checkbox"   formControlName="cuisine" class="form-control"  (click)="onCuisineSelect(cuisine)"></span>
+                                              
                                           </div>
                                       </div>
                                   </div>
+                                  
                                   <div class="row">
                                       <div class="col-12 text-right">
                                           <button type="button" class="btn btn-submit btn-primary mr-2"
@@ -271,7 +274,7 @@
                                           (click)="modal.dismiss('Cross click')" aria-label="Close">Close</button> -->
                                       </div>
                                   </div>
-                              </form>
+                              <!-- </form> -->
                               </div>
                               <!-- <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" (click)="modal.close('Accept click')" rippleEffect>
@@ -280,11 +283,12 @@
                               </div> -->
                             </ng-template>
                             <!-- / Modal -->
+                            <div *ngIf="outletFormSubmitted && ReactiveUDForm.cuisine.errors" class="invalid-feedback">
+                              <div *ngIf="ReactiveUDForm.cuisine.errors.required">Please select atleast one cuisine</div>
+                            </div>
                           </div>
-                          <input type="text" id="cuisine" formControlName="cuisine" [(ngModel)]="addOutletForm.cuisine" class="form-control" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.cuisine.errors }" />
-                          <div *ngIf="outletFormSubmitted && ReactiveUDForm.cuisine.errors" class="invalid-feedback">
-                            <div *ngIf="ReactiveUDForm.cuisine.errors.required">Age is required</div>
-                          </div>
+                          <!-- <input type="text" id="cuisine"  [(ngModel)]="addOutletForm.cuisine" class="form-control" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.cuisine.errors }" /> -->
+                          
                         </div>
                       </div>
                       <div class="col-6">

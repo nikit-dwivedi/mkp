@@ -49,7 +49,10 @@ const appRoutes: Routes = [
 
     //NgBootstrap
     NgbModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 10000,
+    positionClass: 'toast-top-right',
+    }),
 
     // Core modules
     CoreModule.forRoot(coreConfig),
