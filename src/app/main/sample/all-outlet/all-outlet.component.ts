@@ -24,6 +24,7 @@ export class AllOutletComponent implements OnInit {
   public kitchenSinkRows = [];
   allOutletList:any;
   status:any;
+  outletDetails:any
   // config: NgbModalOptions;
   @ViewChild(AllOutletComponent) table: AllOutletComponent | any;
   @ViewChild("tableRowDetails") tableRowDetails: any;
@@ -35,11 +36,11 @@ export class AllOutletComponent implements OnInit {
    
   allOutlet(){
     this.adminService.getAllOutlet().subscribe((data:any) => {
-      // this.allOutletList = data.items;
+      this.allOutletList = data.items;
       this.rows = data.items;
       this.kitchenSinkRows = this.rows;
       this.tempData = this.rows;
-      // console.log(this.allOutletList);
+      console.log(this.allOutletList);
       
     })
   }
@@ -80,6 +81,13 @@ export class AllOutletComponent implements OnInit {
   }
     })
   }
+
+  navigateToDetail(outletDetails:any){
+    this.router.navigate(["menu"], { state: { outletDetails } });
+    
+    
+  }
+
   filterUpdate(event: any) {
     const val = event.target.value.toLowerCase();
 

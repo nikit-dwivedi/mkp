@@ -154,7 +154,7 @@
                           <label for="outletName">Outlet name</label>
                           <input type="text" id="outletName" [(ngModel)]="addOutletForm.outletName" formControlName="outletName" class="form-control" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.outletName.errors }" />
                           <div *ngIf="outletFormSubmitted && ReactiveUDForm.outletName.errors" class="invalid-feedback">
-                            <div *ngIf="ReactiveUDForm.outletName.errors.required">Username is required</div>
+                            <div *ngIf="ReactiveUDForm.outletName.errors.required">Outlet name is required</div>
                           </div>
                         </div>
                       </div>
@@ -164,9 +164,9 @@
                           <div class="custom-file">
                             <input type="file" class="custom-file-input form-control" ng2FileSelect id="outletImage" formControlName="outletImage" [(ngModel)]="addOutletForm.outletImage" (change)="getImage($event)" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.outletImage.errors }" />
                             <label class="custom-file-label">{{ this.imageData?.name ?? "Choose file" }}</label>
-                          </div>
-                          <div *ngIf="outletFormSubmitted && ReactiveUDForm.outletImage.errors" class="invalid-feedback">
-                            <div *ngIf="ReactiveUDForm.outletImage.errors.required">Image is required</div>
+                            <div *ngIf="outletFormSubmitted && ReactiveUDForm.outletImage.errors" class="invalid-feedback">
+                              <div *ngIf="ReactiveUDForm.outletImage.errors.required">Outlet Image is required</div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -180,16 +180,16 @@
                             <option value="LIG">LIG</option>
                           </select>
                           <div *ngIf="outletFormSubmitted && ReactiveUDForm.area.errors" class="invalid-feedback">
-                            <div *ngIf="ReactiveUDForm.area.errors.required">area is required</div>
+                            <div *ngIf="ReactiveUDForm.area.errors.required">Area is required</div>
                           </div>
                         </div>
                       </div>
                       <div class="col-6">
                         <div class="form-group">
-                          <label for="address">Address</label>
-                          <input type="text" id="address" formControlName="address" [(ngModel)]="addOutletForm.address" class="form-control" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.address.errors }" />
-                          <div *ngIf="outletFormSubmitted && ReactiveUDForm.address.errors" class="invalid-feedback">
-                            <div *ngIf="ReactiveUDForm.address.errors.required">Phone Number is required</div>
+                          <label for="shopAddress">Shop Address</label>
+                          <input type="text" id="shopAddress" formControlName="shopAddress" [(ngModel)]="addOutletForm.shopAddress" class="form-control" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.shopAddress.errors }" />
+                          <div *ngIf="outletFormSubmitted && ReactiveUDForm.shopAddress.errors" class="invalid-feedback">
+                            <div *ngIf="ReactiveUDForm.shopAddress.errors.required">Shop Address is required</div>
                           </div>
                         </div>
                       </div>
@@ -211,7 +211,7 @@
                           <label for="closingHour">Closing Hours</label>
                           <ngb-timepicker id="closingHour"  [(ngModel)]="closingHourdata" formControlName="closingHour" [meridian]="meridianTP" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.closingHour.errors }"></ngb-timepicker>
                           <div *ngIf="outletFormSubmitted && ReactiveUDForm.closingHour.errors" class="invalid-feedback">
-                            <div *ngIf="ReactiveUDForm.closingHour.errors.required">language is required</div>
+                            <div *ngIf="ReactiveUDForm.closingHour.errors.required">Closing Hours is required</div>
                           </div>
                         </div>
                       </div>
@@ -284,7 +284,7 @@
                             </ng-template>
                             <!-- / Modal -->
                             <div *ngIf="outletFormSubmitted && ReactiveUDForm.cuisine.errors" class="invalid-feedback">
-                              <div *ngIf="ReactiveUDForm.cuisine.errors.required">Please select atleast one cuisine</div>
+                              <div *ngIf="ReactiveUDForm.cuisine.errors.required">Please select atleast one Cuisine</div>
                             </div>
                           </div>
                           <!-- <input type="text" id="cuisine"  [(ngModel)]="addOutletForm.cuisine" class="form-control" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.cuisine.errors }" /> -->
@@ -295,11 +295,11 @@
                         <div class="form-group">
                           <label for="type">Outlet Type</label>
                           <select id="type" formControlName="type" class="form-control" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.type.errors }">
-                            <option value="Vijay Nagar">Food</option>
+                            <option value="Food">Food</option>
                           </select>
                           <div *ngIf="outletFormSubmitted && ReactiveUDForm.type.errors" class="invalid-feedback">
-                            <div *ngIf="ReactiveUDForm.type.errors.required">Password is required</div>
-                            <div *ngIf="ReactiveUDForm.type.errors.minlength">Password must be at least 6 characters</div>
+                            <div *ngIf="ReactiveUDForm.type.errors.required">Outlet Type is required</div>
+                            
                           </div>
                         </div>
                       </div>
@@ -308,8 +308,8 @@
                           <label for="preparationTime">Preparation Time</label>
                           <input type="text" id="preparationTime" formControlName="preparationTime" [(ngModel)]="addOutletForm.preparationTime" class="form-control" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.preparationTime.errors }" />
                           <div *ngIf="outletFormSubmitted && ReactiveUDForm.preparationTime.errors" class="invalid-feedback">
-                            <div *ngIf="ReactiveUDForm.preparationTime.errors.required">Confirm Password is required</div>
-                            <div *ngIf="ReactiveUDForm.preparationTime.errors.minlength">Confirm Password must be at least 6 characters</div>
+                            <div *ngIf="ReactiveUDForm.preparationTime.errors.required">Preparation Time is required</div>
+                            
                           </div>
                         </div>
                       </div>

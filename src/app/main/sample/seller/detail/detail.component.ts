@@ -6,6 +6,7 @@ import { FormControl, FormGroup, UntypedFormBuilder, Validators } from "@angular
 import { FileUploader } from "ng2-file-upload";
 import { Observable } from "rxjs";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ToastrService } from 'ngx-toastr';
 
 const URL = "localhost:4019/";
 
@@ -36,6 +37,7 @@ export class DetailComponent implements OnInit {
   addCuisineForm:FormGroup;
   selectedCusine:any;
   cuisineArray = [];
+  images:any;
   // Reactive User Details form data
   public addOutletForm = {
     outletName: "",
@@ -47,10 +49,13 @@ export class DetailComponent implements OnInit {
     openingHour: "",
     closingHour: "",
     cuisine: "",
-    address: "",
+    shopAddress: "",
+    longitude: 0,
+    latitude: 0,
+    
   };
 
-  constructor(private router: Router, private adminService: AdminService, private inventoryService: InventoryService,private formBuilder: UntypedFormBuilder, private modalService: NgbModal) {
+  constructor(private router: Router, private adminService: AdminService,private toastr:ToastrService ,private inventoryService: InventoryService,private formBuilder: UntypedFormBuilder, private modalService: NgbModal) {
     let nav: Navigation = this.router.getCurrentNavigation();
     if (nav.extras && nav.extras.state && nav.extras.state.sellerDetail) {
       this.sellerDetail = nav.extras.state.sellerDetail;
@@ -70,7 +75,6 @@ export class DetailComponent implements OnInit {
   allCuisineList(){
     this.adminService.getAllCuisine().subscribe((data:any) => {
       this.cuisineList = data.items;
-      console.log("Cuisine List=============>",this.cuisineList);
       
     });
   }
@@ -100,7 +104,9 @@ export class DetailComponent implements OnInit {
       openingHour: ["", [Validators.required]],
       closingHour: ["", [Validators.required]],
       cuisine: ["", [Validators.required]],
-      address: ["", [Validators.required]],
+      shopAddress: ["", [Validators.required]],
+      longitude: [0, [Validators.required]],
+      latitude: [0, [Validators.required]],
     });
 
 
@@ -140,7 +146,7 @@ export class DetailComponent implements OnInit {
     } else {
       this.cuisineArray.push(cuisine.cuisineId)
     }
-    // console.log("Selected====>",this.cuisineArray);
+    
   }
 
   get ReactiveUDForm() {
@@ -148,48 +154,49 @@ export class DetailComponent implements OnInit {
   }
 
   ReactiveUDFormOnSubmit() {
-    console.log("hdshdsdsdsdddds");
-    
-    this.outletFormSubmitted = true;
+     this.outletFormSubmitted = true;
     this.outletForm.value.openingHour=this.formatTime(this.outletForm.value.openingHour)
     this.outletForm.value.closingHour=this.formatTime(this.outletForm.value.closingHour)
     this.outletForm.value.cuisine = this.cuisineArray;
-
-
     
     // stop here if form is invalid
     if (this.outletForm.invalid) {
       return;
     }
-    
-    
-    let bodyData = { sellerId: this.sellerDetail.sellerId, ...this.outletForm.value };
-    // console.log();
-    console.log("Body Ka Data===================>",this.outletForm.value);
+    const openingHours:any = [`${this.outletForm.value.openingHour} - ${this.outletForm.value.closingHour}`]
+    const formData = new FormData();
+    formData.append("outletName",this.outletForm.value.outletName);
+    formData.append("outletImage",this.imageData);
+    formData.append("type",this.outletForm.value.type);
+    formData.append("preparationTime",this.outletForm.value.preparationTime);
+    formData.append("area",this.outletForm.value.area);
+    formData.append("isVeg",this.outletForm.value.isVeg);
+    formData.append("openingHours",openingHours);
+    formData.append("shopAddress",this.outletForm.value.shopAddress);
+    formData.append("cuisines",this.outletForm.value.cuisine);
+    formData.append("longitude",this.outletForm.value.longitude);
+    formData.append("latitude",this.outletForm.value.latitude);
+    formData.append("sellerId",this.sellerDetail.sellerId);
+  
+    // add outlet api call
+   this.adminService.addOutlet(formData).subscribe((data:any) => {
+      if (data.status) {
+        this.toastr.success(data.message,"Success!");
 
-    alert("SUCCESS!! :-)");
+       }
+       else{
+        this.toastr.error(data.message,"error")
+       }
+    })
+   
 
   }
 
   getImage(event: any): any {
     this.imageData = event.target.files[0];
-   
-    // console.log(this.imageData);
-    
-    // const formData = new FormData();
-    // formData.append("image",this.imageData)
+}
 
-    
-    // this.outletForm.value.outletImage = this.imageData;
-    
-    
-    
-    // console.log(formData.get('image'));
-  }
-
-  getimage(){
-    
-  }
+ 
   sellersOutletList(sellerId: String): any {
     this.adminService.getSellersOutlet(sellerId).subscribe((response) => {
       if (response.status) {
