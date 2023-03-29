@@ -86,8 +86,6 @@ export class OrderComponent implements OnInit {
   }
 
   orderList(status: string): any {
-    console.log();
-
     this.adminService.getAllOrder(status).subscribe((response) => {
       if (response.status) {
         this.rows = response.items;

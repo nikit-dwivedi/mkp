@@ -9,19 +9,69 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h4 class="card-title">Kick start your project 🚀</h4>
+              <h4 class="card-title">Market Place Statistics 🚀</h4>
             </div>
             <div class="card-body pb-1">
-              <p class="card-text">All the best for your new project.</p>
-              <p class="card-text">
-                Please make sure to read our
-                <a
-                  href="https://pixinvent.com/demo/vuexy-angular-admin-dashboard-template/documentation/"
-                  target="_blank"
-                  >Template Documentation</a
-                >
-                to understand where to go from here and how to use our template.
-              </p>
+              <div class="content-wrapper container-xxl p-0">
+                <div class="content-body">
+                  <div class="row match-height">
+                    <!-- Order Card -->
+                    <div class="col-xl-10 col-md-6 col-12">
+                      <div class="card card-statistics">
+                        <div class="card-header">
+                          <h4 class="card-title">Order Count</h4>
+                          <div class="d-flex align-items-center"></div>
+                        </div>
+                        <div class="card-body statistics-body">
+                          <div class="row">
+                            <div class="col" *ngFor="let orderStatus of orderStatArray">
+                              <div class="media">
+                                <div class="avatar mr-2" [ngClass]="getStatusColor(orderStatus.status)">
+                                  <div class="avatar-content">
+                                    <i [data-feather]="getStatusIcon(orderStatus.status)" class="avatar-icon"></i>
+                                  </div>
+                                </div>
+                                <div class="media-body my-auto">
+                                  <h4 class="font-weight-bolder mb-0">{{ orderStatus.count }}</h4>
+                                  <p class="card-text font-small-3 mb-0">{{ orderStatus.status }}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--/ Order Card -->
+                    <!-- Outlet Card -->
+                    <div class="col-xl-10 col-md-6 col-12">
+                      <div class="card card-statistics">
+                        <div class="card-header">
+                          <h4 class="card-title">Outlet stats</h4>
+                          <div class="d-flex align-items-center"></div>
+                        </div>
+                        <div class="card-body statistics-body">
+                          <div class="row">
+                            <div class="col-xl-2 col-md-4 col-sm-6" *ngFor="let outlet of outletStatArray">
+                              <div class="card text-center">
+                                <div class="card-body">
+                                  <div class="avatar p-50 m-0 mb-1"  [ngClass]="getStatusColor(outlet.type)">
+                                    <div class="avatar-content">
+                                      <i [data-feather]="getStatusIcon(outlet.type)" class="font-medium-5"></i>
+                                    </div>
+                                  </div>
+                                  <h2 class="font-weight-bolder">{{ outlet.count }}</h2>
+                                  <p class="mb-0 line-ellipsis">{{ outlet.type }}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--/ Outlet Card -->
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
