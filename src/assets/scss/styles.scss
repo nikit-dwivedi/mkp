@@ -10,3 +10,18 @@ PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER
 WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
 
 $blue:#f59449 !default;
+.card.category-list {
+    padding: 20px;
+}
+
+
+.card.category-list button {
+    padding: 0;
+}
+
+.card.category-list .row {
+    border: 1px solid #ddd;
+    margin: 5px 10px 5px 10px;
+    padding: 5px;
+    align-items: baseline;
+}

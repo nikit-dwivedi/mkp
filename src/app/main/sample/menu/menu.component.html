@@ -1,1 +1,46 @@
-<p>menu works!</p>
+<Section>
+    
+    <div class="container">
+        <div class="row">
+            <!-- category -->
+            <div class="col-4">
+                <h3>Category</h3>
+                <div class="card category-list">
+                    
+                    <div class="row" *ngFor="let category of categoryList">
+                        <div class="col-8">
+                           <button class="btn editbtn" (click)="subCategory(category)"> {{category.categoryName}} </button>
+                        </div>
+                        <div class="col-4 text-right">
+                            <button class="btn editbtn" ><img src="assets/images/edit-icon.png" alt=""></button>
+                        </div>
+                    </div>
+                
+                   
+                  </div>
+            </div>
+
+            <div class="col-8">
+            <ng-template>
+                
+                <div class="btn-block-sec" *ngIf="subcat; else product">
+                    <button class="btn btn-primary" (click)="viewSubcategoryModal(content,row)">View
+                        SubCategory</button>
+
+                </div>
+                <ng-template #product>
+                    <button class="btn btn-primary" (click)="viewproductmodal(content3,row)">View
+                        Product</button>
+                </ng-template>
+
+            </ng-template>
+        </div>
+          
+           
+            
+            
+            
+           
+        </div>
+    </div>
+</Section>

@@ -40,9 +40,7 @@ export class AllOutletComponent implements OnInit {
       this.rows = data.items;
       this.kitchenSinkRows = this.rows;
       this.tempData = this.rows;
-      console.log(this.allOutletList);
-      
-    })
+    });
   }
   
 
