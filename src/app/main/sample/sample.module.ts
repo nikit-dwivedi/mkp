@@ -19,6 +19,8 @@ import { TicketComponent } from './ticket/ticket.component';
 import { CommonModule } from '@angular/common';
 import { AllOutletComponent } from './all-outlet/all-outlet.component';
 import { MenuComponent } from './menu/menu.component';
+import { CategoryComponent } from './menu/category/category.component';
+import { ProductComponent } from './menu/product/product.component';
 
 
 
@@ -55,6 +57,18 @@ const routes = [
     data: { animation: "menu" },
   },
   {
+    path: "menu/category",
+    component: CategoryComponent,
+    canActivate: [AuthGuard],
+    data: { animation: "category" },
+  },
+  {
+    path: "menu/product",
+    component: ProductComponent,
+    canActivate: [AuthGuard],
+    data: { animation: "product" },
+  },
+  {
     path: "order",
     component: OrderComponent,
     canActivate: [AuthGuard],
@@ -69,7 +83,7 @@ const routes = [
 ];
 
 @NgModule({
-  declarations: [SampleComponent, HomeComponent, SellerComponent,  OrderComponent, DetailComponent, TicketComponent, AllOutletComponent, MenuComponent],
+  declarations: [SampleComponent, HomeComponent, SellerComponent,  OrderComponent, DetailComponent, TicketComponent, AllOutletComponent, MenuComponent, CategoryComponent, ProductComponent],
   imports: [RouterModule.forChild(routes), ContentHeaderModule, TranslateModule, NgxDatatableModule, NgbModule, CoreCommonModule,ReactiveFormsModule,CommonModule],
   exports: [SellerComponent, HomeComponent,  DetailComponent,TicketComponent,OrderComponent],
 })

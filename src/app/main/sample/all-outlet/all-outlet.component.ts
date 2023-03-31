@@ -77,7 +77,7 @@ export class AllOutletComponent implements OnInit {
       else{
     this.toastr.error(data.message,"error!");
   }
-    })
+    });
   }
 
   navigateToDetail(outletDetails:any){

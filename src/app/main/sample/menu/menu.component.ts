@@ -8,6 +8,7 @@ import { AdminService } from 'app/services/admin.service';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
+  
   outletDetails: any;
   categoryList:any
   categoryId: any;
@@ -15,40 +16,29 @@ export class MenuComponent implements OnInit {
   categoryData: any;
   subCategoryList:any;
   subcat:any;
+  myData: any;
+  a = {a:"hi"}
+
+  
   constructor(private router: Router,private adminService: AdminService) { 
     let nav: Navigation = this.router.getCurrentNavigation();
-    if (nav.extras && nav.extras.state && nav.extras.state.outletDetails) {
-      this.outletDetails = nav.extras.state.outletDetails.outletId;
-      
-      
-    } else {
-      this.router.navigate(["allOutlet"]);
-    }
+    this.outletDetails = nav.extras.state.outletDetails;
+    
+    
+    // if (nav.extras && nav.extras.state && nav.extras.state.outletDetails) {
+    //   this.outletDetails = nav.extras.state.outletDetails.outletId;
+    //   } else {
+    //   this.router.navigate(["allOutlet"]);
+    // }
   }
 
   ngOnInit(): void {
-    this.categoryByOutlet();
+    this.myData = this.outletDetails;
   }
 
-  categoryByOutlet(){
-    this.adminService.getCategory(this.outletDetails).subscribe((data:any) => {
-      this.categoryList = data.items;
 
-    })  
-  }
+
   
-
-  subCategory(data:any){
-
-
-    this.categoryData = data.categoryId;
-    this.subcat = data.hasSubCategory;
-    console.log(this.categoryData);
-    
-    this.adminService.getSubcategory(this.categoryData).subscribe((data:any) => {
-      this.subCategoryList = data.items
-    })
-  }
 
 
 }

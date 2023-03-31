@@ -1,0 +1,15 @@
+<h3>Categories {{outletData}}</h3>
+    <div class="card category-list">
+                    
+        <div class="row" *ngFor="let category of categoryList">
+            <div class="col-8">
+               <button class="btn editbtn" (click)="subCategory(category)">{{category.categoryName}}</button>
+            </div>
+            <div class="col-4 text-right">
+                <button class="btn editbtn" ><img src="assets/images/edit-icon.png" alt=""></button>
+            </div>
+        </div>
+    
+       
+      </div>
+    <app-category *ngIf="hasSubCheck" [outletData]="myData" [categoryData]="tempCategory"></app-category>
