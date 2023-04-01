@@ -108,7 +108,6 @@ export class AdminService {
   changeStatus(outletId: any) {
     return this.http.get(this.menuUrl + "/v1/outlet/status/" + outletId, this.httpOptions).pipe(
       map((data: any) => {
-        console.log(data);
         return data;
       })
     );
@@ -134,19 +133,15 @@ export class AdminService {
   // get outlet category
   getCategory(outletId:any){
     return this.http.get(this.menuUrl + '/v1/menu/category/' + outletId, this.Header()).pipe(map((data:any) =>{
-      console.log(data);
       return data;
-      
-      
-    }))
+    }));
   }
 
   // get sub category
   getSubcategory(categoryId:any){
     return this.http.get(this.menuUrl + '/v1/menu/sub-category/' + categoryId, this.Header()).pipe(map((data:any) => {
       return data;
-      
-    }))
+   }))
   }
 
 // get product by category

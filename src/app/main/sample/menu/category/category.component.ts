@@ -19,7 +19,7 @@ export class CategoryComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log("Menu Component Data==========>", this.outletData,this.categoryData);
+    // console.log("Menu Component Data==========>", this.outletData,this.categoryData);
     this.outletData ? this.categoryByOutlet() : this.categoryByCatgeoryId();
     this.categoryByOutlet();
 
@@ -33,7 +33,7 @@ export class CategoryComponent implements OnInit {
     });
   }
   subCategory(data: any) {
-    this.tempCategory=data
+    this.tempCategory=data.categoryId;
     console.log("categoryData Data==========>", this.categoryData);
     this.hasSubCheck = data.hasSubCategory
     console.log(data);

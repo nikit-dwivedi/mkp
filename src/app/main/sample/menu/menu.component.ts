@@ -17,7 +17,7 @@ export class MenuComponent implements OnInit {
   subCategoryList:any;
   subcat:any;
   myData: any;
-  a = {a:"hi"}
+  
 
   
   constructor(private router: Router,private adminService: AdminService) { 

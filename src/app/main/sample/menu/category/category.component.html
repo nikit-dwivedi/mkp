@@ -1,4 +1,4 @@
-<h3>Categories {{outletData}}</h3>
+<h3>Categories {{outletData.outletId}}</h3>
     <div class="card category-list">
                     
         <div class="row" *ngFor="let category of categoryList">
@@ -12,4 +12,4 @@
     
        
       </div>
-    <app-category *ngIf="hasSubCheck" [outletData]="myData" [categoryData]="tempCategory"></app-category>
+    <app-category *ngIf="hasSubCheck" [categoryData]="tempCategory"></app-category>
