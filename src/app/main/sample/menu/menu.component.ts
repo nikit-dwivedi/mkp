@@ -1,30 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, Navigation } from '@angular/router';
-import { AdminService } from 'app/services/admin.service';
+import { Component, OnInit } from "@angular/core";
+import { Router, Navigation } from "@angular/router";
+import { AdminService } from "app/services/admin.service";
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss']
+  selector: "app-menu",
+  templateUrl: "./menu.component.html",
+  styleUrls: ["./menu.component.scss"],
 })
 export class MenuComponent implements OnInit {
-  
   outletDetails: any;
-  categoryList:any
+  categoryList: any;
   categoryId: any;
   subCategoryById: any;
   categoryData: any;
-  subCategoryList:any;
-  subcat:any;
+  subCategoryList: any;
+  subcat: any;
   myData: any;
-  
 
-  
-  constructor(private router: Router,private adminService: AdminService) { 
+  constructor(private router: Router, private adminService: AdminService) {
     let nav: Navigation = this.router.getCurrentNavigation();
-    this.outletDetails = nav.extras.state.outletDetails;
-    
-    
+    if (nav.extras && nav.extras.state && nav.extras.state.outletDetails) {
+      this.outletDetails = nav.extras.state.outletDetails;
+    } else {
+      this.router.navigate(["allOutlet"]);
+    }
+
     // if (nav.extras && nav.extras.state && nav.extras.state.outletDetails) {
     //   this.outletDetails = nav.extras.state.outletDetails.outletId;
     //   } else {
@@ -35,10 +35,4 @@ export class MenuComponent implements OnInit {
   ngOnInit(): void {
     this.myData = this.outletDetails;
   }
-
-
-
-  
-
-
 }
