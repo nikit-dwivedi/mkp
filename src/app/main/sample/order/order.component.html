@@ -52,7 +52,7 @@
           </div>
         </div>
       </div>
-      <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force" [headerHeight]="60" [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="basicSelectedOption" [rows]="kitchenSinkRows" [scrollbarH]="true" [messages]="{emptyMessage: 'No Orders to display'}">
+      <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force" [headerHeight]="60" [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="basicSelectedOption" [rows]="kitchenSinkRows" [scrollbarH]="true" [messages]="{ emptyMessage: 'No Orders to display' }">
         <ngx-datatable-column name="Outlet" prop="outlet.outletName" [width]="50">
           <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
             <div class="d-flex align-items-center">
@@ -76,7 +76,7 @@
         <ngx-datatable-column name="Payable Amount" prop="payableAmount" [width]="50"></ngx-datatable-column>
         <ngx-datatable-column name="Payment Mode" prop="payment.paymentMode" [width]="50"></ngx-datatable-column>
         <ngx-datatable-column name="Time" prop="timing" [width]="25">
-          <ng-template let-row="row"  ngx-datatable-cell-template>
+          <ng-template let-row="row" ngx-datatable-cell-template>
             <div class="d-flex align-items-center">
               <div class="cell-line-height">
                 <p class="font-medium-1 line-height-1 mb-0">{{ row.timing[1].date }}</p>
@@ -100,14 +100,14 @@
                 <a ngbDropdownToggle href="javascript:void(0);" class="hide-arrow" id="dropdownBrowserState" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i data-feather="more-vertical" class="text-primary cursor-pointer mr-50"></i>
                 </a>
-                <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState" *ngIf="row.status != 'delivered' && row.status !='cancelled'; else elseBlock">
-                  <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="showDetails(content, row)"><i data-feather="file-text" class="mr-50"></i> Details</a>
-                  <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="statusChange(row,modalSM)"><i data-feather="archive" class="mr-50"></i> Change Status</a>
+                <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState" *ngIf="row.status != 'delivered' && row.status != 'cancelled'; else elseBlock">
+                  <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="showOrderDetail(modalLG, row)"><i data-feather="file-text" class="mr-50"></i> Details</a>
+                  <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="statusChange(row, modalSM)"><i data-feather="archive" class="mr-50"></i> Change Status</a>
                   <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"><i data-feather="trash-2" class="mr-50"></i> Delete</a>
                 </div>
                 <ng-template #elseBlock>
-                  <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState" >
-                    <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="showDetails(content, row)"><i data-feather="file-text" class="mr-50"></i> Details</a>
+                  <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState">
+                    <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="showOrderDetail(modalLG, row)"><i data-feather="file-text" class="mr-50"></i> Details</a>
                     <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"><i data-feather="trash-2" class="mr-50"></i> Delete</a>
                   </div>
                 </ng-template>
@@ -123,22 +123,98 @@
   </div>
 </div>
 
- <!-- Modal -->
- <ng-template #modalSM let-modal>
+<!-- Modal -->
+<ng-template #modalSM let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Change Order Status</h5>
     <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body" tabindex="0" ngbAutofocus>
-    Are You Sure?
-  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>Are You Sure?</div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-success"
-      (click)="modalClick(orderId,status[0])">{{status[0]}}</button>
-      <button type="button" class="btn btn-danger" *ngIf="status[1]"
-      (click)="modalClick(orderId,status[1])">{{status[1]}}</button>
+    <button type="button" class="btn btn-success" (click)="modalClick(orderId, status[0])">{{ status[0] }}</button>
+    <button type="button" class="btn btn-danger" *ngIf="status[1]" (click)="modalClick(orderId, status[1])">{{ status[1] }}</button>
+  </div>
+</ng-template>
+<!-- / Modal -->
+
+<!-- Modal -->
+<ng-template #modalLG let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">{{ orderDetail.outlet.outletName }}</h5>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <!-- Style variation -->
+    <section id="card-style-variation">
+      <!-- Outline -->
+      <div class="row">
+        <div class="col-md-6 col-xl-4">
+          <div class="card shadow-none bg-transparent border-primary">
+            <div class="card-body">
+              <h4 class="card-title">Basic Details</h4>
+              <ul class="list-group">
+                <li class="list-group-item">Customer : {{ orderDetail.client.clientName }}</li>
+                <li class="list-group-item">Amount : {{ orderDetail.payableAmount | number: '.2'}} Rs</li>
+                <li class="list-group-item">Outlet : {{ orderDetail.outlet.outletName }}</li>
+                <li class="list-group-item">Status : {{ orderDetail.status }}</li>
+                <li class="list-group-item">Distance : {{ orderDetail.distance }}</li>
+              </ul>
+              <!-- <p class="card-text">Some quick example text to build on the card title and make up.</p> -->
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+          <div class="card shadow-none bg-transparent border-secondary">
+            <div class="card-body">
+              <h4 class="card-title">ItemList</h4>
+              <ul class="list-group" *ngFor="let item of orderDetail.productList">
+                <li class="list-group-item">Product : {{ item.productName }}</li>
+                <li class="list-group-item">Price : {{ item.productPrice }}</li>
+                <li class="list-group-item">Quantity : {{ item.quantity }}</li>
+                <li class="list-group-item">Total : {{ item.quantityPrice }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+          <div class="card shadow-none bg-transparent border-success">
+            <div class="card-body">
+              <h4 class="card-title">Success card title</h4>
+              <p class="card-text">Some quick example text to build on the card title and make up.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+          <div class="card shadow-none bg-transparent border-danger">
+            <div class="card-body">
+              <h4 class="card-title">Danger card title</h4>
+              <p class="card-text">Some quick example text to build on the card title and make up.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+          <div class="card shadow-none bg-transparent border-warning">
+            <div class="card-body">
+              <h4 class="card-title">Warning card title</h4>
+              <p class="card-text">Some quick example text to build on the card title and make up.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+          <div class="card shadow-none bg-transparent border-info">
+            <div class="card-body">
+              <h4 class="card-title">Info card title</h4>
+              <p class="card-text">Some quick example text to build on the card title and make up.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--/ Style variation -->
   </div>
 </ng-template>
 <!-- / Modal -->

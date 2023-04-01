@@ -22,6 +22,7 @@ export class OrderComponent implements OnInit {
   };
   public sellerOutlet: any;
   public sellerDetail: any;
+  public orderDetail: any;
   private tempData = [];
   public ColumnMode = ColumnMode;
   public contentHeader: object;
@@ -74,10 +75,10 @@ export class OrderComponent implements OnInit {
     this.table.offset = 0;
   }
 
-  modalOpenSM(modalSM) {
-    this.modalService.open(modalSM, {
+  modalOpenSM(content: any, size: any) {
+    this.modalService.open(content, {
       centered: true,
-      size: "sm", // size: 'xs' | 'sm' | 'lg' | 'xl'
+      size: size, // size: 'xs' | 'sm' | 'lg' | 'xl'
     });
   }
 
@@ -121,6 +122,12 @@ export class OrderComponent implements OnInit {
     this.orderStatus = status;
     this.ngOnInit();
   }
+
+  showOrderDetail(modalData: any, row: any): any {
+    this.orderDetail = row;
+    console.log(row);
+    this.modalOpenSM(modalData, "lg");
+  }
   getPageValue(event: any): any {
     console.log(event);
     this.page.pageNumber = event.offset;
@@ -130,7 +137,7 @@ export class OrderComponent implements OnInit {
     this.orderId = row.orderId;
     this.status = this.getNextStatus(row.status);
     if (this.status[0]) {
-      this.modalOpenSM(modalData);
+      this.modalOpenSM(modalData, "xs");
     }
   }
   getNextStatus(currentStatus: any) {
@@ -153,7 +160,7 @@ export class OrderComponent implements OnInit {
     const bodyData = { orderId, orderStatus };
     this.adminService.changeOrderStatus(bodyData).subscribe((response) => {
       if (response.status) {
-        this.modalService.dismissAll()
+        this.modalService.dismissAll();
       }
     });
   }
