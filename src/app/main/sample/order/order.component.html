@@ -158,7 +158,7 @@
               <h4 class="card-title">Basic Details</h4>
               <ul class="list-group">
                 <li class="list-group-item">Customer : {{ orderDetail.client.clientName }}</li>
-                <li class="list-group-item">Amount : {{ orderDetail.payableAmount | number: '.2'}} Rs</li>
+                <li class="list-group-item">Amount : {{ orderDetail.payableAmount | number : ".2" }} Rs</li>
                 <li class="list-group-item">Outlet : {{ orderDetail.outlet.outletName }}</li>
                 <li class="list-group-item">Status : {{ orderDetail.status }}</li>
                 <li class="list-group-item">Distance : {{ orderDetail.distance }}</li>
@@ -173,42 +173,44 @@
               <h4 class="card-title">ItemList</h4>
               <ul class="list-group" *ngFor="let item of orderDetail.productList">
                 <li class="list-group-item">Product : {{ item.productName }}</li>
-                <li class="list-group-item">Price : {{ item.productPrice }}</li>
+                <li class="list-group-item">Price : {{ item.productPrice }} Rs</li>
                 <li class="list-group-item">Quantity : {{ item.quantity }}</li>
-                <li class="list-group-item">Total : {{ item.quantityPrice }}</li>
+                <li class="list-group-item">Total : {{ item.quantityPrice }} Rs</li>
               </ul>
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-xl-4">
-          <div class="card shadow-none bg-transparent border-success">
+      </div>
+      <div class="row">
+        <div class="col-md-12 col-xl-12">
+          <div class="card shadow-none bg-transparent border-primary">
             <div class="card-body">
-              <h4 class="card-title">Success card title</h4>
-              <p class="card-text">Some quick example text to build on the card title and make up.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-xl-4">
-          <div class="card shadow-none bg-transparent border-danger">
-            <div class="card-body">
-              <h4 class="card-title">Danger card title</h4>
-              <p class="card-text">Some quick example text to build on the card title and make up.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-xl-4">
-          <div class="card shadow-none bg-transparent border-warning">
-            <div class="card-body">
-              <h4 class="card-title">Warning card title</h4>
-              <p class="card-text">Some quick example text to build on the card title and make up.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-xl-4">
-          <div class="card shadow-none bg-transparent border-info">
-            <div class="card-body">
-              <h4 class="card-title">Info card title</h4>
-              <p class="card-text">Some quick example text to build on the card title and make up.</p>
+              <h4 class="card-title">Basic Details</h4>
+              <!-- <p class="card-text">Some quick example text to build on the card title and make up.</p> -->
+              <div class="container">
+                <div class="rightbox">
+                  <div class="rb-container">
+                    <ul class="rb">
+                      <li class="rb-item" ng-repeat="itembx" *ngFor="let item of orderDetail.timing;index as i">
+                        <div class="timestamp">
+                          {{item.status}}<br />
+                          {{item.time}}
+                        </div>
+                        <div class="item-title">{{item.date}}</div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="order-timeline" *ngFor="let item of orderDetail.timing;index as i">
+                <div class="timeline-object complete">
+                  <div class="timeline-status"></div>
+                  <div class="timeline-info">
+                    <h3>{{item.status}} {{i}}</h3>
+                    <small>{{item.date}} - {{item.time}}</small>
+                  </div>
+                </div>
+              </div> -->
             </div>
           </div>
         </div>
