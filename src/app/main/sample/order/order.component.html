@@ -73,8 +73,16 @@
             </div>
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Payable Amount" prop="payableAmount" [width]="50"></ngx-datatable-column>
-        <ngx-datatable-column name="Payment Mode" prop="payment.paymentMode" [width]="50"></ngx-datatable-column>
+        <ngx-datatable-column name="Payable Amount" prop="payableAmount" [width]="50">
+          <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+            <div class="d-flex align-items-center">
+              <div class="cell-line-height">
+                <p class="font-medium-1 line-height-1 mb-0">{{row.payableAmount | number : ".2"}} Rs</p>
+                <span class="text-muted font-small-2"> {{ row.payment.paymentMode }}</span>
+              </div>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
         <ngx-datatable-column name="Time" prop="timing" [width]="25">
           <ng-template let-row="row" ngx-datatable-cell-template>
             <div class="d-flex align-items-center">
@@ -191,12 +199,12 @@
                 <div class="rightbox">
                   <div class="rb-container">
                     <ul class="rb">
-                      <li class="rb-item" ng-repeat="itembx" *ngFor="let item of orderDetail.timing;index as i">
+                      <li class="rb-item" ng-repeat="itembx" *ngFor="let item of orderDetail.timing; index as i">
                         <div class="timestamp">
-                          {{item.status}}<br />
-                          {{item.time}}
+                          {{ item.status }}<br />
+                          {{ item.time }}
                         </div>
-                        <div class="item-title">{{item.date}}</div>
+                        <div class="item-title">{{ item.date }}</div>
                       </li>
                     </ul>
                   </div>
