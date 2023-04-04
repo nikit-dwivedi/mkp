@@ -24,12 +24,6 @@ export class MenuComponent implements OnInit {
     } else {
       this.router.navigate(["allOutlet"]);
     }
-
-    // if (nav.extras && nav.extras.state && nav.extras.state.outletDetails) {
-    //   this.outletDetails = nav.extras.state.outletDetails.outletId;
-    //   } else {
-    //   this.router.navigate(["allOutlet"]);
-    // }
   }
 
   ngOnInit(): void {

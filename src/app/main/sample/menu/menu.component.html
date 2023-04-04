@@ -1,78 +1,10 @@
-<!-- <Section>
-    
-    <div class="container">
-        <div class="row">
-           
-            <div class="col-4">
-                <h3>Category</h3>
-                <div class="card category-list">
-                    
-                    <div class="row" *ngFor="let category of categoryList">
-                        <div class="col-8">
-                           <button class="btn editbtn" (click)="subCategory(category)">{{category.categoryName}} </button>
-                        </div>
-                        <div class="col-4 text-right">
-                            <button class="btn editbtn" ><img src="assets/images/edit-icon.png" alt=""></button>
-                        </div>
-                    </div>
-                
-                   
-                  </div>
-            </div>
-            
-            <div class="col-8" *ngIf="subcat; else product">
-                <div class="col-4">
 
-                    <h3>Sub Category</h3>
-                    <div class="card category-list">
-                    
-                        <div class="row" *ngFor="let category of subCategoryList">
-                            <div class="col-8">
-                               <button class="btn editbtn" (click)="subCategory(category)">{{category.categoryName}} </button>
-                            </div>
-                            <div class="col-4 text-right">
-                                <button class="btn editbtn" ><img src="assets/images/edit-icon.png" alt=""></button>
-                            </div>
-                        </div>
-                    
-                       
-                      </div>
-                </div>
-            </div>
-
-            <ng-template #product>
-                <div class="col-4">
-                    <h3>Product</h3>
-                </div>
-            </ng-template>
-          
-           
-            
-            
-            
-           
-        </div>
-    </div>
-</Section> -->
 <section id="anchors-n-buttons">
   <div class="row match-height">
-    <div class="col-lg-6 col-md-12">
+    <div class="col-lg-12 col-md-12">
       <h4 class="card-title">Menu</h4>
       <app-category [outletData]="myData"></app-category>
     </div>
   </div>
 </section>
-<!-- <div class="container">
-    <div class="card-header d-block">
-        <h2>{{outletDetails.outletName}}</h2>
-    </div>
-    <div class="row">
-        <div class="col-4">
-          <app-category [outletData]="myData"></app-category>
-        </div>
 
-        <div class="col-4">
-            <app-product></app-product>
-          </div>
-     </div>
-</div> -->

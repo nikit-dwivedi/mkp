@@ -17,10 +17,13 @@ export class ProductComponent implements OnInit {
   }
   productByCatgeoryId() {
     this.adminService.getProductBycategory(this.categoryData.categoryId).subscribe((data: any) => {
-      // console.log("================",data);
-      if (data.status) {
-        this.productList = data.items;
-      }
+      console.log("================",data);
+      // if (data.status) {
+      //   this.productList = data.items;
+      //   console.log(this.productList);
+        
+      // }
+      this.productList = data.items;
     });
   }
 }

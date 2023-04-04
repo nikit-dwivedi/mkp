@@ -151,6 +151,12 @@ getProductBycategory(categoryId:any){
   }))
 }
 
+// edit category 
+editcategory(body:any){
+  return this.http.post(this.menuUrl + '/v1/menu/category/edit' , body , this.httpOptions).pipe(map((data:any)=> {
+    return data;
+  }));
+}
   //
   // changeStatus(bodyData: any): Observable<any> {
   //   return this.http.post<any>(this.apiUrl + "/v1/user/sub", bodyData).pipe(

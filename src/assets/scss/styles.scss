@@ -25,3 +25,36 @@ $blue:#f59449 !default;
     padding: 5px;
     align-items: baseline;
 }
+
+
+section.category-display {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-evenly;
+    width: 100%;
+}
+.page {
+    width: 35%;
+}
+.page2 {
+    width: 65%;
+}
+.page2 .page {
+    width: 50%;
+}
+.page2 .page2 {
+    width: 50%;
+}
+
+button.edit-icon {
+    padding: 11px 14px;
+    border: 1px solid #e3e4e5;
+    background: #fff;
+}
+.edit-text {
+    display: flex;
+}
+
+button.block-btn.btn.btn-primary {
+    margin-top: 20px;
+}
