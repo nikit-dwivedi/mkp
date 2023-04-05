@@ -10,6 +10,10 @@ PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER
 WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
 
 $blue:#f59449 !default;
+
+button.block-btn.btn.btn-primary{
+    margin-top: 22px;
+}
 .card.category-list {
     padding: 20px;
 }
@@ -46,15 +50,51 @@ section.category-display {
     width: 50%;
 }
 
-button.edit-icon {
+a.edit-icon {
     padding: 11px 14px;
     border: 1px solid #e3e4e5;
-    background: #fff;
+    background: none;
 }
 .edit-text {
     display: flex;
 }
 
-button.block-btn.btn.btn-primary {
+a.block-btn.btn.btn-primary {
     margin-top: 20px;
+}
+
+@media (max-width: 694px){
+    section.category-display {
+        display: block;
+    }
+    
+    section.category-display .card-body {
+        padding: 0;
+    }
+
+    .page.card-body{
+        width: 100%;
+    }
+    .page {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .page2 {
+        width: 100%;
+        
+    }
+    .page2 .page {
+        width: 100%;
+    }
+    .page2 .page2 {
+        width: 100%;
+    }
+
+    button.block-btn.btn.btn-primary{
+        margin-top: 20px;
+    }
+    
+    span.ng-star-inserted {
+    margin: 0 10px;
+}
 }

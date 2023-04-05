@@ -19,6 +19,7 @@ export class CategoryComponent implements OnInit {
   categoryList: any;
   tempCategory: any;
   editBycategory:any;
+  productList:any;
   @Input() outletData: any;
   @Input() categoryData: any;
   constructor(private router: Router, private adminService: AdminService, private modalService: NgbModal,config: NgbModalConfig, private fb:FormBuilder, private toastr:ToastrService ) {}
@@ -45,12 +46,11 @@ export class CategoryComponent implements OnInit {
   }
 
   subCategory(data: any) {
-    console.log("Temp Category===============>",this.tempCategory);
-    
     this.tempCategory = data;
     this.hasSubCheck = data.hasSubCategory;
     this.hasProdCheck = !data.hasSubCategory;
     
+    this.categoryByCatgeoryId();
   }
 
   categoryByCatgeoryId() {
@@ -59,6 +59,7 @@ export class CategoryComponent implements OnInit {
         this.categoryList = data.items;
     });
   }
+
 // open edit category modal
 openeditCategorymodal(data:any,edit:any){
   this.modalService.open(data,{
@@ -87,8 +88,6 @@ editCategoryFormSubmit(){
       "categoryName": this.editCategoryForm.value.categoryName
 
     }
-    console.log("Form Data=================>",formData);
-    
     this.adminService.editcategory(formData).subscribe((data:any) => {
       if(data.status){
         this.toastr.success(data.message,"Success!")

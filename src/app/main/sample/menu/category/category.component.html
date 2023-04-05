@@ -21,9 +21,9 @@
   <div class="list-group" *ngFor="let category of categoryList">
     <div class="edit-text">
     <a href="javascript:void(0)"  class="list-group-item list-group-item-action" (click)="subCategory(category)">{{ category.categoryName }} </a>
-    <button  class="edit-icon" (click)="openeditCategorymodal(content,category)"><i data-feather="edit" class="text-primary cursor-pointer"></i></button>
+    <a href="javascript:void(0)"   class="list-group-item edit-icon" (click)="openeditCategorymodal(content,category)"><i data-feather="edit" class="text-primary cursor-pointer"></i></a>
   </div>
-    <!-- <button class="btn text-primary"><i data-feather="edit" class="text-primary cursor-pointer"></i></button> -->
+    
   </div>
 </div>
 </div>
@@ -35,6 +35,7 @@
 
 </section>
 
+<!-- edit category modal -->
 <ng-template #content let-modal>
   <div class="modal-header">
       <h4 class="modal-title" id="myModalLabel1">Change Status</h4>
