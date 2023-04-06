@@ -63,6 +63,13 @@ a.block-btn.btn.btn-primary {
     margin-top: 20px;
 }
 
+.categories.card-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+}
+// media query start
 @media (max-width: 694px){
     section.category-display {
         display: block;
@@ -97,4 +104,11 @@ a.block-btn.btn.btn-primary {
     span.ng-star-inserted {
     margin: 0 10px;
 }
+
+.nav-vertical .nav.nav-tabs.nav-right ~ .tab-content .tab-pane.active {
+    display: flex;
+    width: 100%;
+}
+
+
 }

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from "@angular/core";
 import { AdminService } from "app/services/admin.service";
 import { NgbModal,NgbModalConfig } from '@ng-bootstrap/ng-bootstrap'; 
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
+import { ToastrService } from "ngx-toastr";
 import { log } from "console";
 
 @Component({
@@ -15,14 +16,20 @@ export class ProductComponent implements OnInit {
   editProduct:any;
   editProductForm:FormGroup
   @Input() categoryData: any;
-  constructor(private adminService: AdminService, private modalService: NgbModal,config: NgbModalConfig, private fb:FormBuilder) {}
+  constructor(private adminService: AdminService, private modalService: NgbModal,config: NgbModalConfig, private fb:FormBuilder, private toastr:ToastrService) {}
 
   ngOnInit(): void {
+    // console.log("categoryData------------->",this.categoryData);
+    
     this.productByCatgeoryId();
     this.editProductForm = this.fb.group({
       productName: new FormControl(''),
       productPrice: new FormControl('')
     })
+  }
+
+  ngOnChanges(){
+    this.productByCatgeoryId();
   }
 
   get f(){
@@ -33,10 +40,11 @@ export class ProductComponent implements OnInit {
     
     
     this.adminService.getProductBycategory(this.categoryData.categoryId).subscribe((data: any) => {
-      // if (data.status) {
-      //   this.productList = data.items;
-      // }   
-      this.productList = data.items;
+      if (data.status) {
+        this.productList = data.items;
+      }   
+      
+      
     });
   }
 
@@ -71,7 +79,17 @@ export class ProductComponent implements OnInit {
       }
 
       console.log("formData========>",formData);
-      
+      this.adminService.editProductbyId(this.editProduct,formData).subscribe((data:any) => {
+        if(data.status){
+          this.toastr.success(data.message,"Success!");
+          this.modalService.dismissAll();
+          this.productByCatgeoryId();
+        }
+        else{
+          this.toastr.error(data.message,"failed");
+          this.productByCatgeoryId();
+        }
+      })
     }
    }
 

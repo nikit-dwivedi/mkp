@@ -157,6 +157,22 @@ editcategory(body:any){
     return data;
   }));
 }
+
+// edit product by product id
+
+editProductbyId(productId:any,body:any){
+  return this.http.post(this.menuUrl + '/v1/menu/product/edit/' + productId, body ,this.httpOptions).pipe(map((data:any) => {
+    return data;
+  }));
+}
+
+  // add outlet category
+  addCategory(body:any){
+    return this.http.post(this.menuUrl + '/v1/menu/category' , body, this.httpOptions).pipe(map((data:any) => {
+      return data;
+    }))
+  }
+
   //
   // changeStatus(bodyData: any): Observable<any> {
   //   return this.http.post<any>(this.apiUrl + "/v1/user/sub", bodyData).pipe(

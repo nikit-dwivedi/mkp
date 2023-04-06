@@ -2,9 +2,9 @@ import { Component, Input, OnInit } from "@angular/core";
 import { Navigation, Router } from "@angular/router";
 import { AdminService } from "app/services/admin.service";
 import { NgbModal,NgbModalConfig } from '@ng-bootstrap/ng-bootstrap'; 
-
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
+import { log } from "console";
 
 @Component({
   selector: "app-category",
@@ -13,6 +13,7 @@ import { ToastrService } from "ngx-toastr";
 })
 export class CategoryComponent implements OnInit {
   editCategoryForm: FormGroup;
+  addCategoryForm: FormGroup;
   hasSubCheck: Boolean = false;
   hasProdCheck: Boolean = false;
   submitted: Boolean = false;
@@ -25,41 +26,96 @@ export class CategoryComponent implements OnInit {
   constructor(private router: Router, private adminService: AdminService, private modalService: NgbModal,config: NgbModalConfig, private fb:FormBuilder, private toastr:ToastrService ) {}
 
   ngOnInit(): void {
+    console.log(this.outletData);
+    
+    this.outletData ? this.categoryByOutlet() : this.categoryByCatgeoryId();
+  
+    
+  // add category name
+    this.addCategoryForm = this.fb.group({
+      categoryName: new FormControl(''),
+      outletId:new FormControl(''),
+      parentCategoryId: new FormControl('')
+    });
 
+    // edit category form
     this.editCategoryForm = this.fb.group({
       categoryName: new FormControl(''),
       categoryId: new FormControl('')
-    })
-    this.outletData ? this.categoryByOutlet() : this.categoryByCatgeoryId();
-    
-    
-  }
+    });
+   }
 
-  get f(){
+   ngOnChanges(){
+    this.outletData ? this.categoryByOutlet() : this.categoryByCatgeoryId();
+   }
+    
+   get f(){
+    return this.addCategoryForm.controls
+   }
+
+  get b(){
     return this.editCategoryForm.controls;
   }
+
   categoryByOutlet() {
     this.adminService.getCategory(this.outletData.outletId).subscribe((data: any) => {
       this.categoryList = data.items;
       
     });
+    
   }
 
   subCategory(data: any) {
     this.tempCategory = data;
     this.hasSubCheck = data.hasSubCategory;
     this.hasProdCheck = !data.hasSubCategory;
-    
-    this.categoryByCatgeoryId();
-  }
+}
 
   categoryByCatgeoryId() {
   
     this.adminService.getSubcategory(this.categoryData.categoryId).subscribe((data: any) => {
         this.categoryList = data.items;
     });
-  }
+   
+}
 
+// open add category modal
+openAddCategoryModal(data:any){
+  this.modalService.open(data,{
+    centered:true,
+    scrollable:true,
+    size:'lg'
+  });
+}
+
+addCategoryFormSubmit(){
+  if(this.addCategoryForm.invalid){
+    return;
+  }
+  else{
+    const bodyData = {
+      "categoryName": this.addCategoryForm.value.categoryName,
+      "outletId": this.outletData.outletId,
+      "parentCategoryId":"" 
+    }
+
+    console.log("bodyData",bodyData);
+    
+    this.adminService.addCategory(bodyData).subscribe((data:any) => {
+      if(data.status){
+        this.toastr.success(data.message,"Success!");
+        this.modalService.dismissAll();
+        this.categoryByOutlet();
+      }
+      else{
+        this.toastr.error(data.message,"failed")
+        this.categoryByOutlet();
+      }
+    });
+  }
+}
+
+  
 // open edit category modal
 openeditCategorymodal(data:any,edit:any){
   this.modalService.open(data,{
