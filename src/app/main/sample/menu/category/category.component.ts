@@ -4,7 +4,7 @@ import { AdminService } from "app/services/admin.service";
 import { NgbModal,NgbModalConfig } from '@ng-bootstrap/ng-bootstrap'; 
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
-import { log } from "console";
+
 
 @Component({
   selector: "app-category",
@@ -26,16 +26,13 @@ export class CategoryComponent implements OnInit {
   constructor(private router: Router, private adminService: AdminService, private modalService: NgbModal,config: NgbModalConfig, private fb:FormBuilder, private toastr:ToastrService ) {}
 
   ngOnInit(): void {
-    console.log(this.outletData);
-    
     this.outletData ? this.categoryByOutlet() : this.categoryByCatgeoryId();
   
     
   // add category name
     this.addCategoryForm = this.fb.group({
       categoryName: new FormControl(''),
-      outletId:new FormControl(''),
-      parentCategoryId: new FormControl('')
+      
     });
 
     // edit category form
@@ -46,6 +43,7 @@ export class CategoryComponent implements OnInit {
    }
 
    ngOnChanges(){
+
     this.outletData ? this.categoryByOutlet() : this.categoryByCatgeoryId();
    }
     
@@ -60,20 +58,20 @@ export class CategoryComponent implements OnInit {
   categoryByOutlet() {
     this.adminService.getCategory(this.outletData.outletId).subscribe((data: any) => {
       this.categoryList = data.items;
-      
     });
     
   }
 
   subCategory(data: any) {
+    data.outletId = this.outletData?this.outletData.outletId:this.categoryData.outletId
+   
     this.tempCategory = data;
     this.hasSubCheck = data.hasSubCategory;
     this.hasProdCheck = !data.hasSubCategory;
 }
 
   categoryByCatgeoryId() {
-  
-    this.adminService.getSubcategory(this.categoryData.categoryId).subscribe((data: any) => {
+     this.adminService.getSubcategory(this.categoryData.categoryId).subscribe((data: any) => {
         this.categoryList = data.items;
     });
    
@@ -84,7 +82,8 @@ openAddCategoryModal(data:any){
   this.modalService.open(data,{
     centered:true,
     scrollable:true,
-    size:'lg'
+    size:'lg',
+    windowClass: 'custom-class'
   });
 }
 
@@ -95,21 +94,18 @@ addCategoryFormSubmit(){
   else{
     const bodyData = {
       "categoryName": this.addCategoryForm.value.categoryName,
-      "outletId": this.outletData.outletId,
-      "parentCategoryId":"" 
+      "outletId": this.outletData?.outletId??this.categoryData.outletId,
+      "parentCategoryId": this.categoryData?.categoryId ?? "" 
     }
 
-    console.log("bodyData",bodyData);
-    
     this.adminService.addCategory(bodyData).subscribe((data:any) => {
       if(data.status){
         this.toastr.success(data.message,"Success!");
         this.modalService.dismissAll();
-        this.categoryByOutlet();
+        this.outletData ? this.categoryByOutlet() : this.categoryByCatgeoryId();
       }
       else{
         this.toastr.error(data.message,"failed")
-        this.categoryByOutlet();
       }
     });
   }

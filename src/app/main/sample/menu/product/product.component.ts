@@ -14,14 +14,22 @@ export class ProductComponent implements OnInit {
   submitted:Boolean = false;
   productList: any;
   editProduct:any;
-  editProductForm:FormGroup
+  editProductForm:FormGroup;
+  addProductForm:FormGroup;
   @Input() categoryData: any;
   constructor(private adminService: AdminService, private modalService: NgbModal,config: NgbModalConfig, private fb:FormBuilder, private toastr:ToastrService) {}
 
   ngOnInit(): void {
-    // console.log("categoryData------------->",this.categoryData);
-    
+   
     this.productByCatgeoryId();
+
+    // add product form
+    this.addProductForm = this.fb.group({
+      productName: new FormControl(''),
+      productPrice: new FormControl('')
+
+    })
+    // edit poduct form
     this.editProductForm = this.fb.group({
       productName: new FormControl(''),
       productPrice: new FormControl('')
@@ -33,22 +41,53 @@ export class ProductComponent implements OnInit {
   }
 
   get f(){
+    return this.addProductForm.controls;
+  }
+
+  get b(){
    return this.editProductForm.controls
   }
   
+  addProductFormSubmit(){
+    this.submitted = true;
+    if(this.addProductForm.invalid){
+      return;
+    }
+    else{
+      const formData = {
+        parentCategoryId: this.categoryData.categoryId,
+        productName: this.addProductForm.value.productName,
+        productPrice: this.addProductForm.value.productPrice
+      }
+     
+      this.adminService.addProduct(formData).subscribe((data:any) => {
+        if(!data.status){
+          this.toastr.error(data.message,"failed");
+        }
+        this.toastr.success(data.message,"Success!");
+        this.modalService.dismissAll();
+        this.productByCatgeoryId();
+      })
+    }
+
+  }
+
   productByCatgeoryId() {
-    
-    
     this.adminService.getProductBycategory(this.categoryData.categoryId).subscribe((data: any) => {
       if (data.status) {
         this.productList = data.items;
       }   
-      
-      
     });
   }
 
-  
+  openAddProductModal(data:any){
+    this.modalService.open(data,{
+      centered:true,
+      scrollable:true,
+      size:'lg'
+    })
+
+  }
 
   // open edit product modal
    openEditProductModal(data:any,edit:any){
@@ -68,7 +107,7 @@ export class ProductComponent implements OnInit {
 
   //  edit product form submit
    editProductFormSubmit(){
-    this.submitted == true;
+    this.submitted = true;
     if(this.editProductForm.invalid){
       return;
     }
@@ -93,4 +132,14 @@ export class ProductComponent implements OnInit {
     }
    }
 
+
+  //  open view product modal
+  openViewProductModal(data:any){
+    this.modalService.open(data,{
+      centered:false,
+      scrollable:true,
+      size:'lg',
+      windowClass: 'view-product'
+    })
+  }
 }

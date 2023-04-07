@@ -69,6 +69,16 @@ a.block-btn.btn.btn-primary {
     align-items: baseline;
     margin-bottom: 10px;
 }
+.view-product {
+    right: 2%;
+    left: unset;
+    top: 20% !important;
+    bottom: unset;
+    position: absolute;
+    background: none;
+    width: 32%;
+    height: 100%;
+}
 // media query start
 @media (max-width: 694px){
     section.category-display {
