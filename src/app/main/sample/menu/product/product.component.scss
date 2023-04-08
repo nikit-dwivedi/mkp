@@ -3,7 +3,7 @@
     margin: 0;
 }
 @media only screen and (min-width: 576px){
-    ::ng-deep .modal-dialog{
+    ::ng-deep .modal-dialog.custom-class{
         max-width: 100%;
         margin: 0;
     }
