@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { AdminService } from "app/services/admin.service";
-import { NgbModal,NgbModalConfig } from '@ng-bootstrap/ng-bootstrap'; 
+import { NgbModal,NgbModalConfig, } from '@ng-bootstrap/ng-bootstrap'; 
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 
@@ -141,12 +141,13 @@ export class ProductComponent implements OnInit {
     this.modalService.open(data,{
       centered:false,
       scrollable:true,
-      size:'md',
+      size:'fullscreen',
       windowClass: 'modal-fullscreen'
     });
     this.view = view.productId
     console.log(this.view);
     
+
     this.adminService.viewProduct(this.view).subscribe((data:any) => {
       this.productDetails = data.items;
       console.log("Product Details---------->",this.productDetails);
