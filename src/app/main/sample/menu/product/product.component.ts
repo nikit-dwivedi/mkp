@@ -3,7 +3,6 @@ import { AdminService } from "app/services/admin.service";
 import { NgbModal,NgbModalConfig } from '@ng-bootstrap/ng-bootstrap'; 
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
-import { log } from "console";
 
 @Component({
   selector: "app-product",
@@ -16,7 +15,11 @@ export class ProductComponent implements OnInit {
   editProduct:any;
   editProductForm:FormGroup;
   addProductForm:FormGroup;
+  view:any;
+  hasCustom:any;
+  hasAddon:any;
   @Input() categoryData: any;
+  productDetails: any;
   constructor(private adminService: AdminService, private modalService: NgbModal,config: NgbModalConfig, private fb:FormBuilder, private toastr:ToastrService) {}
 
   ngOnInit(): void {
@@ -134,12 +137,40 @@ export class ProductComponent implements OnInit {
 
 
   //  open view product modal
-  openViewProductModal(data:any){
+  openViewProductModal(data:any,view:any){
     this.modalService.open(data,{
       centered:false,
       scrollable:true,
-      size:'lg',
-      windowClass: 'view-product'
+      size:'md',
+      windowClass: 'modal-fullscreen'
+    });
+    this.view = view.productId
+    console.log(this.view);
+    
+    this.adminService.viewProduct(this.view).subscribe((data:any) => {
+      this.productDetails = data.items;
+      console.log("Product Details---------->",this.productDetails);
+      
+      this.hasCustom = this.productDetails.hasCustomization
+      this.hasAddon = this.productDetails.hasAddOn
     })
   }
+
+  openViewCustomizationModal(data:any){
+    this.modalService.open(data,{
+      centered:true,
+      scrollable:true,
+      size:'lg'
+    });
+  }
+
+  openViewAddonModal(data:any){
+    this.modalService.open(data,{
+      centered:true,
+      scrollable:true,
+      size:'lg',
+    });
+  }
+
+  
 }

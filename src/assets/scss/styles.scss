@@ -9,116 +9,188 @@ NOTE:
 PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
 WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
 
-$blue:#f59449 !default;
+$blue: #f59449 !default;
 
-button.block-btn.btn.btn-primary{
-    margin-top: 22px;
+button.block-btn.btn.btn-primary {
+	margin-top: 22px;
 }
+
 .card.category-list {
-    padding: 20px;
+	padding: 20px;
 }
 
 
 .card.category-list button {
-    padding: 0;
+	padding: 0;
 }
 
 .card.category-list .row {
-    border: 1px solid #ddd;
-    margin: 5px 10px 5px 10px;
-    padding: 5px;
-    align-items: baseline;
+	border: 1px solid #ddd;
+	margin: 5px 10px 5px 10px;
+	padding: 5px;
+	align-items: baseline;
 }
 
 
 section.category-display {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-evenly;
-    width: 100%;
+	display: flex;
+	align-items: baseline;
+	justify-content: space-evenly;
+	width: 100%;
 }
+
 .page {
-    width: 35%;
+	width: 35%;
 }
+
 .page2 {
-    width: 65%;
+	width: 65%;
 }
+
 .page2 .page {
-    width: 50%;
+	width: 50%;
 }
+
 .page2 .page2 {
-    width: 50%;
+	width: 50%;
 }
 
 a.edit-icon {
-    padding: 11px 14px;
-    border: 1px solid #e3e4e5;
-    background: none;
+	padding: 11px 14px;
+	border: 1px solid #e3e4e5;
+	background: none;
 }
+
 .edit-text {
-    display: flex;
+	display: flex;
 }
 
 a.block-btn.btn.btn-primary {
-    margin-top: 20px;
+	margin-top: 20px;
 }
 
 .categories.card-text {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	margin-bottom: 10px;
+}
+
+.view-product {
+	right: 2%;
+	left: unset;
+	top: 20% !important;
+	bottom: unset;
+	position: absolute;
+	background: none;
+	width: 32%;
+	height: 100%;
+}
+
+.modal-backdrop {
+	background: none !important;
+}
+
+button.btn-customization.btn.btn-primary {
+	margin-right: 20px;
+}
+.custome-addon {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
+}
+.card-product-view {
     margin-bottom: 10px;
 }
-.view-product {
-    right: 2%;
-    left: unset;
-    top: 20% !important;
-    bottom: unset;
-    position: absolute;
-    background: none;
-    width: 32%;
-    height: 100%;
+.view-product .card {
+    margin-bottom: 10px;
 }
-// media query start
-@media (max-width: 694px){
-    section.category-display {
-        display: block;
-    }
-    
-    section.category-display .card-body {
-        padding: 0;
-    }
-
-    .page.card-body{
-        width: 100%;
-    }
-    .page {
-        width: 100%;
-        margin-bottom: 20px;
-    }
-    .page2 {
-        width: 100%;
-        
-    }
-    .page2 .page {
-        width: 100%;
-    }
-    .page2 .page2 {
-        width: 100%;
-    }
-
-    button.block-btn.btn.btn-primary{
-        margin-top: 20px;
-    }
-    
-    span.ng-star-inserted {
-    margin: 0 10px;
-}
-
-.nav-vertical .nav.nav-tabs.nav-right ~ .tab-content .tab-pane.active {
+.product-view-parent {
     display: flex;
-    width: 100%;
+    align-items: baseline;
+    justify-content: space-between;
+}
+button.btn-view-image {
+    border: none;
+    background: none;
+}
+.product-view-parent img {
+    border-radius: 10px;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+.product-list {
+    width: 50%;
+}
+.page2 .product-list .card-body.product-list-module {
+    width: 50%;
+}
+.page2 .page2 .card-body.product-list-module {
+    width: 90%;
 }
 
+// media query start
+@media (max-width: 694px) {
+	section.category-display {
+		display: block;
+	}
+
+	section.category-display .card-body {
+		padding: 0;
+	}
+
+	.page.card-body {
+		width: 100%;
+	}
+
+	.page {
+		width: 100%;
+		margin-bottom: 20px;
+	}
+
+	.page2 {
+		width: 100%;
+
+	}
+
+	.page2 .page {
+		width: 100%;
+	}
+
+	.page2 .page2 {
+		width: 100%;
+	}
+
+	button.block-btn.btn.btn-primary {
+		margin-top: 20px;
+	}
+
+	span.ng-star-inserted {
+		margin: 0 10px;
+	}
+
+	.nav-vertical .nav.nav-tabs.nav-right~.tab-content .tab-pane.active {
+		display: flex;
+		width: 100%;
+	}
+
+	.view-product {
+		width: 100%;
+		left: 0;
+		right: 0;
+	}
+
+	.page2 .product-list .card-body.product-list-module {
+		width: 100%;
+	}
+	.categories.card-text {
+		display: block;
+	}
+	
+	
+	.categories.card-text button.block-btn {
+		margin: 0;
+	}
 
 }

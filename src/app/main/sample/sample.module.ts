@@ -21,7 +21,7 @@ import { AllOutletComponent } from './all-outlet/all-outlet.component';
 import { MenuComponent } from './menu/menu.component';
 import { CategoryComponent } from './menu/category/category.component';
 import { ProductComponent } from './menu/product/product.component';
-
+// import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 
 
 

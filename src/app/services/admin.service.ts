@@ -180,6 +180,12 @@ editProductbyId(productId:any,body:any){
     }))
   }
 
+  // view product details by product id
+  viewProduct(productId:any){
+    return this.http.get(this.menuUrl + '/v1/menu/product/' + productId, this.httpOptions).pipe(map((data:any) => {
+      return data;
+    }))
+  }
   //
   // changeStatus(bodyData: any): Observable<any> {
   //   return this.http.post<any>(this.apiUrl + "/v1/user/sub", bodyData).pipe(

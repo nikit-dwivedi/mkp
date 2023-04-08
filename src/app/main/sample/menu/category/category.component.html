@@ -1,21 +1,6 @@
-<!-- <h3>Categories</h3>
-<div class="card category-list">
-  <div class="row" *ngFor="let category of categoryList">
-    <div class="col-8">
-      <button class="btn editbtn" (click)="subCategory(category)">{{ category.categoryName }}</button>
-    </div>
-    <div class="col-4 text-right">
-      <button class="btn editbtn"><img src="assets/images/edit-icon.png" alt="" /></button>
-    </div>
-  </div>
-</div>
-<app-category *ngIf="hasSubCheck" [categoryData]="tempCategory"></app-category> -->
 <section class="category-display">
- 
-<div class="page">
+ <div class="page">
 <div class="card-body">
-  
-   
   <div class=" categories card-text">
    <p> {{ outletData?.outletName ?? categoryData.categoryName }} (Category List)</p>
     <button class="block-btn btn btn-primary" (click)="openAddCategoryModal(content1)">Add New</button>
@@ -35,7 +20,7 @@
 <div class="page2">
   
 <app-category *ngIf="hasSubCheck" [categoryData]="tempCategory"></app-category>
-<app-product *ngIf="hasProdCheck" [categoryData]="tempCategory"></app-product>
+<app-product class="product-list" *ngIf="hasProdCheck" [categoryData]="tempCategory"></app-product>
 </div>
 
 </section>
@@ -69,7 +54,6 @@
 </ng-template>
 
 <!-- add category modal -->
-
 <ng-template #content1 let-modal>
   <div class="modal-header">
       <h4 class="modal-title" id="myModalLabel1">Add Category</h4>
