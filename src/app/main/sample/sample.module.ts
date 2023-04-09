@@ -21,6 +21,8 @@ import { AllOutletComponent } from './all-outlet/all-outlet.component';
 import { MenuComponent } from './menu/menu.component';
 import { CategoryComponent } from './menu/category/category.component';
 import { ProductComponent } from './menu/product/product.component';
+import { AddOnComponent } from './menu/product/add-on/add-on.component';
+import { CustomizationComponent } from './menu/product/customization/customization.component';
 // import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 
 
@@ -83,7 +85,7 @@ const routes = [
 ];
 
 @NgModule({
-  declarations: [SampleComponent, HomeComponent, SellerComponent,  OrderComponent, DetailComponent, TicketComponent, AllOutletComponent, MenuComponent, CategoryComponent, ProductComponent],
+  declarations: [SampleComponent, HomeComponent, SellerComponent,  OrderComponent, DetailComponent, TicketComponent, AllOutletComponent, MenuComponent, CategoryComponent, ProductComponent, AddOnComponent, CustomizationComponent],
   imports: [RouterModule.forChild(routes), ContentHeaderModule, TranslateModule, NgxDatatableModule, NgbModule, CoreCommonModule,ReactiveFormsModule,CommonModule],
   exports: [SellerComponent, HomeComponent,  DetailComponent,TicketComponent,OrderComponent],
 })

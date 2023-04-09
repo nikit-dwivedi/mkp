@@ -132,7 +132,7 @@ export class ProductComponent implements OnInit {
     this.modalService.open(data, {
       ariaLabelledBy: 'modal-basic-title', 
       size: 'lg', 
-      windowClass: 'custom-class'
+      windowClass: 'product-detail-modal'
     });
     this.view = view.productId;
     console.log(this.view);
