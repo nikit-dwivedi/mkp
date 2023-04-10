@@ -18,8 +18,10 @@ export class ProductComponent implements OnInit {
   view: any;
   hasCustom: any;
   hasAddon: any;
+  switcher:boolean
   @Input() categoryData: any;
   productDetails: any;
+  product: any;
   constructor(private adminService: AdminService, private modalService: NgbModal, config: NgbModalConfig, private fb: FormBuilder, private toastr: ToastrService) {}
 
   ngOnInit(): void {
@@ -113,7 +115,6 @@ export class ProductComponent implements OnInit {
         productPrice: this.editProductForm.value.productPrice,
       };
 
-      console.log("formData========>", formData);
       this.adminService.editProductbyId(this.editProduct, formData).subscribe((data: any) => {
         if (data.status) {
           this.toastr.success(data.message, "Success!");
@@ -135,16 +136,17 @@ export class ProductComponent implements OnInit {
       windowClass: 'product-detail-modal'
     });
     this.view = view.productId;
-    console.log(this.view);
-
+   
     this.adminService.viewProduct(this.view).subscribe((data: any) => {
       this.productDetails = data.items;
-      console.log("Product Details---------->", this.productDetails);
-
+      
       this.hasCustom = this.productDetails.hasCustomization;
       this.hasAddon = this.productDetails.hasAddOn;
-    });
+      this.switcher = this.productDetails.inStock;
+  });
   }
+
+  
 
   openViewCustomizationModal(data: any) {
     this.modalService.open(data, {

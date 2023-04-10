@@ -102,6 +102,14 @@
             <p>{{ productDetails?.isVeg }}</p>
           </div>
           <div class="product-view-parent">
+            <p>in Stock</p>
+            <!-- <p>{{ productDetails?.inStock }}</p> -->
+            <div class="custom-control custom-switch custom-control-inline">
+              <input type="checkbox" class="custom-control-input" id="customSwitch1" [(ngModel)]="switcher"/>
+              <label class="custom-control-label" for="customSwitch1"></label>
+            </div>
+          </div>
+          <div class="product-view-parent">
             <p>Product Image</p>
             <p><img src="{{ productDetails?.productImage }}" alt="" /></p>
           </div>
@@ -110,22 +118,22 @@
             <li ngbNavItem>
               <a ngbNavLink>Customization</a>
               <ng-template ngbNavContent>
-                <app-customization></app-customization>
+                <app-customization [productData]="productDetails"></app-customization>
               </ng-template>
             </li>
             <li ngbNavItem>
               <a ngbNavLink>Add On</a>
               <ng-template ngbNavContent>
-                <app-add-on></app-add-on>
+                <app-add-on [productData]="productDetails"></app-add-on>
               </ng-template>
             </li>
           </ul>
           <div [ngbNavOutlet]="navJustified" class="mt-2"></div>
 
-          <div class="custome-addon">
+          <!-- <div class="custome-addon">
             <button *ngIf="hasCustom" class="btn-customization btn btn-primary" (click)="openViewCustomizationModal(content3)">Customization</button>
             <button *ngIf="hasAddon" class="btn-addon btn btn-primary" (click)="openViewAddonModal(content4)">Addon</button>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -135,7 +143,7 @@
 <!-- view customization modal -->
 <ng-template #content3 let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="myModalLabel1">View Customization</h4>
+    <h4 class="modal-title" id="myModalLabel1">View Addon</h4>
     <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>

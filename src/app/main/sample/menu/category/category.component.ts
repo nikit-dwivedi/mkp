@@ -43,7 +43,6 @@ export class CategoryComponent implements OnInit {
    }
 
    ngOnChanges(){
-
     this.outletData ? this.categoryByOutlet() : this.categoryByCatgeoryId();
    }
     

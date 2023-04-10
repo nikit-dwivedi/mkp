@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdminService } from "../../../services/admin.service";
-// import {  ToastrserviceService} from "../../../services/toastrservice.service";
 import { ColumnMode } from "@swimlane/ngx-datatable";
 import { Router } from "@angular/router";
 import { NgbModal,NgbModalConfig } from '@ng-bootstrap/ng-bootstrap'; 
