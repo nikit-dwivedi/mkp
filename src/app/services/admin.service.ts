@@ -170,7 +170,7 @@ export class AdminService {
   addCategory(body: any) {
     return this.http.post(this.menuUrl + '/v1/menu/category', body, this.httpOptions).pipe(map((data: any) => {
       return data;
-    }))
+    }));
   }
 
   // add product by parent category id
@@ -191,7 +191,6 @@ export class AdminService {
   // getoutlet addon by outlet id
   getOutletAddon(outletId: any) {
     return this.http.get(this.menuUrl + '/v1/menu/addOn/' + outletId, this.httpOptions).pipe(map((data: any) => {
-      console.log(data);
       return data;
 
     }));
@@ -201,28 +200,49 @@ export class AdminService {
   getProductAddon(productId: any) {
     return this.http.get(this.menuUrl + '/v1/menu/product/addOn/' + productId, this.httpOptions).pipe(map((data: any) => {
       return data;
-    }))
+    }));
   }
 
   // getproduct customization
   getProductCustomization(productId:any){
     return this.http.get(this.menuUrl + '/v1/menu/customization/' + productId , this.httpOptions).pipe(map((data:any) => {
       return data;
-    }))
+    }));
   }
-
-//  get AddonBy addOnCategoryId
-getAddonByaddOnCategoryId(addOnCategoryId:any){
-  return this.http.get(this.menuUrl + '/v1/menu/addOn/' + addOnCategoryId , this.httpOptions).pipe(map((data:any) => {
-    return data;
-  }))
-}
 
 // edit addon Category
 editAddonCategory(body:any){
   return this.http.post(this.menuUrl + '/v1/menu/addOn/Category/edit' , body ,this.httpOptions).pipe(map((data:any) => {
     return data;
-  }))
+  }));
+}
+
+// add addon Category
+addAddonCategory(body:any){
+  return this.http.post(this.menuUrl + '/v1/menu/addOn/Category' , body ,this.httpOptions).pipe(map((data:any) => {
+    return data;
+  }));
+}
+
+// edit addon product
+editAddonProduct(body:any){
+  return this.http.post(this.menuUrl + '/v1/menu/addOn/product/edit' , body , this.httpOptions).pipe(map((data:any) => {
+    return data;
+  }));
+}
+
+// add addon product
+addAddonProduct(body:any){
+  return this.http.post(this.menuUrl + '/v1/menu/addOn/product' , body , this.httpOptions).pipe(map((data:any) => {
+    return data;
+  }));
+}
+
+// link outlet addon to prodcut
+linkUnlink(body:any){
+  return this.http.post(this.menuUrl + '/v1/menu/product/addOn' , body ,this.httpOptions).pipe(map((data:any) => {
+    return data;
+  }));
 }
   //
   // changeStatus(bodyData: any): Observable<any> {

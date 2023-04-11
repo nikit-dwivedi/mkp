@@ -4,6 +4,7 @@ import { NgbModal,NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { AdminService } from 'app/services/admin.service';
 import { FormGroup, FormBuilder,FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { log } from 'console';
 
 
 @Component({
@@ -31,30 +32,75 @@ export class AddOnComponent implements OnInit {
 
   @ViewChild(AddOnComponent) table: AddOnComponent | any;
   @ViewChild("tableRowDetails") tableRowDetails: any;
-  editAddonCategoryForm:FormGroup
+  submitted:Boolean = false;
+  editAddonCategoryForm:FormGroup;
+  addAddonCategoryForm:FormGroup;
+  editAddonProductForm:FormGroup;
+  addAddonProductForm:FormGroup;
   outletAddonList: any;
   productAddonList: any;
   viewByCategoryId: any;
   categoryAddonList: any;
   editCategory: any;
-  submitted:Boolean = false;
+  addCategory:any;
+  addonProduct:any
+  editAddonProduct: any;
+  linkById:any;
+  unLinkById:any;
+  product:any;
   constructor(private AdminService:AdminService,private modalService: NgbModal, config: NgbModalConfig, private fb:FormBuilder , private toastr:ToastrService) { }
 
   ngOnInit(): void {
-    console.log("Product Data",this.productData);
+    console.log("this.productData",this.productData.productId);
+    
     this.productAddonCategory();
     this.outletAddonCategory();
-    
+
+    // edit addon category form
     this.editAddonCategoryForm = this.fb.group({
       categoryName: new FormControl(''),
       minSelection: new FormControl(''),
       maxSelection: new FormControl('')
     });
+
+    // add addon category form
+    this.addAddonCategoryForm = this.fb.group({
+      categoryName: new FormControl(''),
+      minSelection: new FormControl(''),
+      maxSelection: new FormControl('')
+    });
+
+    // edit addon product form
+    this.editAddonProductForm = this.fb.group({
+      productName: new FormControl(''),
+      productPrice: new FormControl('')
+    });
+
+    // add addon product form
+    this.addAddonProductForm = this.fb.group({
+      productName: new FormControl(''),
+      productPrice: new FormControl('')
+    });
+ }
+
+  get a() {
+    return this.addAddonCategoryForm.controls;
   }
 
   get b() {
     return this.editAddonCategoryForm.controls;
   }
+
+  get c() {
+    return this.editAddonProductForm.controls;
+  }
+
+  get d() {
+    return this.addAddonProductForm.controls;
+  }
+  
+
+
 
   outletAddonCategory(){
     this.AdminService.getOutletAddon(this.productData.outletId).subscribe((data:any) => {
@@ -62,7 +108,7 @@ export class AddOnComponent implements OnInit {
       this.rows = data.items;
       this.kitchenSinkRows = this.rows;
       this.tempData = this.rows;
-    });
+   });
   }
 
   productAddonCategory(){
@@ -71,34 +117,71 @@ export class AddOnComponent implements OnInit {
       this.rows1 = data.items;
       this.kitchenSinkRows1 = this.rows1;
       this.tempData1 = this.rows1;
-
-      console.log(" Product Add on is here",this.productAddonList);
-      
-    })
+   });
   }
 
 
-  // open view addon by addOnCategoryId modal
+  // open view addon Product by addOnCategoryId modal
   openviewAddonModal(data:any,view:any){
+    
     this.modalService.open(data,{
       centered:true,
       scrollable:true,
       size:'xl'
-    })
-    this.viewByCategoryId = view;
-    console.log("this.viewByCategoryId",this.viewByCategoryId.addOnCategoryId);
-    
-    this.AdminService.getAddonByaddOnCategoryId(this.viewByCategoryId.addOnCategoryId).subscribe((data:any) => {
-      this.categoryAddonList = data.items;
-      this.rows2 = data.items;
-      this.kitchenSinkRows2 = this.rows2;
-      this.tempData = this.rows2;
+    });
 
-      console.log("Data", this.categoryAddonList);
-      
-    })
+    this.viewByCategoryId = view;
+    console.log("this.viewByCategoryId",this.viewByCategoryId);
+    this.viewProductDetails();
+   
   }
 
+  viewProductDetails(){
+    this.addonProduct = this.viewByCategoryId.productList;
+    this.rows2 = this.viewByCategoryId.productList;
+    this.kitchenSinkRows2 = this.rows2;
+    this.tempData = this.rows2;
+  }
+ 
+
+  // open add addon category modal
+  openAddAddonCategoryModal(data:any){
+    this.modalService.open(data,{
+      centered:true,
+      scrollable:true,
+      size:'lg'
+    });
+    
+  }
+
+  addAddonCategoryFormSubmit(){
+    this.submitted = true;
+    if(this.addAddonCategoryForm.invalid){
+      return;
+    }
+    else{
+      const formData = {
+        outletId: this.productData.outletId,
+        categoryName: this.addAddonCategoryForm.value.categoryName,
+        minSelection: this.addAddonCategoryForm.value.minSelection,
+        maxSelection: this.addAddonCategoryForm.value.maxSelection
+      }
+
+      console.log(formData);
+      
+
+      this.AdminService.addAddonCategory(formData).subscribe((data:any) => {
+       if(data.status){
+          this.toastr.success(data.message,"Success!");
+          this.outletAddonCategory();
+          this.addAddonCategoryForm.reset();
+        }
+        else{
+          this.toastr.error(data.message,"failed")
+        }
+      })
+    }
+  }
 // open edit addon category modal
 openEditAddoncategoryModal(data:any,edit:any){
   this.modalService.open(data,{
@@ -107,9 +190,7 @@ openEditAddoncategoryModal(data:any,edit:any){
     size:'lg'
   })
   this.editCategory = edit;
-
-  console.log("this.editCategory",this.editCategory);
-
+  
   this.editAddonCategoryForm.patchValue({
     categoryName:edit.categoryName,
     minSelection:edit.minSelection,
@@ -143,8 +224,143 @@ editAddonCategoryFormSubmit(){
   }
 }
 
+// open edit adon product Modal
+openEditAddonProductModal(data:any,editProduct:any){
+  this.modalService.open(data,{
+    centered:true,
+    scrollable:true,
+    size:'lg'
+  });
+  this.editAddonProduct =  editProduct
 
-  filterUpdate(event: any) {
+  console.log("Success this.editAddonProduct",this.editAddonProduct);
+  
+  this.editAddonProductForm.patchValue({
+    productName:editProduct.productName,
+    productPrice:editProduct.productPrice
+  });
+}
+
+editAddonProductFormSubmit(){
+  this.submitted = true;
+  if(this.editAddonProductForm.invalid){
+    return;
+  }
+  else{
+    const formData = {
+      addOnProductId:this.editAddonProduct.addOnProductId,
+      productName:this.editAddonProductForm.value.productName,
+      productPrice:this.editAddonProductForm.value.productPrice
+    }
+
+    this.AdminService.editAddonProduct(formData).subscribe((data:any) => {
+      if(data.status){
+        this.toastr.success(data.message,"Success!");
+        this.editAddonProductForm.reset();
+        this.viewProductDetails();
+      }
+      else{
+        this.toastr.error(data.message,"failed");
+      }
+    })
+  }
+}
+
+// open add addon product Modal
+openAddAddonProductModal(data:any){
+   this.modalService.open(data,{
+    centered:true,
+    scrollable:true,
+    size:'lg'
+  });
+}
+
+addAddonProductFormSubmit(){
+  this.submitted = true;
+  if(this.addAddonProductForm.invalid){
+    return;
+  }
+  else{
+    const formData = {
+      addOnCategoryId:this.viewByCategoryId.addOnCategoryId,
+      productName:this.addAddonProductForm.value.productName,
+      productPrice:this.addAddonProductForm.value.productPrice
+    }
+   
+    this.AdminService.addAddonProduct(formData).subscribe((data:any) => {
+      if(data.status){
+        this.toastr.success(data.message,"Success!");
+        this.addAddonProductForm.reset();
+        this.outletAddonCategory();
+      }
+      else{
+        this.toastr.error(data.message,"failed");
+        this.outletAddonCategory();
+      }
+    })
+  }
+}
+
+// open link addpn to product Modal
+openLinktoProductModal(data:any,link:any){
+  this.modalService.open(data,{
+    centered:true,
+    scrollable:true,
+    size:'lg'
+  });
+  this.linkById = link
+}
+
+linkAddon(){
+  const formData = {
+    productId:this.productData.productId,
+    addOnCategoryId:this.linkById.addOnCategoryId,
+    operation:true
+  }
+
+  this.AdminService.linkUnlink(formData).subscribe((data:any) => {
+    if(data.status){
+      this.toastr.success(data.message,"Success!");
+      this.productAddonCategory();
+    }
+    else{
+      this.toastr.error(data.message,"failed");
+      this.productAddonCategory();
+    }
+  });
+}
+
+// open unlink adddon from product addon Modal
+openUlinkAddonModal(data:any,unlink:any){
+  this.modalService.open(data,{
+    centered:true,
+    scrollable:true,
+    size:'lg'
+  });
+
+  this.unLinkById = unlink;
+}
+
+unLinkAddon(){
+  const formData = {
+    productId:this.productData.productId,
+    addOnCategoryId:this.unLinkById.addOnCategoryId,
+    operation: false
+  }
+
+  console.log(formData);
+  
+  this.AdminService.linkUnlink(formData).subscribe((data:any) => {
+    if(data.status){
+      this.toastr.success(data.message);
+      this.productAddonCategory();
+    }
+    else{
+      this.toastr.error(data.message,"failed");
+    }
+  })
+}
+filterUpdate(event: any) {
     const val = event.target.value.toLowerCase();
 
     // filter our data

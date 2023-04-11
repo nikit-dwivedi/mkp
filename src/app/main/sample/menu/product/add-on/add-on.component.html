@@ -115,137 +115,164 @@
 <div class="content-wrapper container-fluid p-0">
   <div class="content-body">
     <app-content-header [contentHeader]="contentHeader"></app-content-header>
-    
+
     <div class="row">
       <div class="col-6">
-    <section id="ngx-datatable-kitchen-sink">
-      <h4 class="card-title justify-content">Product Addon</h4>
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-12 mb-50"></div>
-            <div class="col-md-6 col-12">
-              <div class="d-flex justify-content-between align-items-center m-1">
-                <label class="d-flex align-items-center"
-                  >Show
-                  <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
-                    <option value="5" selected="selected">05</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                  </select>
-                  entries</label>
+        <!-- Product Addon List -->
+        <section id="ngx-datatable-kitchen-sink">
+          <h4 class="card-title justify-content">Product Addon</h4>
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12 mb-50"></div>
+                <div class="col-md-6 col-12">
+                  <div class="d-flex justify-content-between align-items-center m-1">
+                    <label class="d-flex align-items-center">Show
+                      <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                        <option value="5" selected="selected">05</option>
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </select>
+                      entries</label>
+                  </div>
+                </div>
+                <div class="col-md-6 col-12 d-flex justify-content-md-end">
+                  <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+                    <label class="d-flex align-items-center">Search<input type="search" placeholder="Search"
+                        class="form-control ml-25" (keyup)="filterUpdate($event)"
+                        (search)="filterUpdate($event)" /></label>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="col-md-6 col-12 d-flex justify-content-md-end">
-              <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
-                <label class="d-flex align-items-center">Search<input type="search" placeholder="Search" class="form-control ml-25" (keyup)="filterUpdate($event)" (search)="filterUpdate($event)" /></label>
-              </div>
+              <!-- ngx-datatables responsive -->
+              <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force" [headerHeight]="40"
+                [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="basicSelectedOption1"
+                [rows]="kitchenSinkRows1" [scrollbarH]="true">
+
+                <ngx-datatable-column name="Category Name" prop="categoryName" [width]="150"></ngx-datatable-column>
+                <ngx-datatable-column name="Min Selection" prop="minSelection" [width]="150"></ngx-datatable-column>
+                <ngx-datatable-column name="Max Selection" prop="maxSelection" [width]="150"></ngx-datatable-column>
+
+
+                <ngx-datatable-column name="Action" [width]="150" [sortable]="false">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    <div class="d-flex align-items-center">
+                      <div ngbDropdown container="body">
+                        <a ngbDropdownToggle href="javascript:void(0);" class="hide-arrow" id="dropdownBrowserState"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i data-feather="more-vertical" class="text-primary cursor-pointer mr-50"></i>
+                        </a>
+                        <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState">
+                          <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
+                            (click)="navigateToDetail(row)"><i data-feather="file-text" class="mr-50"></i>Details</a>
+                          <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
+                            (click)="openUlinkAddonModal(content6,row)"><i data-feather="archive"
+                              class="mr-50"></i>Unlink</a>
+                          <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"><i
+                              data-feather="trash-2" class="mr-50"></i> Delete</a>
+                        </div>
+                      </div>
+
+                      <!-- <i data-feather="edit" class="text-primary cursor-pointer"></i> -->
+                      <a href="javascript:void(0)" (click)="openEditAddoncategoryModal(content2,row)"> <i
+                        data-feather="edit" class="text-primary cursor-pointer"></i></a>
+                    </div>
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
+              <!--/ ngx-datatables responsive -->
             </div>
           </div>
-          <!-- ngx-datatables responsive -->
-          <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force" [headerHeight]="40" [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="basicSelectedOption1" [rows]="kitchenSinkRows1" [scrollbarH]="true" >
-           
-            <ngx-datatable-column name="Category Name" prop="categoryName" [width]="150"></ngx-datatable-column>
-            <ngx-datatable-column name="Min Selection" prop="minSelection" [width]="150"></ngx-datatable-column>
-            <ngx-datatable-column name="Max Selection" prop="maxSelection" [width]="150"></ngx-datatable-column>
-            
-           
-            <ngx-datatable-column name="Action" [width]="150" [sortable]="false">
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <div class="d-flex align-items-center">
-                  <div ngbDropdown container="body">
-                    <a ngbDropdownToggle href="javascript:void(0);" class="hide-arrow" id="dropdownBrowserState" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i data-feather="more-vertical" class="text-primary cursor-pointer mr-50"></i>
-                    </a>
-                    <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState">
-                      <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="navigateToDetail(row)"><i data-feather="file-text" class="mr-50"></i>Details</a>
-                      <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="changeOutletStatus(content,row)"><i data-feather="archive" class="mr-50"></i>Unlink</a>
-                      <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"><i data-feather="trash-2" class="mr-50"></i> Delete</a>
-                    </div>
+        </section>
+      </div>
+
+      <!-- outlet addon list -->
+      <div class="col-6">
+        <section id="ngx-datatable-kitchen-sink">
+          <h4 class="card-title justify-content">Outlet Addon</h4>
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12 mb-50"></div>
+                <div class="col-md-6 col-12">
+                  <div class="d-flex justify-content-between align-items-center m-1">
+                    <label class="d-flex align-items-center">Show
+                      <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                        <option value="5" selected="selected">05</option>
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </select>
+                      entries</label>
+
+
                   </div>
 
-                  <i data-feather="edit" class="text-primary cursor-pointer"></i>
                 </div>
-              </ng-template>
-            </ngx-datatable-column>
-          </ngx-datatable>
-          <!--/ ngx-datatables responsive -->
-        </div>
-      </div>
-    </section>
-  </div>
-  <div class="col-6">
-    <section id="ngx-datatable-kitchen-sink">
-      <h4 class="card-title justify-content">Outlet Addon</h4>
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-12 mb-50"></div>
-            <div class="col-md-6 col-12">
-              <div class="d-flex justify-content-between align-items-center m-1">
-                <label class="d-flex align-items-center"
-                  >Show
-                  <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
-                    <option value="5" selected="selected">05</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                  </select>
-                  entries</label>
+                <div class="col-md-6 col-12 d-flex justify-content-md-end">
+                  <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+                    <label class="d-flex align-items-center">Search<input type="search" placeholder="Search"
+                        class="form-control ml-25" (keyup)="filterUpdate($event)"
+                        (search)="filterUpdate($event)" /></label>
+                    <button class="add-addon block-btn btn btn-primary"
+                      (click)="openAddAddonCategoryModal(content1)">Add New</button>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="col-md-6 col-12 d-flex justify-content-md-end">
-              <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
-                <label class="d-flex align-items-center">Search<input type="search" placeholder="Search" class="form-control ml-25" (keyup)="filterUpdate($event)" (search)="filterUpdate($event)" /></label>
-              </div>
+              <!-- ngx-datatables responsive -->
+              <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force" [headerHeight]="40"
+                [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="basicSelectedOption"
+                [rows]="kitchenSinkRows" [scrollbarH]="true">
+
+                <ngx-datatable-column name="Category Name" prop="categoryName" [width]="200"></ngx-datatable-column>
+                <ngx-datatable-column name="Min Selection" prop="minSelection" [width]="150"></ngx-datatable-column>
+                <ngx-datatable-column name="Max Selection" prop="maxSelection" [width]="150"></ngx-datatable-column>
+
+
+                <ngx-datatable-column name="Action" [width]="100" [sortable]="false">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    <div class="d-flex align-items-center">
+                      <div ngbDropdown container="body">
+                        <a ngbDropdownToggle href="javascript:void(0);" class="hide-arrow" id="dropdownBrowserState"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i data-feather="more-vertical" class="text-primary cursor-pointer mr-50"></i>
+                        </a>
+                        <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState">
+                          <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
+                            (click)="openviewAddonModal(content,row)"><i data-feather="file-text"
+                              class="mr-50"></i>Details</a>
+                          <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
+                            (click)="openLinktoProductModal(content5,row)"><i data-feather="archive"
+                              class="mr-50"></i>Link</a>
+                          <!-- <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"><i data-feather="trash-2" class="mr-50"></i> Delete</a> -->
+                        </div>
+                      </div>
+
+                      <a href="javascript:void(0)" (click)="openEditAddoncategoryModal(content2,row)"> <i
+                          data-feather="edit" class="text-primary cursor-pointer"></i></a>
+                    </div>
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
+              <!--/ ngx-datatables responsive -->
             </div>
           </div>
-          <!-- ngx-datatables responsive -->
-          <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force" [headerHeight]="40" [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="basicSelectedOption" [rows]="kitchenSinkRows" [scrollbarH]="true" >
-           
-            <ngx-datatable-column name="Category Name" prop="categoryName" [width]="200"></ngx-datatable-column>
-            <ngx-datatable-column name="Min Selection" prop="minSelection" [width]="150"></ngx-datatable-column>
-            <ngx-datatable-column name="Max Selection" prop="maxSelection" [width]="150"></ngx-datatable-column>
-            
-           
-            <ngx-datatable-column name="Action" [width]="100" [sortable]="false">
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <div class="d-flex align-items-center">
-                  <div ngbDropdown container="body">
-                    <a ngbDropdownToggle href="javascript:void(0);" class="hide-arrow" id="dropdownBrowserState" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i data-feather="more-vertical" class="text-primary cursor-pointer mr-50"></i>
-                    </a>
-                    <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState">
-                      <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="openviewAddonModal(content,row)"><i data-feather="file-text" class="mr-50"></i>Details</a>
-                      <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="changeOutletStatus(content,row)"><i data-feather="archive" class="mr-50"></i></a>
-                      <!-- <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"><i data-feather="trash-2" class="mr-50"></i> Delete</a> -->
-                    </div>
-                  </div>
-
-                 <a href="javascript:void(0)" (click)="openEditAddoncategoryModal(content1,row)"> <i data-feather="edit" class="text-primary cursor-pointer"></i></a>
-                </div>
-              </ng-template>
-            </ngx-datatable-column>
-          </ngx-datatable>
-          <!--/ ngx-datatables responsive -->
-        </div>
+        </section>
       </div>
-    </section>
-  </div>
-  </div>
+    </div>
   </div>
 </div>
 
-<!-- view addon by category Modal -->
+<!-- view outlet addon product by category Modal -->
 <ng-template #content let-modal>
   <div class="modal-header">
-      <h4 class="modal-title" id="myModalLabel1">View Addon Category Details</h4>
-      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
+    <h4 class="modal-title" id="myModalLabel1">View Addon Category Details</h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
   <div class="modal-body" tabindex="0" ngbAutofocus>
     <section id="ngx-datatable-kitchen-sink">
@@ -256,8 +283,7 @@
             <div class="col-12 mb-50"></div>
             <div class="col-md-6 col-12">
               <div class="d-flex justify-content-between align-items-center m-1">
-                <label class="d-flex align-items-center"
-                  >Show
+                <label class="d-flex align-items-center">Show
                   <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
                     <option value="5" selected="selected">05</option>
                     <option value="10">10</option>
@@ -270,33 +296,42 @@
             </div>
             <div class="col-md-6 col-12 d-flex justify-content-md-end">
               <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
-                <label class="d-flex align-items-center">Search<input type="search" placeholder="Search" class="form-control ml-25" (keyup)="filterUpdate($event)" (search)="filterUpdate($event)" /></label>
+                <label class="d-flex align-items-center">Search<input type="search" placeholder="Search"
+                    class="form-control ml-25" (keyup)="filterUpdate($event)" (search)="filterUpdate($event)" /></label>
+                <button class="add-addon block-btn btn btn-primary" (click)="openAddAddonProductModal(content4)">Add
+                  New</button>
               </div>
             </div>
           </div>
           <!-- ngx-datatables responsive -->
-          <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force" [headerHeight]="40" [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="basicSelectedOption" [rows]="kitchenSinkRows2" [scrollbarH]="true" >
-           
+          <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force" [headerHeight]="40"
+            [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="basicSelectedOption"
+            [rows]="kitchenSinkRows2" [scrollbarH]="true">
+
             <ngx-datatable-column name="Product Name" prop="productName" [width]="200"></ngx-datatable-column>
             <ngx-datatable-column name="Product Price" prop="productPrice" [width]="150"></ngx-datatable-column>
-            
-            
-           
+
+
+
             <ngx-datatable-column name="Action" [width]="100" [sortable]="false">
               <ng-template let-row="row" ngx-datatable-cell-template>
                 <div class="d-flex align-items-center">
                   <div ngbDropdown container="body">
-                    <a ngbDropdownToggle href="javascript:void(0);" class="hide-arrow" id="dropdownBrowserState" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a ngbDropdownToggle href="javascript:void(0);" class="hide-arrow" id="dropdownBrowserState"
+                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i data-feather="more-vertical" class="text-primary cursor-pointer mr-50"></i>
                     </a>
                     <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState">
-                      <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="navigateToDetail(row)"><i data-feather="file-text" class="mr-50"></i>Details</a>
-                      <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="changeOutletStatus(content,row)"><i data-feather="archive" class="mr-50"></i></a>
+                      <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
+                        (click)="navigateToDetail(row)"><i data-feather="file-text" class="mr-50"></i>Details</a>
+                      <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
+                        (click)="changeOutletStatus(content,row)"><i data-feather="archive" class="mr-50"></i></a>
                       <!-- <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"><i data-feather="trash-2" class="mr-50"></i> Delete</a> -->
                     </div>
                   </div>
 
-                  <i data-feather="edit" class="text-primary cursor-pointer"></i>
+                  <a href="javascript:void(0)" (click)="openEditAddonProductModal(content3,row)"><i data-feather="edit"
+                      class="text-primary cursor-pointer"></i></a>
                 </div>
               </ng-template>
             </ngx-datatable-column>
@@ -306,11 +341,53 @@
       </div>
     </section>
   </div>
-  
+
 </ng-template>
 
-<!-- edit addon category Modal -->
-<ng-template #content1 let-modal>
+<!-- add outlet  addon category Modal-->
+<ng-template #content1 let-modal let-c="close">
+  <div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel1">Add Category</h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <form [formGroup]="addAddonCategoryForm" class="form form-vertical" (ngSubmit)="addAddonCategoryFormSubmit()">
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label for="first-name-vertical">Category Name</label>
+            <input type="text" id="first-name-vertical" class="form-control" name="categoryName"
+              formControlName="categoryName" placeholder="Category Name" />
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="first-name-vertical">Min Selectione</label>
+            <input type="number" id="email-vertical" class="form-control" name="minSelection"
+              formControlName="minSelection" placeholder="Min Selectione" />
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="first-name-vertical">Max Selectione</label>
+            <input type="number" id="email-vertical" class="form-control" name="maxSelection"
+              formControlName="maxSelection" placeholder="Max Selection" />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 text-right">
+          <button type="submit" rippleEffect class="block-btn btn btn-primary" (click)="c('Save Click')">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<!-- edit outlet addon category Modal -->
+<ng-template #content2 let-modal let-c="close">
   <div class="modal-header">
     <h4 class="modal-title" id="myModalLabel1">Edit Addon Category</h4>
     <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
@@ -323,27 +400,150 @@
         <div class="col-6">
           <div class="form-group">
             <label for="first-name-vertical">Category Name</label>
-            <input type="text" id="first-name-vertical" class="form-control" name="categoryName" formControlName="categoryName" placeholder="Category Name" />
+            <input type="text" id="first-name-vertical" class="form-control" name="categoryName"
+              formControlName="categoryName" placeholder="Category Name" />
           </div>
         </div>
         <div class="col-6">
           <div class="form-group">
             <label for="first-name-vertical">Min Selectione</label>
-            <input type="number" id="email-vertical" class="form-control" name="minSelection" formControlName="minSelection" placeholder="Min Selectione" />
+            <input type="number" id="email-vertical" class="form-control" name="minSelection"
+              formControlName="minSelection" placeholder="Min Selectione" />
           </div>
         </div>
         <div class="col-6">
           <div class="form-group">
             <label for="first-name-vertical">Max Selectione</label>
-            <input type="number" id="email-vertical" class="form-control" name="maxSelection" formControlName="maxSelection" placeholder="Max Selection" />
+            <input type="number" id="email-vertical" class="form-control" name="maxSelection"
+              formControlName="maxSelection" placeholder="Max Selection" />
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-12 text-right">
-          <button type="submit" rippleEffect class="block-btn btn btn-primary">Save</button>
+          <button type="submit" rippleEffect class="block-btn btn btn-primary" (click)="c('Save Click')">Save</button>
         </div>
       </div>
     </form>
+  </div>
+</ng-template>
+
+<!-- edit outlet adon product Modal -->
+<ng-template #content3 let-modal let-c="close">
+  <div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel1">Edit Product</h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <form [formGroup]="editAddonProductForm" class="form form-vertical" (ngSubmit)="editAddonProductFormSubmit()">
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label for="first-name-vertical">Product Name</label>
+            <input type="text" id="first-name-vertical" class="form-control" name="productName"
+              formControlName="productName" placeholder="Product Name" />
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="first-name-vertical">Product Price</label>
+            <input type="number" id="email-vertical" class="form-control" name="productPrice"
+              formControlName="productPrice" placeholder="productPrice" />
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-12 text-right">
+          <button type="submit" rippleEffect class="block-btn btn btn-primary" (click)="c('Save Click')">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<!-- add outlet addon product Modal -->
+<ng-template #content4 let-modal let-c="close">
+  <div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel1">Add Product</h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <form [formGroup]="addAddonProductForm" class="form form-vertical" (ngSubmit)="addAddonProductFormSubmit()">
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label for="first-name-vertical">Product Name</label>
+            <input type="text" id="first-name-vertical" class="form-control" name="productName"
+              formControlName="productName" placeholder="Product Name" />
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="first-name-vertical">Product Price</label>
+            <input type="number" id="email-vertical" class="form-control" name="productPrice"
+              formControlName="productPrice" placeholder="productPrice" />
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-12 text-right">
+          <button type="submit" rippleEffect class="block-btn btn btn-primary" (click)="c('Save Click')">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<!-- link addon to  prouct Modal -->
+<ng-template #content5 let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel1">Link Addon</h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <p>
+      Are you sure you want to Link ?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="block-btn btn btn-primary" (click)="modal.close('Cross click')" rippleEffect>
+      Cancel
+    </button>
+    <button type="button" class="block-btn btn btn-primary" (click)="modal.close('Accept click')" (click)="linkAddon()"
+      rippleEffect>
+      Confirm
+    </button>
+  </div>
+</ng-template>
+
+<!-- unlink addon from product addon Modal -->
+<ng-template #content6 let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel1">Unlink Addon</h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <p>
+      Are you sure you want to Unlink ?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="block-btn btn btn-primary" (click)="modal.close('Cross click')" rippleEffect>
+      Cancel
+    </button>
+    <button type="button" class="block-btn btn btn-primary" (click)="modal.close('Accept click')" (click)="unLinkAddon()"
+      rippleEffect>
+      Confirm
+    </button>
   </div>
 </ng-template>

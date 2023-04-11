@@ -19,26 +19,39 @@ export class CustomizationComponent implements OnInit {
   public basicSelectedOption: number = 5;
   public kitchenSinkRows = [];
 
+  @Input() productData:any;
   @ViewChild(CustomizationComponent) table: CustomizationComponent | any;
   @ViewChild("tableRowDetails") tableRowDetails: any;
-  editCustomizationForm: FormGroup | any;
+  submitted :Boolean= false;
+  editVariationForm: FormGroup | any;
+
   customizationList:any;
   customizeById:any;
-  @Input() productData:any;
+  
 
   constructor(private adminService: AdminService, private modalService: NgbModal,config: NgbModalConfig,private fb:FormBuilder) { }
 
   ngOnInit(): void {
     
-    console.log("Product Data=======>",this.productData.productId);
+    console.log("Product Data=======>",this.productData);
     this.getCustomization();  
+
+    // edit variant form
+     this.editVariationForm = this.fb.group({
+      variationName: new FormControl(''),
+      minSelection: new FormControl(''),
+      maxSelection: new FormControl('')
+     });
+}
+
+get b() {
+  return this.editVariationForm.controls;
 }
  
+
  getCustomization(){
   this.adminService.getProductCustomization(this.productData.productId).subscribe((data:any) => {
-    this.customizationList = data.items.variantList;
-    console.log("Customization List",this.customizationList);
-
+    this.customizationList = data.items?.variantList;
     this.rows = data.items?.variantList;
     this.kitchenSinkRows = this.rows;
     this.tempData = this.rows;
@@ -53,9 +66,15 @@ openEditCustomizationModal(data:any,edit:any){
     size:'lg'
   });
   this.customizeById = edit;
-  console.log(this.customizeById);
-  
+
+  // this.editVariationForm.patchValue({
+  //   variationName:edit.variationName,
+  //   minSelection:edit.minSelection,
+  //   maxSelection:edit.maxSelection
+  // });
 }
+
+editVariationFormSubmit(){}
  filterUpdate(event: any) {
   const val = event.target.value.toLowerCase();
 
