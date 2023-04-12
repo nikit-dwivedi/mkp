@@ -244,6 +244,35 @@ linkUnlink(body:any){
     return data;
   }));
 }
+
+// edit customization variantion
+editVariation(variationId:any,body:any){
+  return this.http.post(this.menuUrl + '/v1/menu/customization/edit/' + variationId , body ,this.httpOptions).pipe(map((data:any) => {
+    return data;
+  }));
+}
+
+// add variation in customization
+addCustomization(body:any){
+  return this.http.post(this.menuUrl + '/v1/menu/customization' , body ,this.httpOptions).pipe(map((data:any) => {
+    return data;
+  }));
+}
+
+// add variant in variation
+addVariation(body:any){
+  return this.http.post(this.menuUrl + '/v1/menu/customitem' ,body ,this.httpOptions).pipe(map((data:any) => {
+    return data;
+  }))
+}
+
+// edit variant in variation
+editVariant(body:any){
+  return this.http.post(this.menuUrl + '/v1/menu/customitem/edit' , body, this.httpOptions).pipe(map((data:any) => {
+    return data;
+  }))
+}
+
   //
   // changeStatus(bodyData: any): Observable<any> {
   //   return this.http.post<any>(this.apiUrl + "/v1/user/sub", bodyData).pipe(

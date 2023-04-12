@@ -9,9 +9,11 @@ import { AdminService } from "../../services/admin.service";
 })
 export class HomeComponent implements OnInit {
   constructor(private adminService: AdminService) {
+
     this.pubnub.subscribe({
       channels: ["order-admin"],
     });
+
     this.pubnub.addListener({
       message: (m) => {
         this.getStatOfMP();
@@ -22,11 +24,13 @@ export class HomeComponent implements OnInit {
   public contentHeader: object;
   public orderStatArray: any;
   public outletStatArray: any;
+  
   public pubnub = new PubNub({
     publishKey: "pub-c-40e1c3cd-397d-449b-9a06-2e0505653027",
     subscribeKey: "sub-c-e240b078-b657-4d79-84e1-0504adfe3cf8",
     userId: "clientId",
   });
+
   getStatOfMP() {
     this.adminService.getStat().subscribe((response) => {
       if (response.status) {
