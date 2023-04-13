@@ -69,6 +69,7 @@ export class ProductComponent implements OnInit {
         this.toastr.success(data.message, "Success!");
         this.modalService.dismissAll();
         this.productByCatgeoryId();
+        this.addProductForm.reset();
       });
     }
   }
@@ -120,6 +121,7 @@ export class ProductComponent implements OnInit {
           this.toastr.success(data.message, "Success!");
           this.modalService.dismissAll();
           this.productByCatgeoryId();
+          this.editProductForm.reset();
         } else {
           this.toastr.error(data.message, "failed");
           this.productByCatgeoryId();
@@ -148,19 +150,19 @@ export class ProductComponent implements OnInit {
 
   
 
-  openViewCustomizationModal(data: any) {
-    this.modalService.open(data, {
-      centered: true,
-      scrollable: true,
-      size: "lg",
-    });
-  }
+  // openViewCustomizationModal(data: any) {
+  //   this.modalService.open(data, {
+  //     centered: true,
+  //     scrollable: true,
+  //     size: "lg",
+  //   });
+  // }
 
-  openViewAddonModal(data: any) {
-    this.modalService.open(data, {
-      centered: true,
-      scrollable: true,
-      size: "lg",
-    });
-  }
+  // openViewAddonModal(data: any) {
+  //   this.modalService.open(data, {
+  //     centered: true,
+  //     scrollable: true,
+  //     size: "lg",
+  //   });
+  // }
 }
