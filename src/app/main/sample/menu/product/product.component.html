@@ -67,6 +67,28 @@
             <input type="number" id="email-vertical" class="form-control" name="productPrice" formControlName="productPrice" placeholder="Product Price" />
           </div>
         </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="first-name-vertical">Product Description</label>
+            <input type="text" id="email-vertical" class="form-control" name="productDesc" formControlName="productDesc" placeholder="Product Description" />
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="first-name-vertical">Product Image</label>
+            <input type="file" id="email-vertical" class="form-control" name="productImage" formControlName="productImage" placeholder="Product Image" (change)="getImage($event)" />
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="first-name-vertical">Is Veg</label>
+            <!-- <input type="checkbox" id="email-vertical" class="form-control" name="isVeg" formControlName="isVeg" placeholder="isVeg" /> -->
+            <div class="custom-control custom-control-success custom-switch">
+              <input type="checkbox" checked class="form-control custom-control-input" id="customSwitch4" formControlName="isVeg" [(ngModel)]="addProductForm.isVeg"/>
+              <label class="custom-control-label" for="customSwitch4"></label>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="row">
         <div class="col-12 text-right">

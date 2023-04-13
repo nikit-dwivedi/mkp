@@ -18,11 +18,13 @@ export class ProductComponent implements OnInit {
   view: any;
   hasCustom: any;
   hasAddon: any;
-  switcher:boolean
+  switcher: boolean
+  isVeg: false
   @Input() categoryData: any;
   productDetails: any;
   product: any;
-  constructor(private adminService: AdminService, private modalService: NgbModal, config: NgbModalConfig, private fb: FormBuilder, private toastr: ToastrService) {}
+  imageData: any;
+  constructor(private adminService: AdminService, private modalService: NgbModal, config: NgbModalConfig, private fb: FormBuilder, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.productByCatgeoryId();
@@ -31,6 +33,9 @@ export class ProductComponent implements OnInit {
     this.addProductForm = this.fb.group({
       productName: new FormControl(""),
       productPrice: new FormControl(""),
+      productDesc: new FormControl(""),
+      productImage: new FormControl(""),
+      isVeg: new FormControl("")
     });
     // edit poduct form
     this.editProductForm = this.fb.group({
@@ -51,16 +56,38 @@ export class ProductComponent implements OnInit {
     return this.editProductForm.controls;
   }
 
+  getImage(event: any) {
+    this.imageData = event.target.files[0];
+    console.log(this.imageData);
+  }
+
+
   addProductFormSubmit() {
     this.submitted = true;
     if (this.addProductForm.invalid) {
       return;
-    } else {
-      const formData = {
-        parentCategoryId: this.categoryData.categoryId,
-        productName: this.addProductForm.value.productName,
-        productPrice: this.addProductForm.value.productPrice,
-      };
+    } else
+     {
+
+      const formData = new FormData();
+      formData.append("parentCategoryId", this.categoryData.categoryId);
+      formData.append("productName", this.addProductForm.value.productName);
+      formData.append("productPrice", this.addProductForm.value.productPrice);
+      formData.append("productDesc", this.addProductForm.value.productDesc);
+      formData.append("productImage", this.imageData);
+      formData.append("isVeg", this.addProductForm.value.isVeg);
+
+
+      
+      
+      // const body = {
+      //   parentCategoryId: this.categoryData.categoryId,
+      //   productName: this.addProductForm.value.productName,
+      //   productPrice: this.addProductForm.value.productPrice,
+      // };
+
+
+
 
       this.adminService.addProduct(formData).subscribe((data: any) => {
         if (!data.status) {
@@ -133,22 +160,22 @@ export class ProductComponent implements OnInit {
   //  open view product modal
   openViewProductModal(data: any, view: any) {
     this.modalService.open(data, {
-      ariaLabelledBy: 'modal-basic-title', 
-      size: 'lg', 
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'lg',
       windowClass: 'product-detail-modal'
     });
     this.view = view.productId;
-   
+
     this.adminService.viewProduct(this.view).subscribe((data: any) => {
       this.productDetails = data.items;
-      
+
       this.hasCustom = this.productDetails.hasCustomization;
       this.hasAddon = this.productDetails.hasAddOn;
       this.switcher = this.productDetails.inStock;
-  });
+    });
   }
 
-  
+
 
   // openViewCustomizationModal(data: any) {
   //   this.modalService.open(data, {
