@@ -21,8 +21,10 @@ export class CategoryComponent implements OnInit {
   tempCategory: any;
   editBycategory:any;
   productList:any;
+
   @Input() outletData: any;
   @Input() categoryData: any;
+  
   constructor(private router: Router, private adminService: AdminService, private modalService: NgbModal,config: NgbModalConfig, private fb:FormBuilder, private toastr:ToastrService ) {}
 
   ngOnInit(): void {

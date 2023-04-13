@@ -42,8 +42,7 @@ constructor(private adminService: AdminService, private modalService: NgbModal, 
 
   ngOnInit(): void {
 
-    console.log("Product Data=======>", this.productData);
-    this.getVariation();
+  this.getVariation();
 
     // add variation form
     this.addVariationForm = this.fb.group({

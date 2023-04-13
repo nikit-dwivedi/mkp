@@ -176,8 +176,7 @@
                       </div>
 
                       <!-- <i data-feather="edit" class="text-primary cursor-pointer"></i> -->
-                      <a href="javascript:void(0)" (click)="openEditAddoncategoryModal(content2,row)"> <i
-                        data-feather="edit" class="text-primary cursor-pointer"></i></a>
+                      <a href="javascript:void(0)"><i data-feather="edit" class="text-primary cursor-pointer"></i></a>
                     </div>
                   </ng-template>
                 </ngx-datatable-column>
@@ -541,8 +540,8 @@
     <button type="button" class="block-btn btn btn-primary" (click)="modal.close('Cross click')" rippleEffect>
       Cancel
     </button>
-    <button type="button" class="block-btn btn btn-primary" (click)="modal.close('Accept click')" (click)="unLinkAddon()"
-      rippleEffect>
+    <button type="button" class="block-btn btn btn-primary" (click)="modal.close('Accept click')"
+      (click)="unLinkAddon()" rippleEffect>
       Confirm
     </button>
   </div>

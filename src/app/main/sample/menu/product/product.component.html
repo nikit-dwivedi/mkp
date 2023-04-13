@@ -118,7 +118,7 @@
             <li ngbNavItem>
               <a ngbNavLink>Customization</a>
               <ng-template ngbNavContent>
-                <app-customization [productData]="productDetails"></app-customization>
+                <app-customization *ngIf="productDetails" [productData]="productDetails"></app-customization>
               </ng-template>
             </li>
             <li ngbNavItem>

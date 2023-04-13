@@ -258,6 +258,9 @@ editAddonProductFormSubmit(){
         this.toastr.success(data.message,"Success!");
         this.editAddonProductForm.reset();
         this.viewProductDetails();
+        
+        // window.location.reload();
+        
       }
       else{
         this.toastr.error(data.message,"failed");
