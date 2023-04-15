@@ -62,6 +62,15 @@ export class ProductComponent implements OnInit {
   }
 
 
+  // open add product Modal
+  openAddProductModal(data: any) {
+    this.modalService.open(data, {
+      centered: true,
+      scrollable: true,
+      size: "lg",
+    });
+  }
+  
   addProductFormSubmit() {
     this.submitted = true;
     if (this.addProductForm.invalid) {
@@ -109,13 +118,7 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  openAddProductModal(data: any) {
-    this.modalService.open(data, {
-      centered: true,
-      scrollable: true,
-      size: "lg",
-    });
-  }
+  
 
   // open edit product modal
   openEditProductModal(data: any, edit: any) {

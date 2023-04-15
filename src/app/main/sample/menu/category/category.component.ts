@@ -104,6 +104,7 @@ addCategoryFormSubmit(){
         this.toastr.success(data.message,"Success!");
         this.modalService.dismissAll();
         this.outletData ? this.categoryByOutlet() : this.categoryByCatgeoryId();
+        this.addCategoryForm.reset();
       }
       else{
         this.toastr.error(data.message,"failed")
