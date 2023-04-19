@@ -21,7 +21,13 @@
   
 <app-category *ngIf="hasSubCheck" [categoryData]="tempCategory"></app-category>
 <app-product class="product-list" *ngIf="hasProdCheck" [categoryData]="tempCategory"></app-product>
+
 </div>
+
+<div *ngIf="bothCheck" class="page2">
+  <app-category  [categoryData]="tempCategory"></app-category>
+  <app-product class="product-list"  [categoryData]="tempCategory"></app-product>
+  </div>
 
 </section>
 

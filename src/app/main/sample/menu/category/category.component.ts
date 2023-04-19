@@ -21,7 +21,7 @@ export class CategoryComponent implements OnInit {
   tempCategory: any;
   editBycategory:any;
   productList:any;
-
+  bothCheck:any;
   @Input() outletData: any;
   @Input() categoryData: any;
   
@@ -69,6 +69,14 @@ export class CategoryComponent implements OnInit {
     this.tempCategory = data;
     this.hasSubCheck = data.hasSubCategory;
     this.hasProdCheck = !data.hasSubCategory;
+    // this.bothCheck =  this.hasSubCheck && this.hasProdCheck;
+    if(this.tempCategory ==null){
+
+      this.bothCheck = true;
+    }
+
+    console.log(" this.tempCategory", this.tempCategory);
+    
 }
 
   categoryByCatgeoryId() {
