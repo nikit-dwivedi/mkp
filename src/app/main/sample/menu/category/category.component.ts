@@ -16,6 +16,7 @@ export class CategoryComponent implements OnInit {
   addCategoryForm: FormGroup;
   hasSubCheck: Boolean = false;
   hasProdCheck: Boolean = false;
+  hasNothing:Boolean = false;
   submitted: Boolean = false;
   categoryList: any;
   tempCategory: any;
@@ -29,7 +30,8 @@ export class CategoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.outletData ? this.categoryByOutlet() : this.categoryByCatgeoryId();
-  
+    
+    // this.productCheck(this.outletData)
     
   // add category name
     this.addCategoryForm = this.fb.group({
@@ -68,18 +70,27 @@ export class CategoryComponent implements OnInit {
    
     this.tempCategory = data;
     this.hasSubCheck = data.hasSubCategory;
-    this.hasProdCheck = !data.hasSubCategory;
-    // this.bothCheck =  this.hasSubCheck && this.hasProdCheck == null;
+    this.hasNothing =  !this.hasSubCheck && !this.hasProdCheck?true:false;
+    console.log("nothing",this.hasNothing,"prd",this.hasProdCheck,"dub",this.hasSubCheck);
 
     console.log(" this.tempCategory", this.tempCategory);
     
 }
 
   categoryByCatgeoryId() {
-     this.adminService.getSubcategory(this.categoryData.categoryId).subscribe((data: any) => {
-        this.categoryList = data.items;
-    });
+     this.adminService.getSubcategory(this.categoryData?.categoryId).subscribe((data: any) => {
+       this.productCheck()
+       this.categoryList = data.items;
+      });
    
+}
+
+// product Check
+productCheck(){
+  this.adminService.getProductBycategory(this.categoryData?.categoryId).subscribe((data: any) => {
+  this.hasProdCheck = data.items[0]?true:false;
+    console.log("product check",data);
+});
 }
 
 // open add category modal
