@@ -69,11 +69,7 @@ export class CategoryComponent implements OnInit {
     this.tempCategory = data;
     this.hasSubCheck = data.hasSubCategory;
     this.hasProdCheck = !data.hasSubCategory;
-    // this.bothCheck =  this.hasSubCheck && this.hasProdCheck;
-    if(this.tempCategory ==null){
-
-      this.bothCheck = true;
-    }
+    // this.bothCheck =  this.hasSubCheck && this.hasProdCheck == null;
 
     console.log(" this.tempCategory", this.tempCategory);
     

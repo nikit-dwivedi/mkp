@@ -114,6 +114,9 @@ export class ProductComponent implements OnInit {
     this.adminService.getProductBycategory(this.categoryData.categoryId).subscribe((data: any) => {
       if (data.status) {
         this.productList = data.items;
+
+        console.log("this.productList",this.productList);
+        
       }
     });
   }
