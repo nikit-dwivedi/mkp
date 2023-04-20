@@ -77,7 +77,7 @@
           <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
             <div class="d-flex align-items-center">
               <div class="cell-line-height">
-                <p class="font-medium-1 line-height-1 mb-0">{{row.payableAmount | number : ".2"}} Rs</p>
+                <p class="font-medium-1 line-height-1 mb-0">{{ row.payableAmount | number : ".2" }} Rs</p>
                 <span class="text-muted font-small-2"> {{ row.payment.paymentMode }}</span>
               </div>
             </div>
@@ -189,28 +189,44 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-12 col-xl-12">
-          <div class="card shadow-none bg-transparent border-primary">
-            <div class="card-body">
-              <h4 class="card-title">Basic Details</h4>
-              <!-- <p class="card-text">Some quick example text to build on the card title and make up.</p> -->
-              <div class="container">
-                <div class="rightbox">
-                  <div class="rb-container">
-                    <ul class="rb">
-                      <li class="rb-item" ng-repeat="itembx" *ngFor="let item of orderDetail.timing; index as i">
-                        <div class="timestamp">
-                          {{ item.status }}<br />
-                          {{ item.time }}
-                        </div>
-                        <div class="item-title">{{ item.date }}</div>
-                      </li>
-                    </ul>
+      <div class="d-flex">
+        <!-- <div class="col-md-12 col-xl-12"> -->
+        <div class="card shadow-none bg-transparent border-primary">
+          <div class="card-body">
+            <h4 class="card-title">Basic Details</h4>
+            <!-- <p class="card-text">Some quick example text to build on the card title and make up.</p> -->
+
+            <!-- <div class="rightbox"> -->
+            <!-- <div class="rb-container"> -->
+            <!-- <ul class="rb">
+              <li class="rb-item" ng-repeat="itembx" *ngFor="let item of orderDetail.timing; index as i">
+                <div class="d-block">
+                  <div class="timestamp">
+                    {{ item.status }}<br />
+                    {{ item.time }}
                   </div>
+                  <div class="item-title">{{ item.date }}</div>
                 </div>
-              </div>
-              <!-- <div class="order-timeline" *ngFor="let item of orderDetail.timing;index as i">
+              </li>
+            </ul> -->
+
+            <ul class="timeline">
+              <li class="timeline-item" *ngFor="let item of orderDetail.timing; index as i">
+                <span class="timeline-point">
+                  <i data-feather="dollar-sign"></i>
+                </span>
+                <div class="timeline-event">
+                  <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                    <h6> {{ item.status }}</h6>
+                  </div>
+                  <span class="timeline-event-time">{{ item.time }}</span>
+                </div>
+              </li>
+            </ul>
+
+            <!-- </div> -->
+            <!-- </div> -->
+            <!-- <div class="order-timeline" *ngFor="let item of orderDetail.timing;index as i">
                 <div class="timeline-object complete">
                   <div class="timeline-status"></div>
                   <div class="timeline-info">
@@ -219,9 +235,9 @@
                   </div>
                 </div>
               </div> -->
-            </div>
           </div>
         </div>
+        <!-- </div> -->
       </div>
     </section>
     <!--/ Style variation -->
