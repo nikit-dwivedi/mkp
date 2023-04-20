@@ -107,7 +107,7 @@ constructor(private adminService: AdminService, private modalService: NgbModal, 
         variationName:this.addVariationForm.value.variationName
       }
      this.adminService.addCustomization(formData).subscribe((data:any) => {
-      console.log("formData",formData);
+      
       
       if(data.status){
         this.toastr.success(data.message,"Success");
@@ -131,10 +131,7 @@ constructor(private adminService: AdminService, private modalService: NgbModal, 
       this.rows = this.variationList;
       this.kitchenSinkRows = this.rows;
       this.tempData = this.rows;
-
-      console.log("Customization LIst", this.variationList);
-
-    });
+  });
   }
 
   // open add variant Modal
@@ -157,10 +154,7 @@ constructor(private adminService: AdminService, private modalService: NgbModal, 
         variantName:this.addVariantForm.value.variantName,
         variantPrice:this.addVariantForm.value.variantPrice
       }
-
-     
-      
-      this.adminService.addVariation(formData).subscribe((data:any) => {
+     this.adminService.addVariation(formData).subscribe((data:any) => {
         if(data.status){
           this.toastr.success(data.message,"Suceess!");
           this.getVariation();
@@ -181,8 +175,7 @@ constructor(private adminService: AdminService, private modalService: NgbModal, 
       scrollable: true,
       size: 'xl'
     });
-    console.log("view", view);
-
+   
     this.variantData = view.variantList
 
    
@@ -193,7 +186,7 @@ constructor(private adminService: AdminService, private modalService: NgbModal, 
     this.rows1 = this.variantData;
     this.kitchenSinkRows1 = this.rows1;
     this.tempData1 = this.rows1;
-    console.log(this.tempData1);
+   
   }
 
   // open open edit variant Modal
@@ -204,8 +197,6 @@ constructor(private adminService: AdminService, private modalService: NgbModal, 
       size:'lg'
     });
     this.editVariant = edit
-
-    console.log(this.editVariant);
     
     this.editVariantForm.patchValue({
       variantName:edit.variantName,
@@ -249,10 +240,8 @@ constructor(private adminService: AdminService, private modalService: NgbModal, 
       size: 'lg'
     });
     this.customizeById = edit;
-
-    console.log("edit", edit);
-
-    this.editVariationForm.patchValue({
+   
+   this.editVariationForm.patchValue({
       variationName: edit.variationName,
       minSelection: edit.minSelection,
       maxSelection: edit.maxSelection
@@ -273,7 +262,7 @@ constructor(private adminService: AdminService, private modalService: NgbModal, 
 
 
       this.adminService.editVariation(this.customizationList.variationId, formData).subscribe((data: any) => {
-        console.log("formData", formData);
+       
         if (data.status) {
           this.toastr.success(data.message, "Success!");
           this.getVariation();

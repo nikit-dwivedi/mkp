@@ -62,6 +62,15 @@ export class ProductComponent implements OnInit {
   }
 
 
+  // open add product Modal
+  openAddProductModal(data: any) {
+    this.modalService.open(data, {
+      centered: true,
+      scrollable: true,
+      size: "lg",
+    });
+  }
+  
   addProductFormSubmit() {
     this.submitted = true;
     if (this.addProductForm.invalid) {
@@ -102,20 +111,16 @@ export class ProductComponent implements OnInit {
   }
 
   productByCatgeoryId() {
-    this.adminService.getProductBycategory(this.categoryData.categoryId).subscribe((data: any) => {
+    this.adminService.getProductBycategory(this.categoryData?.categoryId).subscribe((data: any) => {
+      console.log("data",data);
+      
       if (data.status) {
         this.productList = data.items;
-      }
+   }
     });
   }
 
-  openAddProductModal(data: any) {
-    this.modalService.open(data, {
-      centered: true,
-      scrollable: true,
-      size: "lg",
-    });
-  }
+  
 
   // open edit product modal
   openEditProductModal(data: any, edit: any) {

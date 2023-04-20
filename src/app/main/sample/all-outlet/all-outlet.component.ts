@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdminService } from "../../../services/admin.service";
+import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { ColumnMode } from "@swimlane/ngx-datatable";
 import { Router } from "@angular/router";
 import { NgbModal,NgbModalConfig } from '@ng-bootstrap/ng-bootstrap'; 
 import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-all-outlet',
@@ -11,7 +13,9 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./all-outlet.component.scss']
 })
 export class AllOutletComponent implements OnInit {
-
+  editOutletForm:FormGroup;
+  
+  
   public contentHeader: object;
   public rows: any;
   public sellerOutlet: any;
@@ -21,18 +25,37 @@ export class AllOutletComponent implements OnInit {
   // config: NgbModalOptions;
   public basicSelectedOption: number = 5;
   public kitchenSinkRows = [];
+  submitted:Boolean = false;
   allOutletList:any;
   status:any;
-  outletDetails:any
+  outletDetails:any;
+  editOutletById:any;
+  imageData:any;
+  cuisineList:any;
+  isChecked:Boolean = true;
+  checkedData:any;
+  cuisineArray = [];
+  cuisineData:any;
   // config: NgbModalOptions;
   @ViewChild(AllOutletComponent) table: AllOutletComponent | any;
   @ViewChild("tableRowDetails") tableRowDetails: any;
-  constructor(private adminService: AdminService, private router: Router, private toastr: ToastrService ,private modalService: NgbModal,config: NgbModalConfig) { }
+  constructor(private fb:FormBuilder,private adminService: AdminService, private router: Router, private toastr: ToastrService ,private modalService: NgbModal,config: NgbModalConfig) { }
 
   ngOnInit(): void {
     this.allOutlet();
+    this.editOutletForm = this.fb.group({
+      outletName: new FormControl(''),
+      preparationTime: new FormControl(''),
+      shopAddress: new FormControl(''),
+      outletImage: new FormControl(''),
+      cuisine: new FormControl([])
+    });
   }
-   
+  
+  get f(){
+    return this.editOutletForm.controls;
+  }
+
   allOutlet(){
     this.adminService.getAllOutlet().subscribe((data:any) => {
       this.allOutletList = data.items;
@@ -42,6 +65,113 @@ export class AllOutletComponent implements OnInit {
     });
   }
   
+  
+  // open edit cuisine Modal
+  openEditCuisineModal(data:any){
+    
+    this.modalService.open(data,{
+      centered:true,
+      scrollable:true,
+      size:'md'
+    });
+    this.allCuisineList();
+
+  }
+
+  // get select image
+  getImage(event){
+    this.imageData = event.target.files[0];
+  }
+  // open edit outlet Modal
+  openEditOutletModal(data:any,editOutlet:any){
+    this.editOutletForm.reset();
+    
+    this.modalService.open(data,{
+      centered:true,
+      scrollable:true,
+      size:'lg'
+    })
+
+    this.cuisineData =   editOutlet.cuisines;
+    // if(this.cuisineData){
+    //   this.isChecked == false
+    // }
+    // else{
+    //   this.isChecked == true
+    // }
+    console.log("this.cuisineData",this.cuisineData);
+      
+
+
+
+    this.editOutletById = editOutlet.outletId;
+    
+    this.editOutletForm.patchValue({
+      outletName: editOutlet.outletName,
+      preparationTime: editOutlet.preparationTime,
+      cuisines: editOutlet.cuisines,  
+      outletImage:editOutlet.outletImage,
+      shopAddress: editOutlet.shopAddress
+    });
+    
+  }
+
+  editOutletFormSubmit(){
+    this.submitted == true;
+    if(this.editOutletForm.invalid){
+      return;
+    }
+    else{
+      // const formData = new FormData();
+      // formData.append("outletName",this.editOutletForm.value.outletName);
+      // formData.append("preparationTime",this.editOutletForm.value.preparationTime);
+      // formData.append("cuisines",this.editOutletForm.value.cuisines);
+      // formData.append("outletImage",this.imageData);
+      // formData.append("shopAddress",this.editOutletForm.value.shopAddress);
+
+      const formData = {
+        outletName:this.editOutletForm.value.outletName,
+        preparationTime:this.editOutletForm.value.preparationTime,
+        cuisines:this.cuisineArray,
+        outletImage:this.editOutletForm.value.outletImage,
+        shopAddress:this.editOutletForm.value.shopAddress,
+      }
+      console.log("formData=============>",formData);
+      
+    }
+  }
+
+// get all cuisine list
+  allCuisineList(){
+    this.adminService.getAllCuisine().subscribe((data:any) => {
+      this.cuisineList = data.items;
+    });
+  }
+
+  // select cuisine form
+  onCuisineSelect(cuisine:any){
+    if (this.cuisineArray.includes(cuisine.cuisineId)) {
+      let index = this.cuisineArray.indexOf(cuisine.cuisineId)
+      this.cuisineArray.splice(index, 1);
+    } else {
+      this.cuisineArray.push(cuisine.cuisineId)
+    }
+    
+    console.log(this.cuisineArray);
+  }
+
+  cuisineCheck(cuisineId:any){
+    this.cuisineArray.includes(cuisineId)?true:false;
+    // console.log(this.cuisineArray.includes(cuisineId));
+    // console.log("------------------------------");
+    // return this.cuisineArray.includes(cuisineId)
+    // console.log("----",cuisineId);
+    // console.log("====",this.cuisineArray);
+    
+    // console.log("------------------------------");
+    
+    
+  }
 
   selectButtonClass(isClosed: boolean): any {
     switch (isClosed) {
@@ -90,7 +220,7 @@ export class AllOutletComponent implements OnInit {
 
     // filter our data
     const temp = this.tempData.filter(function (d) {
-      return d.outletName?.toLowerCase().indexOf(val) !== -1 || d.outletId?.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.outletName?.toLowerCase().indexOf(val) !== -1 || d.sellerId?.toLowerCase().indexOf(val) !== -1 || !val;
     });
 
     // update the rows

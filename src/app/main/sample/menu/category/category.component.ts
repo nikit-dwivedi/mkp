@@ -4,6 +4,7 @@ import { AdminService } from "app/services/admin.service";
 import { NgbModal,NgbModalConfig } from '@ng-bootstrap/ng-bootstrap'; 
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
+import { ProductComponent } from "../product/product.component";
 
 
 @Component({
@@ -16,12 +17,14 @@ export class CategoryComponent implements OnInit {
   addCategoryForm: FormGroup;
   hasSubCheck: Boolean = false;
   hasProdCheck: Boolean = false;
+  hasNothing:Boolean = false;
   submitted: Boolean = false;
   categoryList: any;
   tempCategory: any;
   editBycategory:any;
   productList:any;
-
+  bothCheck:any;
+  
   @Input() outletData: any;
   @Input() categoryData: any;
   
@@ -29,7 +32,8 @@ export class CategoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.outletData ? this.categoryByOutlet() : this.categoryByCatgeoryId();
-  
+    
+    
     
   // add category name
     this.addCategoryForm = this.fb.group({
@@ -46,6 +50,7 @@ export class CategoryComponent implements OnInit {
 
    ngOnChanges(){
     this.outletData ? this.categoryByOutlet() : this.categoryByCatgeoryId();
+    
    }
     
    get f(){
@@ -59,24 +64,48 @@ export class CategoryComponent implements OnInit {
   categoryByOutlet() {
     this.adminService.getCategory(this.outletData.outletId).subscribe((data: any) => {
       this.categoryList = data.items;
+      this.productCheck();
     });
     
   }
 
-  subCategory(data: any) {
+  subCategory(data: any){
     data.outletId = this.outletData?this.outletData.outletId:this.categoryData.outletId
    
     this.tempCategory = data;
     this.hasSubCheck = data.hasSubCategory;
     this.hasProdCheck = !data.hasSubCategory;
+    this.hasNothing =  !this.hasSubCheck && !this.hasProdCheck?true:false;
+    // console.log("nothing",this.hasNothing,"prd",this.hasProdCheck,"dub",this.hasSubCheck);
+    // this.productCheck();
+    // this.hasProdCheck = false;
+    if(!this.hasSubCheck){
+      this.hasProdCheck == false;
+    }
+
+}
+  
+  categoryByCatgeoryId(){
+    // this.productCheck();
+     this.adminService.getSubcategory(this.categoryData?.categoryId).subscribe((data: any) => {
+       this.categoryList = data.items;
+       this.productCheck();
+      });
+   }
+
+// product Check
+productCheck(){
+  this.adminService.getProductBycategory(this.categoryData?.categoryId).subscribe((data: any) => {
+    console.log("data",data);
+    
+    if (data.status) {
+      this.productList = data.items;
+ }
+  });
 }
 
-  categoryByCatgeoryId() {
-     this.adminService.getSubcategory(this.categoryData.categoryId).subscribe((data: any) => {
-        this.categoryList = data.items;
-    });
-   
-}
+
+
 
 // open add category modal
 openAddCategoryModal(data:any){
@@ -104,6 +133,7 @@ addCategoryFormSubmit(){
         this.toastr.success(data.message,"Success!");
         this.modalService.dismissAll();
         this.outletData ? this.categoryByOutlet() : this.categoryByCatgeoryId();
+        this.addCategoryForm.reset();
       }
       else{
         this.toastr.error(data.message,"failed")
@@ -156,4 +186,6 @@ editCategoryFormSubmit(){
   
   }
 }
+
 }
+
