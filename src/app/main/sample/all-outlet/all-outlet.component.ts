@@ -161,16 +161,16 @@ export class AllOutletComponent implements OnInit {
   }
 
   cuisineCheck(cuisineId:any){
-    console.log(this.cuisineArray.includes(cuisineId));
-    console.log("------------------------------");
-    return this.cuisineArray.includes(cuisineId)
-    console.log("----",cuisineId);
-    console.log("====",this.cuisineArray);
+    this.cuisineArray.includes(cuisineId)?true:false;
+    // console.log(this.cuisineArray.includes(cuisineId));
+    // console.log("------------------------------");
+    // return this.cuisineArray.includes(cuisineId)
+    // console.log("----",cuisineId);
+    // console.log("====",this.cuisineArray);
     
-    console.log("------------------------------");
+    // console.log("------------------------------");
     
     
-    return this.cuisineArray.includes(cuisineId)?{checked:true}:{checked:false};
   }
 
   selectButtonClass(isClosed: boolean): any {
