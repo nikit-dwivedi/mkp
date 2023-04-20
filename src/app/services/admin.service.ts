@@ -87,12 +87,20 @@ export class AdminService {
     );
   }
 
+  // get all outlet
   getAllOutlet() {
     return this.http.get(this.apiUrl + "/v1/outlet/", this.httpOptions).pipe(
       map((data: any) => {
         return data;
       })
     );
+  }
+
+  // edit outlet by outlet id
+  editOutletByOutletId(outletId:any,body:any){
+    return this.http.post(this.menuUrl + '/v1/outlet/update/' + outletId , body , this.httpOptions).pipe(map((data:any) => {
+      return data;
+    }))
   }
 
   // get all cuisine

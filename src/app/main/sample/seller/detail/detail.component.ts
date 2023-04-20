@@ -110,9 +110,9 @@ export class DetailComponent implements OnInit {
     });
 
 
-    this.addCuisineForm = this.formBuilder.group({
-      cuisineName: new FormControl(''),
-    });
+    // this.addCuisineForm = this.formBuilder.group({
+    //   cuisineName: new FormControl(''),
+    // });
 
     
 

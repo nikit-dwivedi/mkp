@@ -19,7 +19,11 @@
 </div>
 <div class="page2">
   
-  <ng-container *ngIf="hasNothing;else second">
+  <app-category *ngIf="hasSubCheck" [categoryData]="tempCategory"></app-category>
+  <app-category *ngIf="hasProdCheck"   [categoryData]="tempCategory"></app-category>
+  <app-product class="product-list" *ngIf="hasProdCheck" [categoryData]="tempCategory"></app-product>
+
+  <!-- <ng-container *ngIf="hasNothing;else second">
     <app-category [categoryData]="tempCategory"></app-category>
     <app-product class="product-list" [categoryData]="tempCategory"></app-product>
  </ng-container>
@@ -27,10 +31,10 @@
    <ng-container *ngIf="hasSubCheck;else third">
       <app-category [categoryData]="tempCategory"></app-category>
     </ng-container>
-    <ng-template #third>
-     <app-product class="product-list"  *ngIf="hasProdCheck" [categoryData]="tempCategory"></app-product>
+    <ng-template #third *ngIf="hasProdCheck">
+     <app-product class="product-list" [categoryData]="tempCategory"></app-product>
     </ng-template>
- </ng-template>
+ </ng-template> -->
   
 </div>
 
