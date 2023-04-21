@@ -10,7 +10,8 @@
             <div class="col-12 mb-50"></div>
             <div class="col-md-6 col-12">
               <div class="d-flex justify-content-between align-items-center m-1">
-                <label class="d-flex align-items-center">Show
+                <label class="d-flex align-items-center"
+                  >Show
                   <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
                     <option value="5" selected="selected">05</option>
                     <option value="10">10</option>
@@ -18,20 +19,18 @@
                     <option value="50">50</option>
                     <option value="100">100</option>
                   </select>
-                  entries</label>
+                  entries</label
+                >
               </div>
             </div>
             <div class="col-md-6 col-12 d-flex justify-content-md-end">
               <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
-                <label class="d-flex align-items-center">Search<input type="search" placeholder="Search"
-                    class="form-control ml-25" (keyup)="filterUpdate($event)" (search)="filterUpdate($event)" /></label>
+                <label class="d-flex align-items-center">Search<input type="search" placeholder="Search" class="form-control ml-25" (keyup)="filterUpdate($event)" (search)="filterUpdate($event)" /></label>
               </div>
             </div>
           </div>
           <!-- ngx-datatables responsive -->
-          <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force" [headerHeight]="40"
-            [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="basicSelectedOption" [rows]="kitchenSinkRows"
-            [scrollbarH]="true">
+          <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force" [headerHeight]="40" [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="basicSelectedOption" [rows]="kitchenSinkRows" [scrollbarH]="true">
             <!-- <ngx-datatable-column name="Name" prop="full_name" [width]="200">
                 <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
                   <div class="d-flex align-items-center">
@@ -88,23 +87,17 @@
               <ng-template let-row="row" ngx-datatable-cell-template>
                 <div class="d-flex align-items-center">
                   <div ngbDropdown container="body">
-                    <a ngbDropdownToggle href="javascript:void(0);" class="hide-arrow" id="dropdownBrowserState"
-                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a ngbDropdownToggle href="javascript:void(0);" class="hide-arrow" id="dropdownBrowserState" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i data-feather="more-vertical" class="text-primary cursor-pointer mr-50"></i>
                     </a>
                     <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState">
-                      <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
-                        (click)="navigateToDetail(row)"><i data-feather="file-text" class="mr-50"></i> Details</a>
-                      <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
-                        (click)="changeOutletStatus(content,row)"><i data-feather="archive" class="mr-50"></i> Change
-                        Status</a>
-                      <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"><i
-                          data-feather="trash-2" class="mr-50"></i> Delete</a>
+                      <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="navigateToDetail(row)"><i data-feather="file-text" class="mr-50"></i> Details</a>
+                      <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="changeOutletStatus(content, row)"><i data-feather="archive" class="mr-50"></i> Change Status</a>
+                      <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"><i data-feather="trash-2" class="mr-50"></i> Delete</a>
                     </div>
                   </div>
 
-                  <a href="javascript:void(0)" (click)="openEditOutletModal(content1,row)"> <i data-feather="edit"
-                      class="text-primary cursor-pointer"></i></a>
+                  <a href="javascript:void(0)" (click)="openEditOutletModal(content1, row)"> <i data-feather="edit" class="text-primary cursor-pointer"></i></a>
                 </div>
               </ng-template>
             </ngx-datatable-column>
@@ -125,18 +118,11 @@
     </button>
   </div>
   <div class="modal-body" tabindex="0" ngbAutofocus>
-    <p>
-      Are you sure you want to Change ?
-    </p>
+    <p>Are you sure you want to Change ?</p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="block-btn btn btn-primary" (click)="modal.close('Cross click')" rippleEffect>
-      Cancel
-    </button>
-    <button type="button" class="block-btn btn btn-primary" (click)="modal.close('Accept click')"
-      (click)="onOffstatus()" rippleEffect>
-      Confirm
-    </button>
+    <button type="button" class="block-btn btn btn-primary" (click)="modal.close('Cross click')" rippleEffect>Cancel</button>
+    <button type="button" class="block-btn btn btn-primary" (click)="modal.close('Accept click')" (click)="onOffstatus()" rippleEffect>Confirm</button>
   </div>
 </ng-template>
 
@@ -155,40 +141,36 @@
         <div class="col-6">
           <div class="form-group">
             <label for="first-name-vertical">Outlet Name</label>
-            <input type="text" id="first-name-vertical" class="form-control" name="outletName"
-              formControlName="outletName" placeholder="Outlet Name" />
+            <input type="text" id="first-name-vertical" class="form-control" name="outletName" formControlName="outletName" placeholder="Outlet Name" />
           </div>
         </div>
-           
+
         <div class="col-6">
           <div class="form-group">
             <label for="first-name-vertical">Preparation Time</label>
-            <input type="text" id="first-name-vertical" class="form-control" name="preparationTime"
-              formControlName="preparationTime" placeholder="Preparation Time" />
+            <input type="text" id="first-name-vertical" class="form-control" name="preparationTime" formControlName="preparationTime" placeholder="Preparation Time" />
           </div>
         </div>
 
         <div class="col-6">
           <div class="form-group">
             <label for="first-name-vertical">Outlet Image</label>
-            <input type="file"  id="first-name-vertical" class="form-control" name="outletImage" nbInput fullWidth
-               placeholder="Outlet Image" (change)="getImage($event)"/>
+            <input type="file" id="first-name-vertical" class="form-control" name="outletImage" nbInput fullWidth placeholder="Outlet Image" (change)="getImage($event)" />
           </div>
         </div>
 
         <div class="col-6">
           <div class="form-group">
             <label for="first-name-vertical">Shop Address</label>
-            <input type="text" id="first-name-vertical" class="form-control" name="shopAddress"
-              formControlName="shopAddress" placeholder="Shop Address" />
+            <input type="text" id="first-name-vertical" class="form-control" name="shopAddress" formControlName="shopAddress" placeholder="Shop Address" />
           </div>
         </div>
 
         <div class="col-6">
           <div class="form-group">
             <label for="first-name-vertical">Cuisines</label>
-            <button type="button" (click)="openEditCuisineModal(content2)" class="btn btn-outline-primary btn-block form-control" >Cuisine</button>
-            <ng-template #content2 let-modal>
+            <button type="button" (click)="openEditCuisineModal(content2)" class="btn btn-outline-primary btn-block form-control">Cuisine</button>
+            <!-- <ng-template #content2 let-modal>
               <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel1">Please select cuisines</h4>
                 <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
@@ -220,21 +202,45 @@
              
               </div>
               
-            </ng-template>
+            </ng-template> -->
           </div>
         </div>
-
       </div>
       <div class="row">
         <div class="col-12 text-right">
           <div class="form-group">
-           
             <button type="submit" rippleEffect class="text-right block-btn btn btn-primary">Confirm</button>
           </div>
         </div>
       </div>
-
     </form>
   </div>
-  
+</ng-template>
+
+<ng-template #content2 let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel1">Please select cuisines</h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <div class="row">
+      <div class="col-3 text-secondary" *ngFor="let cuisine of cuisineList">
+        <div class="cuisine">
+          <div class="cuisine-img">
+            <img src="{{ cuisine.cuisineImage }}" alt="" width="50px" />
+            <p>{{ cuisine.cuisineName }}</p>
+          </div>
+          <span><input type="checkbox" [checked]="cuisineCheck(cuisine.cuisineId)" id="checkbox" (click)="onCuisineSelect(cuisine)" /></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 text-right">
+        <button type="button" class="btn btn-submit btn-primary mr-2" (click)="modal.dismiss('Cross click')" aria-label="Close">Submit</button>
+      </div>
+    </div>
+  </div>
 </ng-template>
