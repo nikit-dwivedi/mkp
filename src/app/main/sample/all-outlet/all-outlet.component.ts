@@ -25,7 +25,8 @@ export class AllOutletComponent implements OnInit {
   public kitchenSinkRows = [];
   submitted: Boolean = false;
   allOutletList: any;
-  status: any;
+  verificationStatus:any;
+  outletId: any;
   outletDetails: any;
   editOutletById: any;
   imageData: any;
@@ -130,7 +131,7 @@ export class AllOutletComponent implements OnInit {
         outletImage: this.editOutletForm.value.outletImage,
         shopAddress: this.editOutletForm.value.shopAddress,
       };
-      this.editOutletDetails(this.editOutletById,formData)
+      this.editOutletDetails(this.editOutletById, formData);
     }
   }
 
@@ -149,7 +150,6 @@ export class AllOutletComponent implements OnInit {
     } else {
       this.cuisineArray.push(cuisine.cuisineId);
     }
-
   }
 
   cuisineCheck(cuisineId: any) {
@@ -170,7 +170,19 @@ export class AllOutletComponent implements OnInit {
       if (data.status) {
         this.toastr.success(data.message, "Success!");
         this.allOutlet();
-        this.modalService.dismissAll()
+        this.modalService.dismissAll();
+      } else {
+        this.toastr.error(data.message, "error!");
+      }
+    });
+  }
+  // verify outlet
+  verifyOutlet( status: any) {
+    this.adminService.changeVerificationStatusOfOutlet({ outletId: this.outletId, status }).subscribe((data: any) => {
+      if (data.status) {
+        this.toastr.success(data.message, "Success!");
+        this.allOutlet();
+        this.modalService.dismissAll();
       } else {
         this.toastr.error(data.message, "error!");
       }
@@ -184,14 +196,17 @@ export class AllOutletComponent implements OnInit {
       scrollable: true,
       size: "lg",
     });
-    this.status = seller.outletId;
+    this.outletId = seller.outletId;
+    this.verificationStatus=seller.isVerified
+    
   }
 
   onOffstatus() {
-    this.adminService.changeStatus(this.status).subscribe((data: any) => {
+    this.adminService.changeStatus(this.outletId).subscribe((data: any) => {
       if (data.status) {
-        this.toastr.success(data.message, "Succes!");
+        this.toastr.success(data.message, "Success!");
         this.allOutlet();
+        this.modalService.dismissAll();
       } else {
         this.toastr.error(data.message, "error!");
       }

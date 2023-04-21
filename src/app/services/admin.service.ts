@@ -11,9 +11,9 @@ export class AdminService {
   private apiUrl = "https://admin.fablocdn.com";
   private menuUrl = "https://inventory.fablocdn.com";
   private baseUrl = "http://139.59.60.119:9000";
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  token: any = JSON.parse(localStorage.getItem("authToken")).token
+  token: any = JSON.parse(localStorage.getItem("authToken")).token;
 
   httpOptions = { headers: new HttpHeaders({ Authorization: `Bearer ${this.token}` }) };
 
@@ -22,7 +22,6 @@ export class AdminService {
     // headers = headers.append('content-type', 'multipart/form-data');
     // headers = headers.append('Accept', 'multipart/form-data');
     headers = headers.append("Authorization", `Bearer ${this.token}`);
-
 
     return { headers };
   };
@@ -87,6 +86,15 @@ export class AdminService {
     );
   }
 
+  //verify outlet
+  changeVerificationStatusOfOutlet(bodyData: any) {
+    return this.http.post(this.menuUrl + "/v1/outlet/verify",bodyData, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
   // get all outlet
   getAllOutlet() {
     return this.http.get(this.apiUrl + "/v1/outlet/", this.httpOptions).pipe(
@@ -97,10 +105,12 @@ export class AdminService {
   }
 
   // edit outlet by outlet id
-  editOutletByOutletId(outletId:any,body:any){
-    return this.http.post(this.menuUrl + '/v1/outlet/update/' + outletId , body , this.httpOptions).pipe(map((data:any) => {
-      return data;
-    }))
+  editOutletByOutletId(outletId: any, body: any) {
+    return this.http.post(this.menuUrl + "/v1/outlet/update/" + outletId, body, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
   }
 
   // get all cuisine
@@ -140,146 +150,184 @@ export class AdminService {
 
   // get outlet category
   getCategory(outletId: any) {
-    return this.http.get(this.menuUrl + '/v1/menu/category/' + outletId, this.Header()).pipe(map((data: any) => {
-      return data;
-    }));
+    return this.http.get(this.menuUrl + "/v1/menu/category/" + outletId, this.Header()).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
   }
 
   // get sub category
   getSubcategory(categoryId: any) {
-    return this.http.get(this.menuUrl + '/v1/menu/sub-category/' + categoryId, this.Header()).pipe(map((data: any) => {
-      return data;
-    }))
+    return this.http.get(this.menuUrl + "/v1/menu/sub-category/" + categoryId, this.Header()).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
   }
 
   // get product by category
   getProductBycategory(categoryId: any) {
-    return this.http.get(this.menuUrl + '/v1/menu/prod/' + categoryId, this.Header()).pipe(map((data: any) => {
-      return data;
-    }))
+    return this.http.get(this.menuUrl + "/v1/menu/prod/" + categoryId, this.Header()).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
   }
 
-  // edit category 
+  // edit category
   editcategory(body: any) {
-    return this.http.post(this.menuUrl + '/v1/menu/category/edit', body, this.httpOptions).pipe(map((data: any) => {
-      return data;
-    }));
+    return this.http.post(this.menuUrl + "/v1/menu/category/edit", body, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
   }
 
   // edit product by product id
 
   editProductbyId(productId: any, body: any) {
-    return this.http.post(this.menuUrl + '/v1/menu/product/edit/' + productId, body, this.httpOptions).pipe(map((data: any) => {
-      return data;
-    }));
+    return this.http.post(this.menuUrl + "/v1/menu/product/edit/" + productId, body, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
   }
 
   // add outlet category
   addCategory(body: any) {
-    return this.http.post(this.menuUrl + '/v1/menu/category', body, this.httpOptions).pipe(map((data: any) => {
-      return data;
-    }));
+    return this.http.post(this.menuUrl + "/v1/menu/category", body, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
   }
 
   // add product by parent category id
   addProduct(body: any) {
-    return this.http.post(this.menuUrl + '/v1/menu/product', body, this.httpOptions).pipe(map((data: any) => {
-      return data;
-    }))
+    return this.http.post(this.menuUrl + "/v1/menu/product", body, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
   }
 
   // view product details by product id
   viewProduct(productId: any) {
-    return this.http.get(this.menuUrl + '/v1/menu/product/' + productId, this.httpOptions).pipe(map((data: any) => {
-      return data;
-    }))
+    return this.http.get(this.menuUrl + "/v1/menu/product/" + productId, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
   }
-
 
   // getoutlet addon by outlet id
   getOutletAddon(outletId: any) {
-    return this.http.get(this.menuUrl + '/v1/menu/addOn/' + outletId, this.httpOptions).pipe(map((data: any) => {
-      return data;
-
-    }));
+    return this.http.get(this.menuUrl + "/v1/menu/addOn/" + outletId, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
   }
 
   // getproduct addon by product id
   getProductAddon(productId: any) {
-    return this.http.get(this.menuUrl + '/v1/menu/product/addOn/' + productId, this.httpOptions).pipe(map((data: any) => {
-      return data;
-    }));
+    return this.http.get(this.menuUrl + "/v1/menu/product/addOn/" + productId, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
   }
 
   // getproduct customization
-  getProductCustomization(productId:any){
-    return this.http.get(this.menuUrl + '/v1/menu/customization/' + productId , this.httpOptions).pipe(map((data:any) => {
-      return data;
-    }));
+  getProductCustomization(productId: any) {
+    return this.http.get(this.menuUrl + "/v1/menu/customization/" + productId, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
   }
 
-// edit addon Category
-editAddonCategory(body:any){
-  return this.http.post(this.menuUrl + '/v1/menu/addOn/Category/edit' , body ,this.httpOptions).pipe(map((data:any) => {
-    return data;
-  }));
-}
+  // edit addon Category
+  editAddonCategory(body: any) {
+    return this.http.post(this.menuUrl + "/v1/menu/addOn/Category/edit", body, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
 
-// add addon Category
-addAddonCategory(body:any){
-  return this.http.post(this.menuUrl + '/v1/menu/addOn/Category' , body ,this.httpOptions).pipe(map((data:any) => {
-    return data;
-  }));
-}
+  // add addon Category
+  addAddonCategory(body: any) {
+    return this.http.post(this.menuUrl + "/v1/menu/addOn/Category", body, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
 
-// edit addon product
-editAddonProduct(body:any){
-  return this.http.post(this.menuUrl + '/v1/menu/addOn/product/edit' , body , this.httpOptions).pipe(map((data:any) => {
-    return data;
-  }));
-}
+  // edit addon product
+  editAddonProduct(body: any) {
+    return this.http.post(this.menuUrl + "/v1/menu/addOn/product/edit", body, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
 
-// add addon product
-addAddonProduct(body:any){
-  return this.http.post(this.menuUrl + '/v1/menu/addOn/product' , body , this.httpOptions).pipe(map((data:any) => {
-    return data;
-  }));
-}
+  // add addon product
+  addAddonProduct(body: any) {
+    return this.http.post(this.menuUrl + "/v1/menu/addOn/product", body, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
 
-// link outlet addon to prodcut
-linkUnlink(body:any){
-  return this.http.post(this.menuUrl + '/v1/menu/product/addOn' , body ,this.httpOptions).pipe(map((data:any) => {
-    return data;
-  }));
-}
+  // link outlet addon to prodcut
+  linkUnlink(body: any) {
+    return this.http.post(this.menuUrl + "/v1/menu/product/addOn", body, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
 
-// edit customization variantion
-editVariation(variationId:any,body:any){
-  return this.http.post(this.menuUrl + '/v1/menu/customization/edit/' + variationId , body ,this.httpOptions).pipe(map((data:any) => {
-    return data;
-  }));
-}
+  // edit customization variantion
+  editVariation(variationId: any, body: any) {
+    return this.http.post(this.menuUrl + "/v1/menu/customization/edit/" + variationId, body, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
 
-// add variation in customization
-addCustomization(body:any){
-  return this.http.post(this.menuUrl + '/v1/menu/customization' , body ,this.httpOptions).pipe(map((data:any) => {
-    return data;
-  }));
-}
+  // add variation in customization
+  addCustomization(body: any) {
+    return this.http.post(this.menuUrl + "/v1/menu/customization", body, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
 
-// add variant in variation
-addVariation(body:any){
-  return this.http.post(this.menuUrl + '/v1/menu/customitem' ,body ,this.httpOptions).pipe(map((data:any) => {
-    return data;
-  }))
-}
+  // add variant in variation
+  addVariation(body: any) {
+    return this.http.post(this.menuUrl + "/v1/menu/customitem", body, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
 
-// edit variant in variation
-editVariant(body:any){
-  return this.http.post(this.menuUrl + '/v1/menu/customitem/edit' , body, this.httpOptions).pipe(map((data:any) => {
-    return data;
-  }))
-}
+  // edit variant in variation
+  editVariant(body: any) {
+    return this.http.post(this.menuUrl + "/v1/menu/customitem/edit", body, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
 
   //
   // changeStatus(bodyData: any): Observable<any> {
