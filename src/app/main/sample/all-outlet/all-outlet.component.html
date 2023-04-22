@@ -251,7 +251,7 @@
             <img src="{{ cuisine.cuisineImage }}" alt="" width="50px" />
             <p>{{ cuisine.cuisineName }}</p>
           </div>
-          <span><input type="checkbox" [checked]="cuisineCheck(cuisine.cuisineId)" id="checkbox" (click)="onCuisineSelect(cuisine)" /></span>
+          <span><input type="checkbox" [checked]="cuisineCheck(cuisine.cuisineId)" id="checkbox" (click)="onCuisineSelect(cuisine)"/></span>
         </div>
       </div>
     </div>

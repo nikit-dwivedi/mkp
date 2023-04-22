@@ -28,7 +28,7 @@ export class DetailComponent implements OnInit {
   public selectBasic: any= [];
   public selectedCuisineId : any
   public selectBasicLoading = false;
-
+  
   public uploader: FileUploader = new FileUploader({
     url: URL,
   });
@@ -38,6 +38,8 @@ export class DetailComponent implements OnInit {
   selectedCusine:any;
   cuisineArray = [];
   images:any;
+  cuisineData:any;
+  cuisineIdList:any;
   // Reactive User Details form data
   public addOutletForm = {
     outletName: "",
@@ -64,21 +66,24 @@ export class DetailComponent implements OnInit {
     }
   }
 
-  modalSelectOpen(modalSelect) {
+  modalSelectOpen(modalSelect:any) {
     // this.selectBasicMethod()
     this.modalService.open(modalSelect, {
       windowClass: 'modal'
     });
     this.allCuisineList();
+    
+    
+
   }
 
   allCuisineList(){
     this.adminService.getAllCuisine().subscribe((data:any) => {
       this.cuisineList = data.items;
-      
-    });
+   });
   }
 
+ 
 
   // private selectBasicMethod() {
   //   this.selectBasicLoading = true;
@@ -103,7 +108,7 @@ export class DetailComponent implements OnInit {
       isVeg: [false, [Validators.required]],
       openingHour: ["", [Validators.required]],
       closingHour: ["", [Validators.required]],
-      cuisine: ["", [Validators.required]],
+      // cuisine: ["", [Validators.required]],
       shopAddress: ["", [Validators.required]],
       longitude: [0, [Validators.required]],
       latitude: [0, [Validators.required]],
@@ -141,12 +146,25 @@ export class DetailComponent implements OnInit {
 
   onCuisineSelect(cuisine:any){
     if (this.cuisineArray.includes(cuisine.cuisineId)) {
-      let index = this.cuisineArray.indexOf(cuisine.cuisineId)
+      let index = this.cuisineArray.indexOf(cuisine.cuisineId);
       this.cuisineArray.splice(index, 1);
     } else {
-      this.cuisineArray.push(cuisine.cuisineId)
+      this.cuisineArray.push(cuisine.cuisineId);
     }
+    console.log(this.cuisineArray);
     
+  }
+
+  cuisineCheck(cuisineId:any){
+// console.log(cuisineId);
+
+    if(this.cuisineArray.includes(cuisineId)){
+      return true;
+    }
+    else{
+      return false;
+    }
+
   }
 
   get ReactiveUDForm() {
