@@ -47,7 +47,7 @@ export class AllOutletComponent implements OnInit {
       outletName: new FormControl(""),
       preparationTime: new FormControl(""),
       shopAddress: new FormControl(""),
-      outletImage: new FormControl(""),
+      outletImage: new FormControl([]),
       cuisine: new FormControl([]),
     });
   }
@@ -76,8 +76,10 @@ export class AllOutletComponent implements OnInit {
   }
 
   // get select image
-  getImage(event) {
+  getImage(event:any) {
     this.imageData = event.target.files[0];
+    console.log(this.imageData);
+    
   }
   // open edit outlet Modal
   openEditOutletModal(data: any, editOutlet: any) {
@@ -88,6 +90,8 @@ export class AllOutletComponent implements OnInit {
       scrollable: true,
       size: "lg",
     });
+// console.log(editOutlet.outletImage);
+
 
     this.cuisineData = editOutlet.cuisines;
     this.cuisineArray = this.cuisineData.map((cuisine: any) => {
@@ -102,6 +106,8 @@ export class AllOutletComponent implements OnInit {
     // }
 
     this.editOutletById = editOutlet.outletId;
+    console.log(this.editOutletById);
+    
 
     this.editOutletForm.patchValue({
       outletName: editOutlet.outletName,
@@ -113,25 +119,41 @@ export class AllOutletComponent implements OnInit {
   }
 
   editOutletFormSubmit() {
+    this.editOutletForm.value.cuisines = this.cuisineArray;
     this.submitted == true;
     if (this.editOutletForm.invalid) {
       return;
     } else {
-      // const formData = new FormData();
-      // formData.append("outletName",this.editOutletForm.value.outletName);
-      // formData.append("preparationTime",this.editOutletForm.value.preparationTime);
-      // formData.append("cuisines",this.editOutletForm.value.cuisines);
-      // formData.append("outletImage",this.imageData);
-      // formData.append("shopAddress",this.editOutletForm.value.shopAddress);
 
-      const formData = {
-        outletName: this.editOutletForm.value.outletName,
-        preparationTime: this.editOutletForm.value.preparationTime,
-        cuisines: this.cuisineArray,
-        outletImage: this.editOutletForm.value.outletImage,
-        shopAddress: this.editOutletForm.value.shopAddress,
-      };
-      this.editOutletDetails(this.editOutletById, formData);
+      const formData = new FormData();
+      formData.append("outletName",this.editOutletForm.value.outletName);
+      formData.append("preparationTime",this.editOutletForm.value.preparationTime);
+      formData.append("cuisines",this.editOutletForm.value.cuisines);
+      formData.append("outletImage",this.imageData);
+      formData.append("shopAddress",this.editOutletForm.value.shopAddress);
+
+      // const formData = {
+      //   outletName: this.editOutletForm.value.outletName,
+      //   preparationTime: this.editOutletForm.value.preparationTime,
+      //   cuisines: this.cuisineArray,
+      //   outletImage: this.imageData,
+      //   shopAddress: this.editOutletForm.value.shopAddress,
+      // };
+      
+      formData.forEach(entries => console.log(entries));
+   
+
+      this.adminService.editOutletByOutletId(this.editOutletById,formData).subscribe((data:any) => {
+        if(data.status){
+          this.toastr.success(data.message,"Success!");
+          this.modalService.dismissAll();
+          this.allOutlet();
+        }
+        else{
+          this.toastr.error(data.message,"error!")
+        }
+      });
+      
     }
   }
 
@@ -165,17 +187,17 @@ export class AllOutletComponent implements OnInit {
     }
   }
 
-  editOutletDetails(outletId: any, bodyData: any) {
-    this.adminService.editOutletByOutletId(outletId, bodyData).subscribe((data: any) => {
-      if (data.status) {
-        this.toastr.success(data.message, "Success!");
-        this.allOutlet();
-        this.modalService.dismissAll();
-      } else {
-        this.toastr.error(data.message, "error!");
-      }
-    });
-  }
+  // editOutletDetails(outletId: any, bodyData: any) {
+  //   this.adminService.editOutletByOutletId(outletId, bodyData).subscribe((data: any) => {
+  //     if (data.status) {
+  //       this.toastr.success(data.message, "Success!");
+  //       this.allOutlet();
+  //       this.modalService.dismissAll();
+  //     } else {
+  //       this.toastr.error(data.message, "error!");
+  //     }
+  //   });
+  // }
   // verify outlet
   verifyOutlet( status: any) {
     this.adminService.changeVerificationStatusOfOutlet({ outletId: this.outletId, status }).subscribe((data: any) => {
