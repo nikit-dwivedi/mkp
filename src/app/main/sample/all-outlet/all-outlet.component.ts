@@ -34,6 +34,7 @@ export class AllOutletComponent implements OnInit {
   isChecked: Boolean = true;
   checkedData: any;
   cuisineArray = [];
+  imageArray = [];
   cuisineData: any;
   number = 0;
   // config: NgbModalOptions;
@@ -62,7 +63,7 @@ export class AllOutletComponent implements OnInit {
       this.rows = data.items;
       this.kitchenSinkRows = this.rows;
       this.tempData = this.rows;
-    });
+   });
   }
 
   // open edit cuisine Modal
@@ -125,32 +126,31 @@ export class AllOutletComponent implements OnInit {
       return;
     } else {
 
+      
       const formData = new FormData();
       formData.append("outletName",this.editOutletForm.value.outletName);
       formData.append("preparationTime",this.editOutletForm.value.preparationTime);
       formData.append("cuisines",this.editOutletForm.value.cuisines);
-      formData.append("outletImage",this.imageData);
+      // formData.append("outletImage",this.imageData);
       formData.append("shopAddress",this.editOutletForm.value.shopAddress);
 
-      // const formData = {
-      //   outletName: this.editOutletForm.value.outletName,
-      //   preparationTime: this.editOutletForm.value.preparationTime,
-      //   cuisines: this.cuisineArray,
-      //   outletImage: this.imageData,
-      //   shopAddress: this.editOutletForm.value.shopAddress,
-      // };
+      console.log(this.editOutletForm.value.outletImage);
+       if(this.imageData == undefined){
+        formData.append("outletImage",this.editOutletForm.value.outletImage)
+      }
+      else{
+        formData.append("outletImage",this.imageData)
+      }
       
-      formData.forEach(entries => console.log(entries));
-   
-
       this.adminService.editOutletByOutletId(this.editOutletById,formData).subscribe((data:any) => {
         if(data.status){
+          this.submitted == false;
           this.toastr.success(data.message,"Success!");
           this.modalService.dismissAll();
           this.allOutlet();
         }
         else{
-          this.toastr.error(data.message,"error!")
+          this.toastr.error(data.message,"error!");
         }
       });
       

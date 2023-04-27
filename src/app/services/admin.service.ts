@@ -106,9 +106,9 @@ export class AdminService {
 
   // edit outlet by outlet id
   editOutletByOutletId(outletId: any, body: any) {
-    return this.http.post(this.menuUrl + '/v1/outlet/update/' + outletId , body , this.Header()).pipe(map((data) => {
+    return this.http.post(this.menuUrl + '/v1/outlet/update/' + outletId , body , this.httpOptions).pipe(map((data) => {
       return data;
-    }))
+    }));
   }
 
   // get all cuisine
