@@ -335,4 +335,11 @@ export class AdminService {
   //     })
   //   );
   // }
+
+  // delete data
+  deleteData(body:any){
+    return this.http.post(this.menuUrl + '/v1/delete' , body,this.httpOptions).pipe(map((data:any) => {
+      return data;
+    }))
+  }
 }

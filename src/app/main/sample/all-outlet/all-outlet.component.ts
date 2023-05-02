@@ -36,7 +36,9 @@ export class AllOutletComponent implements OnInit {
   cuisineArray = [];
   imageArray = [];
   cuisineData: any;
-  number = 0;
+  loading:Boolean = true;
+  isConfirm:Boolean = false;
+  
   // config: NgbModalOptions;
   @ViewChild(AllOutletComponent) table: AllOutletComponent | any;
   @ViewChild("tableRowDetails") tableRowDetails: any;
@@ -120,13 +122,14 @@ export class AllOutletComponent implements OnInit {
   }
 
   editOutletFormSubmit() {
+    this.loading == true;
     this.editOutletForm.value.cuisines = this.cuisineArray;
-    this.submitted == true;
-    if (this.editOutletForm.invalid) {
+    // this.submitted == true;
+    if (this.editOutletForm.invalid){
       return;
-    } else {
-
-      
+    } 
+    else {
+     
       const formData = new FormData();
       formData.append("outletName",this.editOutletForm.value.outletName);
       formData.append("preparationTime",this.editOutletForm.value.preparationTime);
@@ -135,6 +138,7 @@ export class AllOutletComponent implements OnInit {
       formData.append("shopAddress",this.editOutletForm.value.shopAddress);
 
       console.log(this.editOutletForm.value.outletImage);
+
        if(this.imageData == undefined){
         formData.append("outletImage",this.editOutletForm.value.outletImage)
       }
@@ -144,12 +148,13 @@ export class AllOutletComponent implements OnInit {
       
       this.adminService.editOutletByOutletId(this.editOutletById,formData).subscribe((data:any) => {
         if(data.status){
-          this.submitted == false;
+          this.loading = false;
           this.toastr.success(data.message,"Success!");
           this.modalService.dismissAll();
           this.allOutlet();
         }
         else{
+          this.loading = false;
           this.toastr.error(data.message,"error!");
         }
       });

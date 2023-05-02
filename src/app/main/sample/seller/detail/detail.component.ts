@@ -38,6 +38,7 @@ export class DetailComponent implements OnInit {
   selectedCusine:any;
   cuisineArray = [];
   images:any;
+  loading:Boolean = false;
   cuisineData:any;
   cuisineIdList:any;
   // Reactive User Details form data
@@ -172,6 +173,7 @@ export class DetailComponent implements OnInit {
   }
 
   ReactiveUDFormOnSubmit() {
+    this.loading = true;
      this.outletFormSubmitted = true;
     this.outletForm.value.openingHour=this.formatTime(this.outletForm.value.openingHour)
     this.outletForm.value.closingHour=this.formatTime(this.outletForm.value.closingHour)
@@ -199,10 +201,11 @@ export class DetailComponent implements OnInit {
     // add outlet api call
    this.adminService.addOutlet(formData).subscribe((data:any) => {
       if (data.status) {
+        this.loading = false;
         this.toastr.success(data.message,"Success!");
-
        }
        else{
+        this.loading = false;
         this.toastr.error(data.message,"error")
        }
     })

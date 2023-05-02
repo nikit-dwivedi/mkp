@@ -27,6 +27,7 @@ export class CategoryComponent implements OnInit {
   
   @Input() outletData: any;
   @Input() categoryData: any;
+  deleteByCategoryId: any;
   
   constructor(private router: Router, private adminService: AdminService, private modalService: NgbModal,config: NgbModalConfig, private fb:FormBuilder, private toastr:ToastrService ) {}
 
@@ -185,6 +186,34 @@ editCategoryFormSubmit(){
     })
   
   }
+}
+
+// open delete category modal
+openDeleteCategoryModal(data:any,category:any){
+  this.modalService.open(data,{
+    centered:true,
+    scrollable:true,
+    size:'lg'
+  });
+console.log(category);
+this.deleteByCategoryId = category.categoryId
+
+}
+deleteCategory(){
+  const body ={
+    categoryId:this.deleteByCategoryId
+  }
+
+  this.adminService.deleteData(body).subscribe((data:any) => {
+    if(data.status){
+      this.toastr.success(data.message,"Success!");
+      this.categoryByOutlet();
+      this.modalService.dismissAll();
+    }
+    else{
+      this.toastr.error(data.message,"error!");
+    }
+  })
 }
 
 }

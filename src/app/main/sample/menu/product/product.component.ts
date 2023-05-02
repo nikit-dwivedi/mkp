@@ -24,6 +24,7 @@ export class ProductComponent implements OnInit {
   productDetails: any;
   product: any;
   imageData: any;
+  producyById: any;
   constructor(private adminService: AdminService, private modalService: NgbModal, config: NgbModalConfig, private fb: FormBuilder, private toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -182,19 +183,38 @@ export class ProductComponent implements OnInit {
 
 
 
-  // openViewCustomizationModal(data: any) {
-  //   this.modalService.open(data, {
-  //     centered: true,
-  //     scrollable: true,
-  //     size: "lg",
-  //   });
-  // }
+  openDeleteProductModal(data: any,product:any) {
+    this.modalService.open(data, {
+      centered: true,
+      scrollable: true,
+      size: "lg",
+    });
+    this.producyById = product.productId;
+    console.log(this.producyById);
+  }
+  deleteProduct(){
+    const body ={
+      productId:this.producyById
+    }
+    this.adminService.deleteData(body).subscribe((data:any) => {
+      if(data.status){
+        this.toastr.success(data.message,"Success!");
+        this.productByCatgeoryId();
+        this.modalService.dismissAll();
+      }
+      else{
+        this.toastr.error(data.message,"error!");
+      }
+    })
+  }
 
-  // openViewAddonModal(data: any) {
-  //   this.modalService.open(data, {
-  //     centered: true,
-  //     scrollable: true,
-  //     size: "lg",
-  //   });
-  // }
+
+  openViewAddonModal(data: any) {
+    this.modalService.open(data, {
+      centered: true,
+      scrollable: true,
+      size: "lg",
+    });
+    
+  }
 }
