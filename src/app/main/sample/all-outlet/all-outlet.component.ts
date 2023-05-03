@@ -140,10 +140,10 @@ export class AllOutletComponent implements OnInit {
       console.log(this.editOutletForm.value.outletImage);
 
        if(this.imageData == undefined){
-        formData.append("outletImage",this.editOutletForm.value.outletImage)
+         formData.append("outletImage",this.editOutletForm.value.outletImage);
       }
       else{
-        formData.append("outletImage",this.imageData)
+          formData.append("outletImage",this.imageData);
       }
       
       this.adminService.editOutletByOutletId(this.editOutletById,formData).subscribe((data:any) => {

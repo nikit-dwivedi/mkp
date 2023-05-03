@@ -59,7 +59,6 @@ export class ProductComponent implements OnInit {
 
   getImage(event: any) {
     this.imageData = event.target.files[0];
-    console.log(this.imageData);
   }
 
 
@@ -86,19 +85,7 @@ export class ProductComponent implements OnInit {
       formData.append("productDesc", this.addProductForm.value.productDesc);
       formData.append("productImage", this.imageData);
       formData.append("isVeg", this.addProductForm.value.isVeg);
-
-
-      
-      
-      // const body = {
-      //   parentCategoryId: this.categoryData.categoryId,
-      //   productName: this.addProductForm.value.productName,
-      //   productPrice: this.addProductForm.value.productPrice,
-      // };
-
-
-
-
+       
       this.adminService.addProduct(formData).subscribe((data: any) => {
         if (!data.status) {
           this.toastr.error(data.message, "failed");
@@ -113,8 +100,7 @@ export class ProductComponent implements OnInit {
 
   productByCatgeoryId() {
     this.adminService.getProductBycategory(this.categoryData?.categoryId).subscribe((data: any) => {
-      console.log("data",data);
-      
+     
       if (data.status) {
         this.productList = data.items;
    }
@@ -190,7 +176,7 @@ export class ProductComponent implements OnInit {
       size: "lg",
     });
     this.producyById = product.productId;
-    console.log(this.producyById);
+    
   }
   deleteProduct(){
     const body ={

@@ -97,9 +97,7 @@ export class CategoryComponent implements OnInit {
 // product Check
 productCheck(){
   this.adminService.getProductBycategory(this.categoryData?.categoryId).subscribe((data: any) => {
-    console.log("data",data);
-    
-    if (data.status) {
+     if (data.status) {
       this.productList = data.items;
  }
   });
@@ -195,8 +193,8 @@ openDeleteCategoryModal(data:any,category:any){
     scrollable:true,
     size:'lg'
   });
-console.log(category);
-this.deleteByCategoryId = category.categoryId
+
+  this.deleteByCategoryId = category.categoryId
 
 }
 deleteCategory(){
@@ -208,12 +206,13 @@ deleteCategory(){
     if(data.status){
       this.toastr.success(data.message,"Success!");
       this.categoryByOutlet();
+      this.categoryByCatgeoryId();
       this.modalService.dismissAll();
-    }
+  }
     else{
       this.toastr.error(data.message,"error!");
     }
-  })
+  });
 }
 
 }
