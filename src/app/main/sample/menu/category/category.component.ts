@@ -208,6 +208,7 @@ deleteCategory(){
       this.categoryByOutlet();
       this.categoryByCatgeoryId();
       this.modalService.dismissAll();
+      window.location.reload();
   }
     else{
       this.toastr.error(data.message,"error!");
