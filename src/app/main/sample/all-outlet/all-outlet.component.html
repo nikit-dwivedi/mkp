@@ -229,7 +229,7 @@
         <div class="col-12 text-right">
           <div class="form-group">
             <div class="loading-icon">
-            <button *ngIf="isConfirm" type="submit" rippleEffect class="text-right block-btn btn btn-primary">Confirm</button>
+            <button *ngIf="!loading" type="submit" rippleEffect class="text-right block-btn btn btn-primary">Confirm</button>
             <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
           </div>
           </div>

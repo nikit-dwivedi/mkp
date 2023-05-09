@@ -36,8 +36,8 @@ export class AllOutletComponent implements OnInit {
   cuisineArray = [];
   imageArray = [];
   cuisineData: any;
-  loading:Boolean = true;
-  isConfirm:Boolean = false;
+  loading:Boolean = false;
+  isConfirm:Boolean = true;
   
   // config: NgbModalOptions;
   @ViewChild(AllOutletComponent) table: AllOutletComponent | any;
@@ -120,41 +120,43 @@ export class AllOutletComponent implements OnInit {
       shopAddress: editOutlet.shopAddress,
     });
   }
-
+  
   editOutletFormSubmit() {
     this.loading == true;
     this.editOutletForm.value.cuisines = this.cuisineArray;
     // this.submitted == true;
     if (this.editOutletForm.invalid){
+      this.loading = false;
       return;
     } 
     else {
-     
+      
       const formData = new FormData();
+      console.log(this.editOutletForm.value.cuisines);
+      
       formData.append("outletName",this.editOutletForm.value.outletName);
       formData.append("preparationTime",this.editOutletForm.value.preparationTime);
-      formData.append("cuisines",this.editOutletForm.value.cuisines);
+      formData.append("cuisines",JSON.stringify(this.editOutletForm.value.cuisines));
       // formData.append("outletImage",this.imageData);
       formData.append("shopAddress",this.editOutletForm.value.shopAddress);
-
+      
       console.log(this.editOutletForm.value.outletImage);
-
-       if(this.imageData == undefined){
-         formData.append("outletImage",this.editOutletForm.value.outletImage);
+      
+      if(this.imageData == undefined){
+        formData.append("outletImage",this.editOutletForm.value.outletImage);
       }
       else{
-          formData.append("outletImage",this.imageData);
+        formData.append("outletImage",this.imageData);
       }
       
       this.adminService.editOutletByOutletId(this.editOutletById,formData).subscribe((data:any) => {
+        this.loading = false;
         if(data.status){
-          this.loading = false;
           this.toastr.success(data.message,"Success!");
           this.modalService.dismissAll();
           this.allOutlet();
         }
         else{
-          this.loading = false;
           this.toastr.error(data.message,"error!");
         }
       });
