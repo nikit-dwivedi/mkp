@@ -24,6 +24,7 @@ export class ProductComponent implements OnInit {
   productDetails: any;
   product: any;
   imageData: any;
+  producyById: any;
   constructor(private adminService: AdminService, private modalService: NgbModal, config: NgbModalConfig, private fb: FormBuilder, private toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -58,7 +59,6 @@ export class ProductComponent implements OnInit {
 
   getImage(event: any) {
     this.imageData = event.target.files[0];
-    console.log(this.imageData);
   }
 
 
@@ -85,19 +85,7 @@ export class ProductComponent implements OnInit {
       formData.append("productDesc", this.addProductForm.value.productDesc);
       formData.append("productImage", this.imageData);
       formData.append("isVeg", this.addProductForm.value.isVeg);
-
-
-      
-      
-      // const body = {
-      //   parentCategoryId: this.categoryData.categoryId,
-      //   productName: this.addProductForm.value.productName,
-      //   productPrice: this.addProductForm.value.productPrice,
-      // };
-
-
-
-
+       
       this.adminService.addProduct(formData).subscribe((data: any) => {
         if (!data.status) {
           this.toastr.error(data.message, "failed");
@@ -112,8 +100,7 @@ export class ProductComponent implements OnInit {
 
   productByCatgeoryId() {
     this.adminService.getProductBycategory(this.categoryData?.categoryId).subscribe((data: any) => {
-      console.log("data",data);
-      
+     
       if (data.status) {
         this.productList = data.items;
    }
@@ -182,19 +169,38 @@ export class ProductComponent implements OnInit {
 
 
 
-  // openViewCustomizationModal(data: any) {
-  //   this.modalService.open(data, {
-  //     centered: true,
-  //     scrollable: true,
-  //     size: "lg",
-  //   });
-  // }
+  openDeleteProductModal(data: any,product:any) {
+    this.modalService.open(data, {
+      centered: true,
+      scrollable: true,
+      size: "lg",
+    });
+    this.producyById = product.productId;
+    
+  }
+  deleteProduct(){
+    const body ={
+      productId:this.producyById
+    }
+    this.adminService.deleteData(body).subscribe((data:any) => {
+      if(data.status){
+        this.toastr.success(data.message,"Success!");
+        this.productByCatgeoryId();
+        this.modalService.dismissAll();
+      }
+      else{
+        this.toastr.error(data.message,"error!");
+      }
+    })
+  }
 
-  // openViewAddonModal(data: any) {
-  //   this.modalService.open(data, {
-  //     centered: true,
-  //     scrollable: true,
-  //     size: "lg",
-  //   });
-  // }
+
+  openViewAddonModal(data: any) {
+    this.modalService.open(data, {
+      centered: true,
+      scrollable: true,
+      size: "lg",
+    });
+    
+  }
 }

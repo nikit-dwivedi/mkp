@@ -49,7 +49,8 @@
                   <div class="badge badge-light-primary">User Id - {{ sellerDetail.userId }}</div>
                   <ul class="list-unstyled my-1">
                     <li>
-                      <span class="align-middle">Name On Licence - {{ sellerDetail.licenseDetails.nameOnlicence }}</span>
+                      <span class="align-middle">Name On Licence - {{ sellerDetail.licenseDetails.nameOnlicence
+                        }}</span>
                     </li>
                     <li>
                       <span class="align-middle">Licence Number - {{ sellerDetail.licenseDetails.licenceNumber }}</span>
@@ -110,7 +111,8 @@
                   <!-- Profile Card -->
                   <div class="col-lg-4 col-md-6 col-12">
                     <div class="card card-profile">
-                      <img src="{{ outlet.outletImage[0] }}" class="outlet-img card-img-top" alt="Profile Cover Photo" />
+                      <img src="{{ outlet.outletImage[0] }}" class="outlet-img card-img-top"
+                        alt="Profile Cover Photo" />
                       <div class="card-body">
                         <div class="profile-image-wrapper">
                           <div class="profile-image">
@@ -152,7 +154,9 @@
                       <div class="col-6">
                         <div class="form-group">
                           <label for="outletName">Outlet name</label>
-                          <input type="text" id="outletName" [(ngModel)]="addOutletForm.outletName" formControlName="outletName" class="form-control" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.outletName.errors }" />
+                          <input type="text" id="outletName" [(ngModel)]="addOutletForm.outletName"
+                            formControlName="outletName" class="form-control"
+                            [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.outletName.errors }" />
                           <div *ngIf="outletFormSubmitted && ReactiveUDForm.outletName.errors" class="invalid-feedback">
                             <div *ngIf="ReactiveUDForm.outletName.errors.required">Outlet name is required</div>
                           </div>
@@ -162,9 +166,13 @@
                         <div class="form-group">
                           <label for="file-upload-single">Image:</label>
                           <div class="custom-file">
-                            <input type="file" class="custom-file-input form-control" ng2FileSelect id="outletImage" formControlName="outletImage" [(ngModel)]="addOutletForm.outletImage" (change)="getImage($event)" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.outletImage.errors }" />
+                            <input type="file" class="custom-file-input form-control" ng2FileSelect id="outletImage"
+                              formControlName="outletImage" [(ngModel)]="addOutletForm.outletImage"
+                              (change)="getImage($event)"
+                              [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.outletImage.errors }" />
                             <label class="custom-file-label">{{ this.imageData?.name ?? "Choose file" }}</label>
-                            <div *ngIf="outletFormSubmitted && ReactiveUDForm.outletImage.errors" class="invalid-feedback">
+                            <div *ngIf="outletFormSubmitted && ReactiveUDForm.outletImage.errors"
+                              class="invalid-feedback">
                               <div *ngIf="ReactiveUDForm.outletImage.errors.required">Outlet Image is required</div>
                             </div>
                           </div>
@@ -173,7 +181,8 @@
                       <div class="col-6">
                         <div class="form-group">
                           <label for="area">Area</label>
-                          <select id="area" formControlName="area" class="form-control" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.area.errors }">
+                          <select id="area" formControlName="area" class="form-control"
+                            [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.area.errors }">
                             <option value="Vijay Nagar">Vijay Nagar</option>
                             <option value="Palasia">Palasia</option>
                             <option value="Geeta Bhavan">Geeta Bhavan</option>
@@ -187,8 +196,11 @@
                       <div class="col-6">
                         <div class="form-group">
                           <label for="shopAddress">Shop Address</label>
-                          <input type="text" id="shopAddress" formControlName="shopAddress" [(ngModel)]="addOutletForm.shopAddress" class="form-control" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.shopAddress.errors }" />
-                          <div *ngIf="outletFormSubmitted && ReactiveUDForm.shopAddress.errors" class="invalid-feedback">
+                          <input type="text" id="shopAddress" formControlName="shopAddress"
+                            [(ngModel)]="addOutletForm.shopAddress" class="form-control"
+                            [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.shopAddress.errors }" />
+                          <div *ngIf="outletFormSubmitted && ReactiveUDForm.shopAddress.errors"
+                            class="invalid-feedback">
                             <div *ngIf="ReactiveUDForm.shopAddress.errors.required">Shop Address is required</div>
                           </div>
                         </div>
@@ -199,9 +211,12 @@
                       <div class="col-6">
                         <div class="form-group">
                           <label for="openingHour">Opening Hour</label>
-                          <ngb-timepicker id="openingHour" [(ngModel)]="openingHourdata"  formControlName="openingHour" [meridian]="meridianTP" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.openingHour.errors }"></ngb-timepicker>
+                          <ngb-timepicker id="openingHour" [(ngModel)]="openingHourdata" formControlName="openingHour"
+                            [meridian]="meridianTP"
+                            [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.openingHour.errors }"></ngb-timepicker>
                           <hr>
-                          <div *ngIf="outletFormSubmitted && ReactiveUDForm.openingHour.errors" class="invalid-feedback">
+                          <div *ngIf="outletFormSubmitted && ReactiveUDForm.openingHour.errors"
+                            class="invalid-feedback">
                             <div *ngIf="ReactiveUDForm.openingHour.errors.required">openingHour is required</div>
                           </div>
                         </div>
@@ -209,8 +224,11 @@
                       <div class="col-6">
                         <div class="form-group">
                           <label for="closingHour">Closing Hours</label>
-                          <ngb-timepicker id="closingHour"  [(ngModel)]="closingHourdata" formControlName="closingHour" [meridian]="meridianTP" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.closingHour.errors }"></ngb-timepicker>
-                          <div *ngIf="outletFormSubmitted && ReactiveUDForm.closingHour.errors" class="invalid-feedback">
+                          <ngb-timepicker id="closingHour" [(ngModel)]="closingHourdata" formControlName="closingHour"
+                            [meridian]="meridianTP"
+                            [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.closingHour.errors }"></ngb-timepicker>
+                          <div *ngIf="outletFormSubmitted && ReactiveUDForm.closingHour.errors"
+                            class="invalid-feedback">
                             <div *ngIf="ReactiveUDForm.closingHour.errors.required">Closing Hours is required</div>
                           </div>
                         </div>
@@ -219,7 +237,9 @@
                         <div class="form-group">
                           <label for="isVeg">Veg/NonVeg</label>
                           <div class="custom-control custom-control-success custom-switch">
-                            <input type="checkbox" checked class="form-control custom-control-input" id="customSwitch4" formControlName="isVeg" [(ngModel)]="addOutletForm.isVeg" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.isVeg.errors }" />
+                            <input type="checkbox" checked class="form-control custom-control-input" id="customSwitch4"
+                              formControlName="isVeg" [(ngModel)]="addOutletForm.isVeg"
+                              [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.isVeg.errors }" />
                             <label class="custom-control-label" for="customSwitch4"></label>
                           </div>
                           <div *ngIf="outletFormSubmitted && ReactiveUDForm.isVeg.errors" class="invalid-feedback">
@@ -232,90 +252,85 @@
                           <label for="cuisine">Cuisine</label>
                           <div class="col-sm-6 col-12">
                             <!-- Button trigger modal -->
-                            <button
-                              type="button"
-                              (click)="modalSelectOpen(modalSelect)"
-                              class="btn btn-outline-primary btn-block form-control"
-                              [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.cuisine.errors }" 
-                              rippleEffect
-                            >
-                              Cuisine
-                            </button>
-          
+                            <button type="button" (click)="modalSelectOpen(modalSelect)" class="btn btn-outline-primary btn-block form-control"
+                               rippleEffect>Cuisine</button>
+
                             <!-- Modal -->
                             <ng-template #modalSelect let-modal>
                               <div class="modal-header">
                                 <h4 class="modal-title" id="myModalLabel1">Please select cuisines</h4>
-                                <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+                                <button type="button" class="close" (click)="modal.dismiss('Cross click')"
+                                  aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
                               </div>
                               <div class="modal-body" tabindex="0" ngbAutofocus>
-                                <!-- <form [formGroup]="addCuisineForm" class="form form-vertical" > -->
-                                  
-                                  <div class="row">
-                                      <div class="col-3 text-secondary" *ngFor="let cuisine of cuisineList">
-                                          <div class="cuisine">
-                                              <div class="cuisine-img">
-                                                  <img src="{{cuisine.cuisineImage}}" alt="" width="50px">
-                                                  <p>{{cuisine.cuisineName}}</p>
-                                              </div>
-                                              <span><input type="checkbox" id="checkbox"   formControlName="cuisine" class="form-control"  (click)="onCuisineSelect(cuisine)"></span>
-                                              
-                                          </div>
+                                <div class="row">
+                                  <div class="col-3 text-secondary" *ngFor="let cuisine of cuisineList">
+                                    <div class="cuisine">
+                                      <div class="cuisine-img">
+                                        <img src="{{cuisine.cuisineImage}}" alt="" width="50px">
+                                        <p>{{cuisine.cuisineName}}</p>
                                       </div>
+                                      <span><input type="checkbox" [checked]="cuisineCheck(cuisine.cuisineId,cuisineList)"
+                                          id="checkbox" class="form-control"
+                                          (click)="onCuisineSelect(cuisine)"></span>
+
+                                    </div>
                                   </div>
-                                  
-                                  <div class="row">
-                                      <div class="col-12 text-right">
-                                          <button type="button" class="btn btn-submit btn-primary mr-2"
-                                              (click)="modal.dismiss('Cross click')" aria-label="Close">Submit</button>
-                                          <!-- <button type="button" class="btn btn-outline-primary close"
-                                          (click)="modal.dismiss('Cross click')" aria-label="Close">Close</button> -->
-                                      </div>
+                                </div>
+
+                                <div class="row">
+                                  <div class="col-12 text-right">
+                                    <button type="button" class="btn btn-submit btn-primary mr-2"
+                                      (click)="modal.dismiss('Cross click')" aria-label="Close">Submit</button>
+                                    
                                   </div>
-                              <!-- </form> -->
+                                </div>
+                                
                               </div>
-                              <!-- <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" (click)="modal.close('Accept click')" rippleEffect>
-                                  Accept
-                                </button>
-                              </div> -->
+                             
                             </ng-template>
                             <!-- / Modal -->
-                            <div *ngIf="outletFormSubmitted && ReactiveUDForm.cuisine.errors" class="invalid-feedback">
-                              <div *ngIf="ReactiveUDForm.cuisine.errors.required">Please select atleast one Cuisine</div>
-                            </div>
+                            <!-- <div *ngIf="outletFormSubmitted && ReactiveUDForm.cuisine.errors" class="invalid-feedback">
+                              <div *ngIf="ReactiveUDForm.cuisine.errors.required">Please select atleast one Cuisine
+                              </div>
+                            </div> -->
                           </div>
                           <!-- <input type="text" id="cuisine"  [(ngModel)]="addOutletForm.cuisine" class="form-control" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.cuisine.errors }" /> -->
-                          
+
                         </div>
                       </div>
                       <div class="col-6">
                         <div class="form-group">
                           <label for="type">Outlet Type</label>
-                          <select id="type" formControlName="type" class="form-control" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.type.errors }">
+                          <select id="type" formControlName="type" class="form-control"
+                            [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.type.errors }">
                             <option value="Food">Food</option>
                           </select>
                           <div *ngIf="outletFormSubmitted && ReactiveUDForm.type.errors" class="invalid-feedback">
                             <div *ngIf="ReactiveUDForm.type.errors.required">Outlet Type is required</div>
-                            
+
                           </div>
                         </div>
                       </div>
                       <div class="col-6">
                         <div class="form-group">
                           <label for="preparationTime">Preparation Time</label>
-                          <input type="text" id="preparationTime" formControlName="preparationTime" [(ngModel)]="addOutletForm.preparationTime" class="form-control" [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.preparationTime.errors }" />
-                          <div *ngIf="outletFormSubmitted && ReactiveUDForm.preparationTime.errors" class="invalid-feedback">
-                            <div *ngIf="ReactiveUDForm.preparationTime.errors.required">Preparation Time is required</div>
-                            
+                          <input type="text" id="preparationTime" formControlName="preparationTime"
+                            [(ngModel)]="addOutletForm.preparationTime" class="form-control"
+                            [ngClass]="{ 'is-invalid': outletFormSubmitted && ReactiveUDForm.preparationTime.errors }" />
+                          <div *ngIf="outletFormSubmitted && ReactiveUDForm.preparationTime.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="ReactiveUDForm.preparationTime.errors.required">Preparation Time is required
+                            </div>
+
                           </div>
                         </div>
                       </div>
                       <div class="col-12">
                         <div class="form-group">
-                          <button class="btn btn-primary" rippleEffect>Add</button>
+                          <button class="btn btn-primary" rippleEffect>Add<i class="ml-1 fa fa-spinner fa-spin" *ngIf="loading"></i></button>
                         </div>
                       </div>
                     </div>
@@ -330,7 +345,10 @@
       <li ngbNavItem>
         <a ngbNavLink>Orders</a>
         <ng-template ngbNavContent>
-          <p>Chocolate croissant cupcake croissant jelly donut. Cheesecake toffee apple pie chocolate bar biscuit tart croissant. Lemon drops danish cookie. Oat cake macaroon icing tart lollipop cookie sweet bear claw. Carrot cake dragée chocolate. Lemon drops ice cream wafer gummies dragée. Chocolate bar liquorice cheesecake cookie chupa chups marshmallow oat cake biscuit. Dessert toffee fruitcake ice cream powder tootsie roll cake.</p>
+          <p>Chocolate croissant cupcake croissant jelly donut. Cheesecake toffee apple pie chocolate bar biscuit tart
+            croissant. Lemon drops danish cookie. Oat cake macaroon icing tart lollipop cookie sweet bear claw. Carrot
+            cake dragée chocolate. Lemon drops ice cream wafer gummies dragée. Chocolate bar liquorice cheesecake cookie
+            chupa chups marshmallow oat cake biscuit. Dessert toffee fruitcake ice cream powder tootsie roll cake.</p>
         </ng-template>
       </li>
     </ul>

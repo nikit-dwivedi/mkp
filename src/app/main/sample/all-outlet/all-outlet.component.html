@@ -199,7 +199,10 @@
       <div class="row">
         <div class="col-12 text-right">
           <div class="form-group">
-            <button type="submit" rippleEffect class="text-right block-btn btn btn-primary">Confirm</button>
+            <div class="loading-icon">
+            <button *ngIf="!loading" type="submit" rippleEffect class="text-right block-btn btn btn-primary">Confirm</button>
+            <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+          </div>
           </div>
         </div>
       </div>
@@ -222,7 +225,7 @@
             <img src="{{ cuisine.cuisineImage }}" alt="" width="50px" />
             <p>{{ cuisine.cuisineName }}</p>
           </div>
-          <span><input type="checkbox" [checked]="cuisineCheck(cuisine.cuisineId)" id="checkbox" (click)="onCuisineSelect(cuisine)" /></span>
+          <span><input type="checkbox" [checked]="cuisineCheck(cuisine.cuisineId)" id="checkbox" (click)="onCuisineSelect(cuisine)"/></span>
         </div>
       </div>
     </div>

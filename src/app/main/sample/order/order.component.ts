@@ -93,6 +93,7 @@ export class OrderComponent implements OnInit {
         this.kitchenSinkRows = this.rows;
         this.page.totalElements = this.rows.length;
         this.tempData = this.kitchenSinkRows;
+        console.log("this.rows",this.rows);
       } else {
         this.rows = [];
         this.kitchenSinkRows = this.rows;
@@ -163,5 +164,10 @@ export class OrderComponent implements OnInit {
         this.modalService.dismissAll();
       }
     });
+  }
+
+  // seller details
+  sellerBySellerId(){
+
   }
 }

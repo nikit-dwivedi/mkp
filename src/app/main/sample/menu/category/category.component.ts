@@ -27,6 +27,7 @@ export class CategoryComponent implements OnInit {
   
   @Input() outletData: any;
   @Input() categoryData: any;
+  deleteByCategoryId: any;
   
   constructor(private router: Router, private adminService: AdminService, private modalService: NgbModal,config: NgbModalConfig, private fb:FormBuilder, private toastr:ToastrService ) {}
 
@@ -96,9 +97,7 @@ export class CategoryComponent implements OnInit {
 // product Check
 productCheck(){
   this.adminService.getProductBycategory(this.categoryData?.categoryId).subscribe((data: any) => {
-    console.log("data",data);
-    
-    if (data.status) {
+     if (data.status) {
       this.productList = data.items;
  }
   });
@@ -185,6 +184,36 @@ editCategoryFormSubmit(){
     })
   
   }
+}
+
+// open delete category modal
+openDeleteCategoryModal(data:any,category:any){
+  this.modalService.open(data,{
+    centered:true,
+    scrollable:true,
+    size:'lg'
+  });
+
+  this.deleteByCategoryId = category.categoryId
+
+}
+deleteCategory(){
+  const body ={
+    categoryId:this.deleteByCategoryId
+  }
+
+  this.adminService.deleteData(body).subscribe((data:any) => {
+    if(data.status){
+      this.toastr.success(data.message,"Success!");
+      this.categoryByOutlet();
+      this.categoryByCatgeoryId();
+      this.modalService.dismissAll();
+      window.location.reload();
+  }
+    else{
+      this.toastr.error(data.message,"error!");
+    }
+  });
 }
 
 }
