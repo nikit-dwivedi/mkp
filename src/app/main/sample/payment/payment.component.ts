@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { AdminService } from 'app/services/admin.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-payment',
@@ -17,10 +18,16 @@ export class PaymentComponent implements OnInit {
   private tempData = [];
   public ColumnMode = ColumnMode;
   // config: NgbModalOptions;
-  public basicSelectedOption: number = 5;
+  public basicSelectedOption: number = 10;
   public kitchenSinkRows = [];
+  paymentList: any;
+  currentDate: any
+  startDate: string;
+  endDate: string;
   // config: NgbModalOptions;
-  constructor(private adminService: AdminService, private router:Router) {}
+  constructor(private adminService: AdminService, private router: Router) {
+
+  }
   /**
    * Search (filter)
    *
@@ -38,18 +45,34 @@ export class PaymentComponent implements OnInit {
     // update the rows
     this.kitchenSinkRows = temp;
     // Whenever the filter changes, always go back to the first page
-    
+
   }
   ngOnInit(): void {
+    var from = new Date()
+    from.setDate(from.getDate() - 5)
+    this.startDate = moment(from).format('MM-DD-YYYY');
+    this.endDate = moment(new Date()).format('MM-DD-YYYY');
+    this.getAllPaymentlist();
+
   }
-  paymentList(): any {
-    this.adminService.getAllSeller().subscribe((response) => {
-      if (response.status) {
-        this.rows = response.items;
-        this.kitchenSinkRows = this.rows;
-        this.tempData = this.rows;
-      }
-    });
+
+  getStartDate(event: any) {
+    var from = event.target.value;
+    this.startDate = moment(from).format('MM-DD-YYYY');
+  }
+
+  getEndDate(event: any) {
+    var to = event.target.value
+    this.endDate = moment(to).format('MM-DD-YYYY');
+    this.getAllPaymentlist();
+  }
+
+  getAllPaymentlist() {
+    this.adminService.getPaymentDetails(this.startDate, this.endDate).subscribe((data: any) => {
+      this.paymentList = data.items;
+      console.log("Payment List========>", this.paymentList);
+
+    })
   }
 
 }

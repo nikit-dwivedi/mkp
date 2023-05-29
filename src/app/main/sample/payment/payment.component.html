@@ -5,32 +5,45 @@
       <section id="ngx-datatable-kitchen-sink">
         <div class="card">
           <div class="card-body">
-            <div class="row">
-              <div class="col-12 mb-50"></div>
+            <div class="mb-3 row">
+              <!-- <div class="col-12 mb-50"></div> -->
               <div class="col-md-6 col-12">
-                <div class="d-flex justify-content-between align-items-center m-1">
+                <div class="row">
+                  <div class="col-2">
+                <div class="d-flex justify-content-between">
                   <label class="d-flex align-items-center"
                     >Show
                     <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
-                      <option value="5" selected="selected">05</option>
-                      <option value="10">10</option>
+                     <option value="10">10</option>
                       <option value="25">25</option>
                       <option value="50">50</option>
                       <option value="100">100</option>
                     </select>
                     entries</label
                   >
+                  
                 </div>
               </div>
+              <div class="col-4">
+                
+              </div>
+              </div>
+              </div>
               <div class="col-md-6 col-12 d-flex justify-content-md-end">
+                <div class="mr-2 d-flex justify-content-between">
+                  <label class="mr-1">From:</label>
+                  <input  type="Date" name="" id="dateRange" (change)="getStartDate($event)">
+                  <label class="mr-1">To:</label>
+                  <input type="Date" name="" id="dateRange" (change)="getEndDate($event)">
+                </div>
                 <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
                   <label class="d-flex align-items-center">Search<input type="search" placeholder="Search" class="form-control ml-25" (keyup)="filterUpdate($event)" (search)="filterUpdate($event)" /></label>
                 </div>
               </div>
             </div>
-            <!-- ngx-datatables responsive -->
+          
             <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force" [headerHeight]="40" [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="basicSelectedOption" [rows]="kitchenSinkRows" [scrollbarH]="true">
-              <ngx-datatable-column name="Name" prop="full_name" [width]="200">
+              <!-- <ngx-datatable-column name="Name" prop="full_name" [width]="200">
                 <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
                   <div class="d-flex align-items-center">
                     <div *ngIf="row?.avatar?.length > 0; else customAvatar">
@@ -56,7 +69,12 @@
                     </div>
                   </div>
                 </ng-template>
-              </ngx-datatable-column>
+              </ngx-datatable-column> -->
+              <ngx-datatable-column name="Amount Received" prop="totalAmountReceived" [width]="100"></ngx-datatable-column>
+              <ngx-datatable-column name="phone" prop="phone" [width]="100"></ngx-datatable-column>
+              <ngx-datatable-column name="amount" prop="amount" [width]="100"></ngx-datatable-column>
+              <ngx-datatable-column name="date" prop="date" [width]="100" [sortable]="false"></ngx-datatable-column>
+
               <!-- <ngx-datatable-column name="Email" prop="authorizedPersonDetails.email" [width]="200"></ngx-datatable-column>
               <ngx-datatable-column name="Seller id" prop="sellerId" [width]="50"></ngx-datatable-column>
               <ngx-datatable-column name="Phone" prop="basicDetails.phone" [width]="50"></ngx-datatable-column>

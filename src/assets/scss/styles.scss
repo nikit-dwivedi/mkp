@@ -135,6 +135,10 @@ button.add-addon.block-btn.btn.btn-primary {
     margin: 0 0 0 32px;
 }
 
+input#dateRange {
+    padding: 5px;
+    border: 1px solid #f8b17a;
+}
 // i.fa.fa-spinner.fa-spin.ng-star-inserted {
 //     animation: fa-spin 1.5s infinite linear;
 //     font-size: 30px;
@@ -201,5 +205,6 @@ button.add-addon.block-btn.btn.btn-primary {
 	.categories.card-text button.block-btn {
 		margin: 0;
 	}
+
 
 }

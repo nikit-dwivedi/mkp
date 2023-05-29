@@ -11,6 +11,7 @@ export class AdminService {
   private apiUrl = "https://admin.fablocdn.com";
   private menuUrl = "https://inventory.fablocdn.com";
   private baseUrl = "http://139.59.60.119:9000";
+  private paymentUrl = "https://payment.fablocdn.com"
   constructor(private http: HttpClient) {}
 
   token: any = JSON.parse(localStorage.getItem("authToken")).token;
@@ -327,19 +328,17 @@ export class AdminService {
     );
   }
 
-  //
-  // changeStatus(bodyData: any): Observable<any> {
-  //   return this.http.post<any>(this.apiUrl + "/v1/user/sub", bodyData).pipe(
-  //     map((data: any) => {
-  //       return data;
-  //     })
-  //   );
-  // }
-
   // delete data
   deleteData(body:any){
     return this.http.post(this.menuUrl + '/v1/delete' , body,this.httpOptions).pipe(map((data:any) => {
       return data;
-    }))
+    }));
+  }
+
+  getPaymentDetails(from:any,to:any){
+    return this.http.get(this.paymentUrl + `/payment/transaction?from=${from}&to=${to}` ,this.httpOptions).pipe(map((data:any)=>{
+      console.log(data);
+      return data;
+   }));
   }
 }
