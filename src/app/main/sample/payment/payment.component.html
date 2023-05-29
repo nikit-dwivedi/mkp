@@ -71,10 +71,11 @@
                 </ng-template>
               </ngx-datatable-column> -->
               <ngx-datatable-column name="Amount Received" prop="totalAmountReceived" [width]="100"></ngx-datatable-column>
-              <ngx-datatable-column name="phone" prop="phone" [width]="100"></ngx-datatable-column>
-              <ngx-datatable-column name="amount" prop="amount" [width]="100"></ngx-datatable-column>
-              <ngx-datatable-column name="date" prop="date" [width]="100" [sortable]="false"></ngx-datatable-column>
-
+              <ngx-datatable-column name="Customer" prop="client.deduction" [width]="100"></ngx-datatable-column>
+              <ngx-datatable-column name="Merchant" prop="outlet.paymentAmount" [width]="100"></ngx-datatable-column>
+              <ngx-datatable-column name="Partner" prop="partner.paymentAmount" [width]="100"></ngx-datatable-column>
+              <ngx-datatable-column name="Platform" prop="platformsPayment" [width]="100"></ngx-datatable-column>
+              <ngx-datatable-column name="Mode" prop="paymentMode" [width]="100"></ngx-datatable-column>
               <!-- <ngx-datatable-column name="Email" prop="authorizedPersonDetails.email" [width]="200"></ngx-datatable-column>
               <ngx-datatable-column name="Seller id" prop="sellerId" [width]="50"></ngx-datatable-column>
               <ngx-datatable-column name="Phone" prop="basicDetails.phone" [width]="50"></ngx-datatable-column>
