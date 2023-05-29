@@ -10,7 +10,8 @@ export const locale = {
       CATEGORY: "Category",
       PRODUCT: "Product",
       ORDER: "Order",
-      TICKET:"Ticket"
+      TICKET: "Ticket",
+      PAYMENT: "Payment",
     },
   },
 };

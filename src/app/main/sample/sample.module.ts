@@ -23,6 +23,7 @@ import { CategoryComponent } from './menu/category/category.component';
 import { ProductComponent } from './menu/product/product.component';
 import { AddOnComponent } from './menu/product/add-on/add-on.component';
 import { CustomizationComponent } from './menu/product/customization/customization.component';
+import { PaymentComponent } from './payment/payment.component';
 // import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 
 
@@ -82,10 +83,16 @@ const routes = [
     canActivate: [AuthGuard],
     data: { animation: "ticket" },
   },
+  {
+    path: "payment",
+    component: PaymentComponent,
+    canActivate: [AuthGuard],
+    data: { animation: "payment" },
+  },
 ];
 
 @NgModule({
-  declarations: [SampleComponent, HomeComponent, SellerComponent,  OrderComponent, DetailComponent, TicketComponent, AllOutletComponent, MenuComponent, CategoryComponent, ProductComponent, AddOnComponent, CustomizationComponent],
+  declarations: [SampleComponent, HomeComponent, SellerComponent,  OrderComponent, DetailComponent, TicketComponent, AllOutletComponent, MenuComponent, CategoryComponent, ProductComponent, AddOnComponent, CustomizationComponent, PaymentComponent],
   imports: [RouterModule.forChild(routes), ContentHeaderModule, TranslateModule, NgxDatatableModule, NgbModule, CoreCommonModule,ReactiveFormsModule,CommonModule],
   exports: [SellerComponent, HomeComponent,  DetailComponent,TicketComponent,OrderComponent],
 })
