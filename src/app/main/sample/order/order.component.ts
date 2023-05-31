@@ -48,7 +48,7 @@ export class OrderComponent implements OnInit {
     });
     this.pubnub.addListener({
       message: (m) => {
-        console.log(m.message);
+        
         this.ngOnInit();
       },
     });
@@ -64,8 +64,6 @@ export class OrderComponent implements OnInit {
 
     // filter our data
     const temp = this.tempData.filter(function (d) {
-      console.log(d);
-
       return d.client.clientName.toLowerCase().indexOf(val) !== -1 || d.outlet.outletName.toLowerCase().indexOf(val) !== -1 || !val;
     });
 
@@ -93,7 +91,6 @@ export class OrderComponent implements OnInit {
         this.kitchenSinkRows = this.rows;
         this.page.totalElements = this.rows.length;
         this.tempData = this.kitchenSinkRows;
-        console.log("this.rows",this.rows);
       } else {
         this.rows = [];
         this.kitchenSinkRows = this.rows;
@@ -130,7 +127,7 @@ export class OrderComponent implements OnInit {
     this.modalOpenSM(modalData, "lg");
   }
   getPageValue(event: any): any {
-    console.log(event);
+    
     this.page.pageNumber = event.offset;
     this.ngOnInit();
   }
