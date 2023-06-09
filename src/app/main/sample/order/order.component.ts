@@ -123,7 +123,6 @@ export class OrderComponent implements OnInit {
 
   showOrderDetail(modalData: any, row: any): any {
     this.orderDetail = row;
-    console.log(row);
     this.modalOpenSM(modalData, "lg");
   }
   getPageValue(event: any): any {
