@@ -109,12 +109,12 @@
             <div
               class="avatar mr-1 ml-0"
               [ngClass]="{
-                'bg-light-danger': row.status == 'Open',
-                'bg-light-dark': row.status == 'InProgress',
-                'bg-light-success': row.status == 'Closed'
+                'bg-light-danger': row.role == 'customer',
+                'bg-light-dark': row.role == 'seller',
+                'bg-light-success': row.role == 'partner'
               }"
             >
-              <div class="avatar-content">{{ row.status | initials }}</div>
+              <div class="avatar-content">{{ row.role | initials }}</div>
             </div>
           </ng-template>
           <div class="cell-line-height">
@@ -127,7 +127,7 @@
       </ng-template>
     </ngx-datatable-column>
     <ngx-datatable-column name="Description" prop="description" [width]="250"></ngx-datatable-column>
-    <ngx-datatable-column name="AssignedTo" prop="assignedTo" [width]="120"></ngx-datatable-column>
+    <ngx-datatable-column name="Date" prop="createdAt" [width]="120"></ngx-datatable-column>
     <ngx-datatable-column name="Status" prop="status" [width]="120">
         <ng-template let-status="value" ngx-datatable-cell-template>
             <div
