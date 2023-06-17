@@ -208,3 +208,9 @@ input#dateRange {
 
 
 }
+.ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-cell, .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-group-cell {
+    overflow: auto !important;
+    text-overflow: ellipsis;
+    white-space: normal !important;
+	margin-right: 20px;
+}
