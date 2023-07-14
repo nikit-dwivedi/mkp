@@ -35,6 +35,22 @@
             <input type="number" id="email-vertical" class="form-control" name="productPrice" formControlName="productPrice" placeholder="Product Price" />
           </div>
         </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="first-name-vertical">Veg/Nonveg</label>
+            <select formControlName="isVeg" class="form-control">
+              <option value="true">Veg</option>
+              <option value="false">Nonveg</option>
+            </select>
+            
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="first-name-vertical">Product Image</label>
+            <input type="file" id="email-vertical" class="form-control" name="productImage" formControlName="productImage" placeholder="Product Image" (change)="changeImage($event)" />
+          </div>
+        </div>
       </div>
       <div class="row">
         <div class="col-12 text-right">
