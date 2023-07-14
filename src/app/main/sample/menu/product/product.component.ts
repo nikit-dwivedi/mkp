@@ -80,7 +80,9 @@ export class ProductComponent implements OnInit {
       formData.append("productName", this.addProductForm.value.productName);
       formData.append("productPrice", this.addProductForm.value.productPrice);
       formData.append("productDesc", this.addProductForm.value.productDesc);
-      formData.append("productImage", this.imageData);
+      if (this.imageData) {
+        formData.append("productImage", this.imageData);
+      }
       formData.append("isVeg", this.addProductForm.value.isVeg ?? false);
 
       this.adminService.addProduct(formData).subscribe((data: any) => {
@@ -91,6 +93,7 @@ export class ProductComponent implements OnInit {
         this.modalService.dismissAll();
         this.productByCatgeoryId();
         this.addProductForm.reset();
+        this.imageData = null;
       });
     }
   }
