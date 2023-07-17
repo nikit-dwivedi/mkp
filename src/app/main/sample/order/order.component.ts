@@ -153,7 +153,7 @@ export class OrderComponent implements OnInit {
         return [];
     }
   }
-  modalClick(orderId: any, orderStatus: any) {
+  modalClick(orderId: any, orderStatus: any){
     const bodyData = { orderId, orderStatus };
     this.adminService.changeOrderStatus(bodyData).subscribe((response) => {
       if (response.status) {
