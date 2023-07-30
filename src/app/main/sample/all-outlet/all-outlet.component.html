@@ -219,21 +219,21 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body" tabindex="0" ngbAutofocus>
+  <div class="modal-body no-scroll" tabindex="0" ngbAutofocus>
     <section class="custom-spinner-time-picker">
       <div class="row">
         <div class="col-12" *ngFor="let item of daysList; let dayIndex = index">
           <h4 class="card-title">{{ item.day }}</h4>
           <div class="card-body">
             <div class="row" *ngFor="let hour of item.hours; let hourIndex = index">
-              <div class="col-6">
+              <div class="col-12 col-md-6">
                 <p class="card-text">Opening Hours</p>
                 <!-- Custom Time Picker -->
-                <ngb-timepicker [(ngModel)]="item.openingHours[hourIndex]" [size]="small" [minuteStep]="15" [spinners]="true" [meridian]="true" (ngModelChange)="concatHours(dayIndex,hourIndex)"></ngb-timepicker>
+                <ngb-timepicker [(ngModel)]="item.openingHours[hourIndex]" [size]="small" [minuteStep]="15" [spinners]="true" [meridian]="true" (ngModelChange)="concatHours(dayIndex, hourIndex)"></ngb-timepicker>
               </div>
-              <div class="col-6">
+              <div class="col-12 col-md-6">
                 <p class="card-text">Closing Hours</p>
-                <ngb-timepicker [(ngModel)]="item.closingHours[hourIndex]" [size]="small" [minuteStep]="15" [spinners]="true" [meridian]="true" (ngModelChange)="concatHours(dayIndex,hourIndex)"></ngb-timepicker>
+                <ngb-timepicker [(ngModel)]="item.closingHours[hourIndex]" [size]="small" [minuteStep]="15" [spinners]="true" [meridian]="true" (ngModelChange)="concatHours(dayIndex, hourIndex)"></ngb-timepicker>
               </div>
               <div class="d-flex flex-row-reverse align-items-end mb-100" *ngIf="hourIndex != 0">
                 <div class="form-group">
