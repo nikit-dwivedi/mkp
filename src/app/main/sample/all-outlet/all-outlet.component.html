@@ -221,18 +221,41 @@
   </div>
   <div class="modal-body" tabindex="0" ngbAutofocus>
     <section class="custom-spinner-time-picker">
-      <div class="row match-height">
-        <div class="col-12 col-md-6" *ngFor="let item of daysList">
-          <h4 class="card-title">{{ item }}</h4>
+      <div class="row">
+        <div class="col-12" *ngFor="let item of daysList; let dayIndex = index">
+          <h4 class="card-title">{{ item.day }}</h4>
           <div class="card-body">
-            <p class="card-text">Opening Hours</p>
-            <!-- Custom Time Picker -->
-            <ngb-timepicker [(ngModel)]="spinnerTPtime" [spinners]="true"></ngb-timepicker>
-            <p class="card-text">Closing Hours</p>
-            <ngb-timepicker [(ngModel)]="spinnerTPtime" [spinners]="true"></ngb-timepicker>
+            <div class="row" *ngFor="let hour of item.hours; let hourIndex = index">
+              <div class="col-6">
+                <p class="card-text">Opening Hours</p>
+                <!-- Custom Time Picker -->
+                <ngb-timepicker [(ngModel)]="item.openingHours[hourIndex]" [size]="small" [minuteStep]="15" [spinners]="true" [meridian]="true" (ngModelChange)="concatHours(dayIndex,hourIndex)"></ngb-timepicker>
+              </div>
+              <div class="col-6">
+                <p class="card-text">Closing Hours</p>
+                <ngb-timepicker [(ngModel)]="item.closingHours[hourIndex]" [size]="small" [minuteStep]="15" [spinners]="true" [meridian]="true" (ngModelChange)="concatHours(dayIndex,hourIndex)"></ngb-timepicker>
+              </div>
+              <div class="d-flex flex-row-reverse align-items-end mb-100" *ngIf="hourIndex != 0">
+                <div class="form-group">
+                  <button (click)="removeHour(dayIndex, hourIndex)" class="btn btn-outline-danger tabs text-nowrap px-1" rippleEffect>
+                    <i data-feather="trash-2" class="align-middle mr-sm-25 mr-0"></i>
+                    <span class="align-middle d-sm-inline-block d-none">Delete</span>
+                  </button>
+                </div>
+              </div>
+            </div>
             <hr />
+            <div class="d-flex flex-row-reverse mb-2">
+              <button (click)="addHour(dayIndex)" class="btn btn-outline-primary tabs" rippleEffect>
+                <i data-feather="plus" class="align-middle mr-sm-25 mr-0"></i>
+                <span class="align-middle d-sm-inline-block d-none">Add More Hours</span>
+              </button>
+            </div>
             <!--/ Custom Time Picker -->
           </div>
+          <!-- <div class="col-2">
+            <button class="btn btn-primary ml-1" (click)="addHour(dayIndex)" rippleEffect><i data-feather="plus" class="mr-0 mr-sm-1"></i></button>
+          </div> -->
         </div>
       </div>
     </section>

@@ -13,7 +13,6 @@ import { ToastrService } from "ngx-toastr";
 })
 export class AllOutletComponent implements OnInit {
   editOutletForm: FormGroup;
-
   public contentHeader: object;
   public rows: any;
   public sellerOutlet: any;
@@ -39,7 +38,50 @@ export class AllOutletComponent implements OnInit {
   loading: Boolean = false;
   isConfirm: Boolean = true;
 
-  public daysList = ["monday","tuesday","wednesday","thursday","friday","saturday","sunday"]
+  public daysList: any = [
+    {
+      day: "monday",
+      hours: [""],
+      openingHours: [{}],
+      closingHours: [{}],
+    },
+    {
+      day: "tuesday",
+      hours: [""],
+      openingHours: [{}],
+      closingHours: [{}],
+    },
+    {
+      day: "wednesday",
+      hours: [""],
+      openingHours: [{}],
+      closingHours: [{}],
+    },
+    {
+      day: "thursday",
+      hours: [""],
+      openingHours: [{}],
+      closingHours: [{}],
+    },
+    {
+      day: "friday",
+      hours: [""],
+      openingHours: [{}],
+      closingHours: [{}],
+    },
+    {
+      day: "saturday",
+      hours: [""],
+      openingHours: [{}],
+      closingHours: [{}],
+    },
+    {
+      day: "sunday",
+      hours: [""],
+      openingHours: [{}],
+      closingHours: [{}],
+    },
+  ];
 
   // config: NgbModalOptions;
   @ViewChild(AllOutletComponent) table: AllOutletComponent | any;
@@ -135,6 +177,28 @@ export class AllOutletComponent implements OnInit {
     });
   }
 
+  addHour(mainIndex: any) {
+    this.daysList[mainIndex].hours.push("");
+    this.daysList[mainIndex].openingHours.push({});
+    this.daysList[mainIndex].closingHours.push({});
+  }
+  removeHour(mainIndex: any, removingIndex: any) {
+    this.daysList[mainIndex].hours.splice(removingIndex, 1);
+    this.daysList[mainIndex].openingHours.splice(removingIndex, 1);
+    this.daysList[mainIndex].closingHours.splice(removingIndex, 1);
+  }
+  concatHours(mainIndex: any, hourIndex: any) {
+    console.log(this.daysList[mainIndex].hours);
+
+    if (this.daysList[mainIndex].openingHours[hourIndex] && this.daysList[mainIndex].closingHours[hourIndex]) {
+      console.log(this.daysList[mainIndex].openingHours[hourIndex]);
+      const { hour: opnHour, minute: opnMin } = this.daysList[mainIndex].openingHours[hourIndex];
+      const { hour: clsHour, minute: clsMin } = this.daysList[mainIndex].closingHours[hourIndex];
+
+      // Concatenate opening and closing hours
+      this.daysList[mainIndex].hours[hourIndex] = `${opnHour}:${opnMin} - ${clsHour}:${clsMin}`;
+    }
+  }
   editOutletFormSubmit() {
     this.loading == true;
     this.editOutletForm.value.cuisines = this.cuisineArray;
