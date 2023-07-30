@@ -5,7 +5,7 @@
     <section id="ngx-datatable-kitchen-sink">
       <h4 class="card-title justify-content">Ticket List</h4>
       <div class="card">
-        <div class="card-body no-scroll">
+        <div class="card-body">
           <div class="row">
             <div class="col-12 mb-50"></div>
             <div class="col-md-6 col-12">
@@ -30,7 +30,7 @@
             </div>
           </div>
           <!-- ngx-datatables responsive -->
-          <ngx-datatable  #table class="bootstrap core-bootstrap" [rows]="kitchenSinkRows"  [headerHeight]="40" [footerHeight]="50" rowHeight="auto" [limit]="basicSelectedOption">
+          <ngx-datatable  #table class="bootstrap core-bootstrap" [rows]="kitchenSinkRows" [columnMode]="ColumnMode.force" [scrollbarH]="true" [headerHeight]="40" [footerHeight]="50" rowHeight="auto" [limit]="basicSelectedOption">
             <ngx-datatable-column name="Issue" prop="issue" [width]="280">
               <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
                 <div class="d-flex align-items-center">
