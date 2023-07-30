@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { AdminService } from "../../../services/admin.service";
-import { FormControl, FormBuilder, FormGroup } from "@angular/forms";
+import { FormControl, FormBuilder, FormGroup, FormArray } from "@angular/forms";
 import { ColumnMode } from "@swimlane/ngx-datatable";
 import { Router } from "@angular/router";
 import { NgbModal, NgbModalConfig } from "@ng-bootstrap/ng-bootstrap";
@@ -25,7 +25,7 @@ export class AllOutletComponent implements OnInit {
   public kitchenSinkRows = [];
   submitted: Boolean = false;
   allOutletList: any;
-  verificationStatus:any;
+  verificationStatus: any;
   outletId: any;
   outletDetails: any;
   editOutletById: any;
@@ -36,9 +36,11 @@ export class AllOutletComponent implements OnInit {
   cuisineArray = [];
   imageArray = [];
   cuisineData: any;
-  loading:Boolean = false;
-  isConfirm:Boolean = true;
-  
+  loading: Boolean = false;
+  isConfirm: Boolean = true;
+
+  public daysList = ["monday","tuesday","wednesday","thursday","friday","saturday","sunday"]
+
   // config: NgbModalOptions;
   @ViewChild(AllOutletComponent) table: AllOutletComponent | any;
   @ViewChild("tableRowDetails") tableRowDetails: any;
@@ -52,6 +54,15 @@ export class AllOutletComponent implements OnInit {
       shopAddress: new FormControl(""),
       outletImage: new FormControl([]),
       cuisine: new FormControl([]),
+      timing: new FormGroup({
+        0: new FormArray([]),
+        1: new FormArray([]),
+        2: new FormArray([]),
+        3: new FormArray([]),
+        4: new FormArray([]),
+        5: new FormArray([]),
+        6: new FormArray([]),
+      }),
     });
   }
 
@@ -65,7 +76,7 @@ export class AllOutletComponent implements OnInit {
       this.rows = data.items;
       this.kitchenSinkRows = this.rows;
       this.tempData = this.rows;
-   });
+    });
   }
 
   // open edit cuisine Modal
@@ -77,12 +88,17 @@ export class AllOutletComponent implements OnInit {
     });
     this.allCuisineList();
   }
+  openEditTimingModal(data: any) {
+    this.modalService.open(data, {
+      scrollable: true,
+      size: "lg",
+    });
+  }
 
   // get select image
-  getImage(event:any) {
+  getImage(event: any) {
     this.imageData = event.target.files[0];
     console.log(this.imageData);
-    
   }
   // open edit outlet Modal
   openEditOutletModal(data: any, editOutlet: any) {
@@ -93,8 +109,7 @@ export class AllOutletComponent implements OnInit {
       scrollable: true,
       size: "lg",
     });
-// console.log(editOutlet.outletImage);
-
+    // console.log(editOutlet.outletImage);
 
     this.cuisineData = editOutlet.cuisines;
     this.cuisineArray = this.cuisineData.map((cuisine: any) => {
@@ -110,7 +125,6 @@ export class AllOutletComponent implements OnInit {
 
     this.editOutletById = editOutlet.outletId;
     console.log(this.editOutletById);
-    
 
     this.editOutletForm.patchValue({
       outletName: editOutlet.outletName,
@@ -120,47 +134,42 @@ export class AllOutletComponent implements OnInit {
       shopAddress: editOutlet.shopAddress,
     });
   }
-  
+
   editOutletFormSubmit() {
     this.loading == true;
     this.editOutletForm.value.cuisines = this.cuisineArray;
     // this.submitted == true;
-    if (this.editOutletForm.invalid){
+    if (this.editOutletForm.invalid) {
       this.loading = false;
       return;
-    } 
-    else {
-      
+    } else {
       const formData = new FormData();
       console.log(this.editOutletForm.value.cuisines);
-      
-      formData.append("outletName",this.editOutletForm.value.outletName);
-      formData.append("preparationTime",this.editOutletForm.value.preparationTime);
-      formData.append("cuisines",JSON.stringify(this.editOutletForm.value.cuisines));
+
+      formData.append("outletName", this.editOutletForm.value.outletName);
+      formData.append("preparationTime", this.editOutletForm.value.preparationTime);
+      formData.append("cuisines", JSON.stringify(this.editOutletForm.value.cuisines));
       // formData.append("outletImage",this.imageData);
-      formData.append("shopAddress",this.editOutletForm.value.shopAddress);
-      
+      formData.append("shopAddress", this.editOutletForm.value.shopAddress);
+
       console.log(this.editOutletForm.value.outletImage);
-      
-      if(this.imageData == undefined){
-        formData.append("outletImage",this.editOutletForm.value.outletImage);
+
+      if (this.imageData == undefined) {
+        formData.append("outletImage", this.editOutletForm.value.outletImage);
+      } else {
+        formData.append("outletImage", this.imageData);
       }
-      else{
-        formData.append("outletImage",this.imageData);
-      }
-      
-      this.adminService.editOutletByOutletId(this.editOutletById,formData).subscribe((data:any) => {
+
+      this.adminService.editOutletByOutletId(this.editOutletById, formData).subscribe((data: any) => {
         this.loading = false;
-        if(data.status){
-          this.toastr.success(data.message,"Success!");
+        if (data.status) {
+          this.toastr.success(data.message, "Success!");
           this.modalService.dismissAll();
           this.allOutlet();
-        }
-        else{
-          this.toastr.error(data.message,"error!");
+        } else {
+          this.toastr.error(data.message, "error!");
         }
       });
-      
     }
   }
 
@@ -206,7 +215,7 @@ export class AllOutletComponent implements OnInit {
   //   });
   // }
   // verify outlet
-  verifyOutlet( status: any) {
+  verifyOutlet(status: any) {
     this.adminService.changeVerificationStatusOfOutlet({ outletId: this.outletId, status }).subscribe((data: any) => {
       if (data.status) {
         this.toastr.success(data.message, "Success!");
@@ -226,8 +235,7 @@ export class AllOutletComponent implements OnInit {
       size: "lg",
     });
     this.outletId = seller.outletId;
-    this.verificationStatus=seller.isVerified
-    
+    this.verificationStatus = seller.isVerified;
   }
 
   onOffstatus() {
