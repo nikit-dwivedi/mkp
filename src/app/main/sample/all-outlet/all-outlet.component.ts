@@ -290,11 +290,13 @@ export class AllOutletComponent implements OnInit {
     this.daysList[mainIndex].closingHours.splice(removingIndex, 1);
   }
   concatHours(mainIndex: any, hourIndex: any) {
-
     if (this.daysList[mainIndex].openingHours[hourIndex] && this.daysList[mainIndex].closingHours[hourIndex]) {
-      const { hour: opnHour, minute: opnMin } = this.daysList[mainIndex].openingHours[hourIndex];
-      const { hour: clsHour, minute: clsMin } = this.daysList[mainIndex].closingHours[hourIndex];
-
+      let { hour: opnHour, minute: opnMin } = this.daysList[mainIndex].openingHours[hourIndex];
+      let { hour: clsHour, minute: clsMin } = this.daysList[mainIndex].closingHours[hourIndex];
+      opnHour = opnHour<10?`0${opnHour}`:opnHour
+      opnMin = opnMin<10?`0${opnMin}`:opnMin
+      clsHour = clsHour<10?`0${clsHour}`:clsHour
+      clsMin = clsMin<10?`0${clsMin}`:clsMin
       // Concatenate opening and closing hours
       this.daysList[mainIndex].hours[hourIndex] = `${opnHour}:${opnMin} - ${clsHour}:${clsMin}`;
     }
@@ -311,14 +313,12 @@ export class AllOutletComponent implements OnInit {
       return;
     } else {
       const formData = new FormData();
-
       formData.append("outletName", this.editOutletForm.value.outletName);
       formData.append("preparationTime", this.editOutletForm.value.preparationTime);
       formData.append("cuisines", JSON.stringify(this.editOutletForm.value.cuisines));
       // formData.append("outletImage",this.imageData);
       formData.append("shopAddress", this.editOutletForm.value.shopAddress);
       formData.append("openingHours", JSON.stringify(this.editOutletForm.value.timing));
-
 
       if (this.imageData == undefined) {
         formData.append("outletImage", this.editOutletForm.value.outletImage);
@@ -331,8 +331,8 @@ export class AllOutletComponent implements OnInit {
         if (data.status) {
           this.toastr.success(data.message, "Success!");
           this.modalService.dismissAll();
-          this.editOutletForm.reset()
-          this.daysList=[
+          this.editOutletForm.reset();
+          this.daysList = [
             {
               day: "monday",
               hours: [""],
