@@ -140,7 +140,6 @@ export class AllOutletComponent implements OnInit {
   // get select image
   getImage(event: any) {
     this.imageData = event.target.files[0];
-    console.log(this.imageData);
   }
   // open edit outlet Modal
   openEditOutletModal(data: any, editOutlet: any) {
@@ -151,7 +150,6 @@ export class AllOutletComponent implements OnInit {
       scrollable: true,
       size: "lg",
     });
-    // console.log(editOutlet.outletImage);
 
     this.cuisineData = editOutlet.cuisines;
     this.cuisineArray = this.cuisineData.map((cuisine: any) => {
@@ -166,7 +164,111 @@ export class AllOutletComponent implements OnInit {
     // }
 
     this.editOutletById = editOutlet.outletId;
-    console.log(this.editOutletById);
+    editOutlet.openingHours[0].forEach((timing: any, index: any) => {
+      let [openingHours, closingHours] = timing.split("-");
+      if (openingHours[0] === '"') {
+        openingHours = openingHours.slice(1, 6);
+        closingHours = closingHours.slice(0, 6);
+      } else {
+        openingHours = openingHours.slice(0, 5);
+        closingHours = closingHours.slice(0, 6);
+      }
+      let [opnHour, opnMin] = openingHours.split(":");
+      let [clsHour, clsMin] = openingHours.split(":");
+      this.daysList[0].openingHours[index] = { hour: Number(opnHour), minute: Number(opnMin) };
+      this.daysList[0].closingHours[index] = { hour: Number(clsHour), minute: Number(clsMin) };
+      this.daysList[0].hours[index] = timing;
+    });
+    editOutlet.openingHours[1].forEach((timing: any, index: any) => {
+      let [openingHours, closingHours] = timing.split("-");
+      if (openingHours[0] === '"') {
+        openingHours = openingHours.slice(1, 6);
+        closingHours = closingHours.slice(0, 6);
+      } else {
+        openingHours = openingHours.slice(0, 5);
+        closingHours = closingHours.slice(0, 6);
+      }
+      let [opnHour, opnMin] = openingHours.split(":");
+      let [clsHour, clsMin] = openingHours.split(":");
+      this.daysList[1].openingHours[index] = { hour: Number(opnHour), minute: Number(opnMin) };
+      this.daysList[1].closingHours[index] = { hour: Number(clsHour), minute: Number(clsMin) };
+      this.daysList[1].hours[index] = timing;
+    });
+    editOutlet.openingHours[2].forEach((timing: any, index: any) => {
+      let [openingHours, closingHours] = timing.split("-");
+      if (openingHours[0] === '"') {
+        openingHours = openingHours.slice(1, 6);
+        closingHours = closingHours.slice(0, 6);
+      } else {
+        openingHours = openingHours.slice(0, 5);
+        closingHours = closingHours.slice(0, 6);
+      }
+      let [opnHour, opnMin] = openingHours.split(":");
+      let [clsHour, clsMin] = openingHours.split(":");
+      this.daysList[2].openingHours[index] = { hour: Number(opnHour), minute: Number(opnMin) };
+      this.daysList[2].closingHours[index] = { hour: Number(clsHour), minute: Number(clsMin) };
+      this.daysList[2].hours[index] = timing;
+    });
+    editOutlet.openingHours[3].forEach((timing: any, index: any) => {
+      let [openingHours, closingHours] = timing.split("-");
+      if (openingHours[0] === '"') {
+        openingHours = openingHours.slice(1, 6);
+        closingHours = closingHours.slice(0, 6);
+      } else {
+        openingHours = openingHours.slice(0, 5);
+        closingHours = closingHours.slice(0, 6);
+      }
+      let [opnHour, opnMin] = openingHours.split(":");
+      let [clsHour, clsMin] = openingHours.split(":");
+      this.daysList[3].openingHours[index] = { hour: Number(opnHour), minute: Number(opnMin) };
+      this.daysList[3].closingHours[index] = { hour: Number(clsHour), minute: Number(clsMin) };
+      this.daysList[3].hours[index] = timing;
+    });
+    editOutlet.openingHours[4].forEach((timing: any, index: any) => {
+      let [openingHours, closingHours] = timing.split("-");
+      if (openingHours[0] === '"') {
+        openingHours = openingHours.slice(1, 6);
+        closingHours = closingHours.slice(0, 6);
+      } else {
+        openingHours = openingHours.slice(0, 5);
+        closingHours = closingHours.slice(0, 6);
+      }
+      let [opnHour, opnMin] = openingHours.split(":");
+      let [clsHour, clsMin] = openingHours.split(":");
+      this.daysList[4].openingHours[index] = { hour: Number(opnHour), minute: Number(opnMin) };
+      this.daysList[4].closingHours[index] = { hour: Number(clsHour), minute: Number(clsMin) };
+      this.daysList[4].hours[index] = timing;
+    });
+    editOutlet.openingHours[5].forEach((timing: any, index: any) => {
+      let [openingHours, closingHours] = timing.split("-");
+      if (openingHours[0] === '"') {
+        openingHours = openingHours.slice(1, 6);
+        closingHours = closingHours.slice(0, 6);
+      } else {
+        openingHours = openingHours.slice(0, 5);
+        closingHours = closingHours.slice(0, 6);
+      }
+      let [opnHour, opnMin] = openingHours.split(":");
+      let [clsHour, clsMin] = openingHours.split(":");
+      this.daysList[5].openingHours[index] = { hour: Number(opnHour), minute: Number(opnMin) };
+      this.daysList[5].closingHours[index] = { hour: Number(clsHour), minute: Number(clsMin) };
+      this.daysList[5].hours[index] = timing;
+    });
+    editOutlet.openingHours[6].forEach((timing: any, index: any) => {
+      let [openingHours, closingHours] = timing.split("-");
+      if (openingHours[0] === '"') {
+        openingHours = openingHours.slice(1, 6);
+        closingHours = closingHours.slice(0, 6);
+      } else {
+        openingHours = openingHours.slice(0, 5);
+        closingHours = closingHours.slice(0, 6);
+      }
+      let [opnHour, opnMin] = openingHours.split(":");
+      let [clsHour, clsMin] = openingHours.split(":");
+      this.daysList[6].openingHours[index] = { hour: Number(opnHour), minute: Number(opnMin) };
+      this.daysList[6].closingHours[index] = { hour: Number(clsHour), minute: Number(clsMin) };
+      this.daysList[6].hours[index] = timing;
+    });
 
     this.editOutletForm.patchValue({
       outletName: editOutlet.outletName,
@@ -188,10 +290,8 @@ export class AllOutletComponent implements OnInit {
     this.daysList[mainIndex].closingHours.splice(removingIndex, 1);
   }
   concatHours(mainIndex: any, hourIndex: any) {
-    console.log(this.daysList[mainIndex].hours);
 
     if (this.daysList[mainIndex].openingHours[hourIndex] && this.daysList[mainIndex].closingHours[hourIndex]) {
-      console.log(this.daysList[mainIndex].openingHours[hourIndex]);
       const { hour: opnHour, minute: opnMin } = this.daysList[mainIndex].openingHours[hourIndex];
       const { hour: clsHour, minute: clsMin } = this.daysList[mainIndex].closingHours[hourIndex];
 
@@ -202,21 +302,23 @@ export class AllOutletComponent implements OnInit {
   editOutletFormSubmit() {
     this.loading == true;
     this.editOutletForm.value.cuisines = this.cuisineArray;
+    for (let index = 0; index < 7; index++) {
+      this.editOutletForm.value.timing[index] = this.daysList[index].hours;
+    }
     // this.submitted == true;
     if (this.editOutletForm.invalid) {
       this.loading = false;
       return;
     } else {
       const formData = new FormData();
-      console.log(this.editOutletForm.value.cuisines);
 
       formData.append("outletName", this.editOutletForm.value.outletName);
       formData.append("preparationTime", this.editOutletForm.value.preparationTime);
       formData.append("cuisines", JSON.stringify(this.editOutletForm.value.cuisines));
       // formData.append("outletImage",this.imageData);
       formData.append("shopAddress", this.editOutletForm.value.shopAddress);
+      formData.append("openingHours", JSON.stringify(this.editOutletForm.value.timing));
 
-      console.log(this.editOutletForm.value.outletImage);
 
       if (this.imageData == undefined) {
         formData.append("outletImage", this.editOutletForm.value.outletImage);
@@ -229,6 +331,51 @@ export class AllOutletComponent implements OnInit {
         if (data.status) {
           this.toastr.success(data.message, "Success!");
           this.modalService.dismissAll();
+          this.editOutletForm.reset()
+          this.daysList=[
+            {
+              day: "monday",
+              hours: [""],
+              openingHours: [{}],
+              closingHours: [{}],
+            },
+            {
+              day: "tuesday",
+              hours: [""],
+              openingHours: [{}],
+              closingHours: [{}],
+            },
+            {
+              day: "wednesday",
+              hours: [""],
+              openingHours: [{}],
+              closingHours: [{}],
+            },
+            {
+              day: "thursday",
+              hours: [""],
+              openingHours: [{}],
+              closingHours: [{}],
+            },
+            {
+              day: "friday",
+              hours: [""],
+              openingHours: [{}],
+              closingHours: [{}],
+            },
+            {
+              day: "saturday",
+              hours: [""],
+              openingHours: [{}],
+              closingHours: [{}],
+            },
+            {
+              day: "sunday",
+              hours: [""],
+              openingHours: [{}],
+              closingHours: [{}],
+            },
+          ];
           this.allOutlet();
         } else {
           this.toastr.error(data.message, "error!");
