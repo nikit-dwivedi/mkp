@@ -24,6 +24,7 @@ import { ProductComponent } from './menu/product/product.component';
 import { AddOnComponent } from './menu/product/add-on/add-on.component';
 import { CustomizationComponent } from './menu/product/customization/customization.component';
 import { PaymentComponent } from './payment/payment.component';
+import { MenuCheckComponent } from './menu-check/menu-check.component';
 // import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 
 
@@ -50,6 +51,12 @@ const routes = [
   {
     path: "allOutlet",
     component: AllOutletComponent,
+    canActivate: [AuthGuard],
+    data: { animation: "allOutlet" },
+  },
+  {
+    path: "allOutlet/check-menu",
+    component: MenuCheckComponent,
     canActivate: [AuthGuard],
     data: { animation: "allOutlet" },
   },
@@ -92,7 +99,7 @@ const routes = [
 ];
 
 @NgModule({
-  declarations: [SampleComponent, HomeComponent, SellerComponent,  OrderComponent, DetailComponent, TicketComponent, AllOutletComponent, MenuComponent, CategoryComponent, ProductComponent, AddOnComponent, CustomizationComponent, PaymentComponent],
+  declarations: [SampleComponent, HomeComponent, SellerComponent,  OrderComponent, DetailComponent, TicketComponent, AllOutletComponent, MenuComponent, CategoryComponent, ProductComponent, AddOnComponent, CustomizationComponent, PaymentComponent, MenuCheckComponent],
   imports: [RouterModule.forChild(routes), ContentHeaderModule, TranslateModule, NgxDatatableModule, NgbModule, CoreCommonModule,ReactiveFormsModule,CommonModule],
   exports: [SellerComponent, HomeComponent,  DetailComponent,TicketComponent,OrderComponent],
 })

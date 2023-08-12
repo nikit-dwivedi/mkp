@@ -147,6 +147,14 @@ export class AdminService {
     );
   }
 
+  getFullMenu(outletId:any){
+    return this.http.get(this.menuUrl + "/v1/menu/full/" + outletId, this.Header()).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
   // get outlet category
   getCategory(outletId: any) {
     return this.http.get(this.menuUrl + "/v1/menu/category/" + outletId, this.Header()).pipe(

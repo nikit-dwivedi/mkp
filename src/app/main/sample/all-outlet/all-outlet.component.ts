@@ -464,6 +464,9 @@ export class AllOutletComponent implements OnInit {
   navigateToDetail(outletDetails: any) {
     this.router.navigate(["menu"], { state: { outletDetails } });
   }
+  navigateToMenuCheck(outletDetails: any) {
+    this.router.navigate([`allOutlet/check-menu`], { queryParams: { oId: outletDetails.outletId } });
+  }
 
   filterUpdate(event: any) {
     const val = event.target.value.toLowerCase();

@@ -1,0 +1,146 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <div class="row match-height" *ngIf="currentIndex">
+      <!-- Goal Overview Card -->
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h4 class="card-title">{{ menuList[currentIndex - 1].categoryName }}</h4>
+            <i data-feather="help-circle" class="font-medium-3 text-muted cursor-pointer"></i>
+          </div>
+          <div class="card-body p-0">
+            <div id="goalChartoptions" class="mb-1 mt-1 pt-1" #goalChartRef>
+              <!-- sub category -->
+              <div *ngIf="menuList[currentIndex - 1].hasSubCategory">
+                <div class="col-12" *ngFor="let subCategory of menuList[currentIndex - 1].subCategoryList">
+                  <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                      <h4 class="card-title">{{ subCategory.categoryName }}</h4>
+                      <i data-feather="help-circle" class="font-medium-3 text-muted cursor-pointer"></i>
+                    </div>
+                    <div class="card-body p-0">
+                      <div id="goalChartoptions" class="mb-1 mt-1 pt-1" #goalChartRef>
+                        <!-- Company Table -->
+                        <div class="col-12">
+                          <div class="card card-company-table">
+                            <div class="card-body p-0">
+                              <div class="table-responsive">
+                                <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th>Name</th>
+                                      <th>Price</th>
+                                      <th>Veg/Non-Veg</th>
+                                      <th>Description</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let product of subCategory.productList">
+                                      <td>
+                                        <div class="d-flex align-items-center">
+                                          <div class="avatar rounded" *ngIf="product.productImage">
+                                            <div class="avatar-content">
+                                              <img [src]="product.productImage" alt="Toolbar svg" />
+                                            </div>
+                                          </div>
+                                          <div>
+                                            <div class="font-weight-bolder m-1">{{ product.productName }}</div>
+                                            <div class="font-small-2 text-muted m-1">{{ product.productId }}</div>
+                                          </div>
+                                        </div>
+                                      </td>
+
+                                      <td>{{ product.productPrice }}</td>
+                                      <td>
+                                        <div class="d-flex align-items-center">
+                                          <span class="font-weight-bolder mr-1">{{ product.isVeg ? "Veg" : "Non Veg" }}</span>
+                                          <i data-feather="stop-circle" class="text-success font-medium-1" *ngIf="product.isVeg"></i>
+                                          <i data-feather="stop-circle" class="text-danger font-medium-1" *ngIf="!product.isVeg"></i>
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <div class="d-flex align-items-center">
+                                          <span>{{ product.productDesc }}</span>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!--/ Company Table -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- / sub category -->
+              <!-- Company Table -->
+              <div class="col-12" *ngIf="menuList[currentIndex - 1].hasProduct">
+                <div class="card card-company-table">
+                  <div class="card-body p-0">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Veg/Non-Veg</th>
+                            <th>Description</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let product of menuList[currentIndex - 1].productList">
+                            <td>
+                              <div class="d-flex align-items-center">
+                                <div class="avatar rounded" *ngIf="product.productImage">
+                                  <div class="avatar-content">
+                                    <img [src]="product.productImage" alt="Toolbar svg" />
+                                  </div>
+                                </div>
+                                <div>
+                                  <div class="font-weight-bolder m-1">{{ product.productName }}</div>
+                                  <div class="font-small-2 text-muted m-1">{{ product.productId }}</div>
+                                </div>
+                              </div>
+                            </td>
+
+                            <td>{{ product.productPrice }}</td>
+                            <td>
+                              <div class="d-flex align-items-center">
+                                <span class="font-weight-bolder mr-1">{{ product.isVeg ? "Veg" : "Non Veg" }}</span>
+                                <i data-feather="stop-circle" class="text-success font-medium-1" *ngIf="product.isVeg"></i>
+                                <i data-feather="stop-circle" class="text-danger font-medium-1" *ngIf="!product.isVeg"></i>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="d-flex align-items-center">
+                                <span>{{ product.productDesc }}</span>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--/ Company Table -->
+            </div>
+            <div class="row border-top text-center mx-0">
+              <div class="col-6 border-right py-1">
+                <button class="btn btn-outline-primary font-weight-bolder mb-0" (click)="changeIndex(false)" [disabled]="currentIndex == 1">Previous</button>
+              </div>
+              <div class="col-6 py-1">
+                <button class="btn btn-outline-primary font-weight-bolder mb-0" (click)="changeIndex(true)" [disabled]="currentIndex == lastIndex">Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--/ Goal Overview Card -->
+    </div>
+  </div>
+</div>
