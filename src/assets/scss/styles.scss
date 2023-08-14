@@ -9,6 +9,10 @@ NOTE:
 PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
 WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
 
+*{
+	margin: 0;
+	padding: 0;
+}
 $blue: #f59449 !default;
 
 button.block-btn.btn.btn-primary {
@@ -38,7 +42,9 @@ section.category-display {
 	justify-content: space-evenly;
 	width: 100%;
 }
-
+.add-btn{
+	gap: 10px;
+}
 .page {
 	width: 35%;
 }
@@ -50,6 +56,8 @@ section.category-display {
 .page2 .page {
 	width: 50%;
 }
+
+
 
 .page2 .page2 {
 	width: 50%;

@@ -6,7 +6,14 @@
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center">
             <h4 class="card-title">{{ menuList[currentIndex - 1].categoryName }}</h4>
-            <i data-feather="help-circle" class="font-medium-3 text-muted cursor-pointer"></i>
+            
+            <div class="add-btn d-flex justify-content-between align-items-center">
+              <button class="btn btn-primary" (click)="openAddCategoryModal(content4,menuList[currentIndex - 1])">Add New</button>
+            <a href="javascript:void(0)" (click)="openeditCategorymodal(content2, menuList[currentIndex - 1])"><i data-feather="edit" class="text-primary cursor-pointer"></i></a>
+            <a href="javascript:void(0)" (click)="openDeleteCategoryModal(content5,menuList[currentIndex - 1])"><i data-feather="trash-2" class="ml-1 text-primary cursor-pointer"></i></a>
+            
+          </div>
+            <!-- <i data-feather="help-circle" class="font-medium-3 text-muted cursor-pointer"></i> -->
           </div>
           <div class="card-body p-0">
             <div id="goalChartoptions" class="mb-1 mt-1 pt-1" #goalChartRef>
@@ -14,9 +21,13 @@
               <div *ngIf="menuList[currentIndex - 1].hasSubCategory">
                 <div class="col-12" *ngFor="let subCategory of menuList[currentIndex - 1].subCategoryList">
                   <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="card-header d-flex justify-content-between">
                       <h4 class="card-title">{{ subCategory.categoryName }}</h4>
-                      <i data-feather="help-circle" class="font-medium-3 text-muted cursor-pointer"></i>
+                      <div class="add-btn d-flex justify-content-between align-items-center">
+                        <button class="btn btn-primary" (click)="openAddProductModal(content1,subCategory)">Add New</button>
+                      <a href="javascript:void(0)" (click)="openeditCategorymodal(content2, subCategory)"> <i data-feather="edit" class="text-primary cursor-pointer"></i></a>
+                      <a href="javascript:void(0)" (click)="openDeleteCategoryModal(content5,subCategory)"> <i data-feather="trash-2" class="ml-1 text-primary cursor-pointer"></i></a>
+                    </div>
                     </div>
                     <div class="card-body p-0">
                       <div id="goalChartoptions" class="mb-1 mt-1 pt-1" #goalChartRef>
@@ -32,6 +43,7 @@
                                       <th>Price</th>
                                       <th>Veg/Non-Veg</th>
                                       <th>Description</th>
+                                      <th>Action</th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -61,6 +73,14 @@
                                       <td>
                                         <div class="d-flex align-items-center">
                                           <span>{{ product.productDesc }}</span>
+                                        </div>
+                                      </td>
+                                      <td>
+                                        
+                                        <div class="d-flex align-items-center">
+                                          <a href="javascript:void(0)" (click)="openEditProductModal(content, product)"><i data-feather="edit" class="text-primary cursor-pointer"></i></a>
+                                          <a href="javascript:void(0)" (click)="openDeleteProductModal(content3,product)"><i data-feather="trash-2" class="ml-1 text-primary cursor-pointer"></i></a>
+                                          <a href="javascript:void(0)" (click)="openEditProductModal(content, product)"><i data-feather="eye" class="ml-1 text-primary cursor-pointer"></i></a>
                                         </div>
                                       </td>
                                     </tr>
@@ -144,3 +164,215 @@
     </div>
   </div>
 </div>
+
+
+<!-- open edit category / subcategory Modal -->
+<ng-template #content2 let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title" id="myModalLabel1">Edit Category</h4>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <form [formGroup]="editCategoryForm" class="form form-vertical" (ngSubmit)="editCategoryFormSubmit()">
+      <div class="row">
+          <div class="col-8">
+              <div class="form-group">
+                  <label for="first-name-vertical">Category Name</label>
+                  <input type="text" id="first-name-vertical" class="form-control" name="categoryName"
+                      formControlName="categoryName" placeholder="Category Name" />
+              </div>
+          </div>
+          <div class="col-4">
+            <button type="submit" rippleEffect class="block-btn btn btn-primary">Save</button>
+          </div>
+      </div>
+      
+  </form>
+  </div>
+  
+</ng-template>
+<!-- open edit product Modal -->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel1">Edit Product</h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <form [formGroup]="editProductForm" class="form form-vertical" (ngSubmit)="editProductFormSubmit()">
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label for="first-name-vertical">Product Name</label>
+            <input type="text" id="first-name-vertical" class="form-control" name="productName" formControlName="productName" placeholder="Product Name" />
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="first-name-vertical">Product Price</label>
+            <input type="number" id="email-vertical" class="form-control" name="productPrice" formControlName="productPrice" placeholder="Product Price" />
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="first-name-vertical">Veg/Nonveg</label>
+            <select formControlName="isVeg" class="form-control">
+              <option value="true">Veg</option>
+              <option value="false">Nonveg</option>
+            </select>
+            
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="first-name-vertical">Product Image</label>
+            <input type="file" id="email-vertical" class="form-control" name="productImage" formControlName="productImage" placeholder="Product Image" (change)="changeImage($event)" />
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="first-name-vertical">Product Description</label>
+            <input type="text" id="email-vertical" class="form-control" name="productDesc" formControlName="productDesc" placeholder="Product Des" />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 text-right">
+          <button type="submit" rippleEffect class="block-btn btn btn-primary">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<!-- open delete product Modal -->
+<ng-template #content3 let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title" id="myModalLabel1">Delete Product</h4>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+      <p>
+          Are you sure you want to Delete ?
+      </p>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="block-btn btn btn-primary" (click)="modal.close('Cross click')" rippleEffect>
+          Cancel
+      </button>
+      <button type="button" class="block-btn btn btn-primary" (click)="modal.close('Accept click')" (click)="deleteProduct()" rippleEffect>
+          Confirm
+      </button>
+  </div>
+</ng-template>
+
+<!-- open add product Modal -->
+<ng-template #content1 let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel1">Add Product</h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <form [formGroup]="addProductForm" class="form form-vertical" (ngSubmit)="addProductFormSubmit()">
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label for="first-name-vertical">Product Name</label>
+            <input type="text" id="first-name-vertical" class="form-control" name="productName" formControlName="productName" placeholder="Product Name" />
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="first-name-vertical">Product Price</label>
+            <input type="number" id="email-vertical" class="form-control" name="productPrice" formControlName="productPrice" placeholder="Product Price" />
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="first-name-vertical">Product Description</label>
+            <input type="text" id="email-vertical" class="form-control" name="productDesc" formControlName="productDesc" placeholder="Product Description" />
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="first-name-vertical">Product Image</label>
+            <input type="file" id="email-vertical" class="form-control" name="productImage" formControlName="productImage" placeholder="Product Image" (change)="getImage($event)" />
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="first-name-vertical">Is Veg</label>
+            <!-- <input type="checkbox" id="email-vertical" class="form-control" name="isVeg" formControlName="isVeg" placeholder="isVeg" /> -->
+            <div class="custom-control custom-control-success custom-switch">
+              <input type="checkbox" checked class="form-control custom-control-input" id="customSwitch4" formControlName="isVeg" [(ngModel)]="addProductForm.isVeg"/>
+              <label class="custom-control-label" for="customSwitch4"></label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 text-right">
+          <button type="submit" rippleEffect class="block-btn btn btn-primary">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<!-- open add category Modal -->
+<ng-template #content4 let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title" id="myModalLabel1">Add Category</h4>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <form [formGroup]="addCategoryForm" class="form form-vertical" (ngSubmit)="addCategoryFormSubmit()">
+      <div class="row">
+          <div class="col-8">
+              <div class="form-group">
+                  <label for="first-name-vertical">Category Name</label>
+                  <input type="text" id="first-name-vertical" class="form-control" name="categoryName"
+                      formControlName="categoryName" placeholder="Category Name" />
+              </div>
+          </div>
+          <div class="col-4">
+            <button type="submit" rippleEffect class="block-btn btn btn-primary">Save</button>
+          </div>
+      </div>
+      
+  </form>
+  </div>
+  
+</ng-template>
+
+<!-- open delete category Modal -->
+<ng-template #content5 let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title" id="myModalLabel1">Delete Category</h4>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+      <p>
+          Are you sure you want to Delete ?
+      </p>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="block-btn btn btn-primary" (click)="modal.close('Cross click')" rippleEffect>
+          Cancel
+      </button>
+      <button type="button" class="block-btn btn btn-primary" (click)="modal.close('Accept click')" (click)="deleteCategories()" rippleEffect>
+          Confirm
+      </button>
+  </div>
+</ng-template>
