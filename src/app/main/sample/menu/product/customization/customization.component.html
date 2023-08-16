@@ -186,7 +186,7 @@
                         <i data-feather="more-vertical" class="text-primary cursor-pointer mr-50"></i>
                       </a>
                       <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState">
-                        <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="navigateToDetail(row)"><i data-feather="file-text" class="mr-50"></i> Details</a>
+                        <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="openNestedCustomization(content5,row)"><i data-feather="file-text" class="mr-50"></i> Details</a>
                         <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="changeOutletStatus(content,row)"><i data-feather="archive" class="mr-50"></i> Change Status</a>
                         <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"><i data-feather="trash-2" class="mr-50"></i> Delete</a>
                       </div>
@@ -279,3 +279,74 @@
     </form>
   </div>
 </ng-template>
+
+<!-- open view nested customization -->
+<ng-template #content5 let-modal let-c="close">
+  <div class="modal-header">
+    
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <section id="ngx-datatable-kitchen-sink">
+      <h4 class="card-title justify-content">Customization List</h4>
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 mb-50"></div>
+            <div class="col-md-6 col-12">
+              <div class="d-flex justify-content-between align-items-center m-1">
+                <label class="d-flex align-items-center"
+                  >Show
+                  <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                    <option value="5" selected="selected">05</option>
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                  entries</label>
+              </div>
+            </div>
+            <div class="col-md-6 col-12 d-flex justify-content-md-end">
+              <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+                <label class="d-flex align-items-center">Search<input type="search" placeholder="Search" class="form-control ml-25" (keyup)="filterUpdate($event)" (search)="filterUpdate($event)" /></label>
+                <button class="add-addon block-btn btn btn-primary" (click)="openAddCustomizationModal(content2)">Add New</button>
+              </div>
+            </div>
+          </div>
+          <!-- ngx-datatables responsive -->
+          <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force" [headerHeight]="40" [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="basicSelectedOption" [rows]="kitchenSinkRows2" [scrollbarH]="true" >
+         
+            <ngx-datatable-column name="Variation Name" prop="variationName" [width]="50"></ngx-datatable-column>
+            <ngx-datatable-column name="Min Selection" prop="minSelection" [width]="50"></ngx-datatable-column>
+            <ngx-datatable-column name="Max Selection" prop="maxSelection" [width]="50"></ngx-datatable-column>
+            
+           <ngx-datatable-column name="Action" [width]="50" [sortable]="false">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <div class="d-flex align-items-center">
+                  <div ngbDropdown container="body">
+                    <a ngbDropdownToggle href="javascript:void(0);" class="hide-arrow" id="dropdownBrowserState" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i data-feather="more-vertical" class="text-primary cursor-pointer mr-50"></i>
+                    </a>
+                    <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState">
+                      <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="openViewVariantModal(content1,row2)"><i data-feather="file-text" class="mr-50"></i> Details</a>
+                      <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="changeOutletStatus(content,row2)"><i data-feather="archive" class="mr-50"></i> Change Status</a>
+                      <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"><i data-feather="trash-2" class="mr-50"></i> Delete</a>
+                    </div>
+                  </div>
+
+                  <a href="javascript:void(0)" (click)="openEditCustomizationModal(content,row)"><i data-feather="edit" class="text-primary cursor-pointer"></i></a>
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+          <!--/ ngx-datatables responsive -->
+        </div>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+

@@ -13,36 +13,43 @@ export class CustomizationComponent implements OnInit {
   public contentHeader: object;
   public rows: any;
   public rows1: any;
+  public rows2: any;
   public sellerOutlet: any;
   public sellerDetail: any;
   private tempData = [];
   private tempData1 = [];
+  private tempData2 = [];
   public ColumnMode = ColumnMode;
-  
+
 
   public basicSelectedOption: number = 5;
   public basicSelectedOption1: number = 5;
   public kitchenSinkRows = [];
   public kitchenSinkRows1 = [];
+  public kitchenSinkRows2 = [];
 
   @Input() productData: any;
   @ViewChild(CustomizationComponent) table: CustomizationComponent | any;
   @ViewChild("tableRowDetails") tableRowDetails: any;
   submitted: Boolean = false;
   editVariationForm: FormGroup;
-  addVariationForm:FormGroup;
-  addVariantForm:FormGroup;
-  editVariantForm:FormGroup;
+  addVariationForm: FormGroup;
+  addVariantForm: FormGroup;
+  editVariantForm: FormGroup;
   customizationList: any;
   customizeById: any;
   variationList: any[];
   variantData: any;
-  editVariant:any;
-constructor(private adminService: AdminService, private modalService: NgbModal, config: NgbModalConfig, private fb: FormBuilder, private toastr: ToastrService) { }
+  editVariant: any;
+  nextCustom: any
+  nextCustomization: any;
+  nextCustomizationList: any;
+  NextvariantData:any;
+  constructor(private adminService: AdminService, private modalService: NgbModal, config: NgbModalConfig, private fb: FormBuilder, private toastr: ToastrService) { }
 
   ngOnInit(): void {
 
-  this.getVariation();
+    this.getVariation();
 
     // add variation form
     this.addVariationForm = this.fb.group({
@@ -65,7 +72,7 @@ constructor(private adminService: AdminService, private modalService: NgbModal, 
     // edit variant form
     this.editVariantForm = this.fb.group({
       variantName: new FormControl(''),
-      variantPrice:new FormControl('')
+      variantPrice: new FormControl('')
     })
   }
 
@@ -86,41 +93,41 @@ constructor(private adminService: AdminService, private modalService: NgbModal, 
   }
 
 
-  openAddCustomizationModal(data:any){
-    this.modalService.open(data,{
-      centered:true,
-      scrollable:true,
-      size:'lg'
+  openAddCustomizationModal(data: any) {
+    this.modalService.open(data, {
+      centered: true,
+      scrollable: true,
+      size: 'lg'
     })
 
   }
 
-  addCustomizationFormSubmit(){
+  addCustomizationFormSubmit() {
     this.submitted = true;
-    if(this.addVariationForm.invalid){
+    if (this.addVariationForm.invalid) {
       return;
     }
-    else{
+    else {
 
       const formData = {
-        productId:this.productData.productId,
-        variationName:this.addVariationForm.value.variationName
+        productId: this.productData.productId,
+        variationName: this.addVariationForm.value.variationName
       }
-     this.adminService.addCustomization(formData).subscribe((data:any) => {
-      
-      
-      if(data.status){
-        this.toastr.success(data.message,"Success");
-        this.getVariation();
-      }
-      else{
-        this.toastr.error(data.message,"failed");
-        this.getVariation();
-      }
-     })
+      this.adminService.addCustomization(formData).subscribe((data: any) => {
+
+
+        if (data.status) {
+          this.toastr.success(data.message, "Success");
+          this.getVariation();
+        }
+        else {
+          this.toastr.error(data.message, "failed");
+          this.getVariation();
+        }
+      })
     }
   }
-  
+
   // get Variation list
   getVariation() {
     this.adminService.getProductCustomization(this.productData.productId).subscribe((data: any) => {
@@ -131,39 +138,39 @@ constructor(private adminService: AdminService, private modalService: NgbModal, 
       this.rows = this.variationList;
       this.kitchenSinkRows = this.rows;
       this.tempData = this.rows;
-  });
+    });
   }
 
   // open add variant Modal
-  openAddVariantModal(data:any){
-    this.modalService.open(data,{
-      centered:true,
-      scrollable:true,
-      size:'lg'
-     });
+  openAddVariantModal(data: any) {
+    this.modalService.open(data, {
+      centered: true,
+      scrollable: true,
+      size: 'lg'
+    });
   }
 
-  addVariantFormSubmit(){
+  addVariantFormSubmit() {
     this.submitted = true;
-    if(this.addVariantForm.invalid){
+    if (this.addVariantForm.invalid) {
       return;
     }
-    else{
+    else {
       const formData = {
-        variationId:this.customizationList.variationId,
-        variantName:this.addVariantForm.value.variantName,
-        variantPrice:this.addVariantForm.value.variantPrice
+        variationId: this.customizationList.variationId,
+        variantName: this.addVariantForm.value.variantName,
+        variantPrice: this.addVariantForm.value.variantPrice
       }
-     this.adminService.addVariation(formData).subscribe((data:any) => {
-        if(data.status){
-          this.toastr.success(data.message,"Suceess!");
+      this.adminService.addVariation(formData).subscribe((data: any) => {
+        if (data.status) {
+          this.toastr.success(data.message, "Suceess!");
           this.getVariation();
         }
-        else{
-          this.toastr.error(data.message,"failed");
+        else {
+          this.toastr.error(data.message, "failed");
           this.getVariation();
         }
-        
+
       })
     }
   }
@@ -175,58 +182,58 @@ constructor(private adminService: AdminService, private modalService: NgbModal, 
       scrollable: true,
       size: 'xl'
     });
-   
-    this.variantData = view.variantList
+    console.log(view);
+    
+   this.variantData = view.variantList
 
-   
+
     this.getVariant();
   }
   getVariant() {
-   
     this.rows1 = this.variantData;
     this.kitchenSinkRows1 = this.rows1;
     this.tempData1 = this.rows1;
-   
+
   }
 
   // open open edit variant Modal
-  openEditVariantModal(data:any,edit:any){
-    this.modalService.open(data,{
-      centered:true,
-      scrollable:true,
-      size:'lg'
+  openEditVariantModal(data: any, edit: any) {
+    this.modalService.open(data, {
+      centered: true,
+      scrollable: true,
+      size: 'lg'
     });
     this.editVariant = edit
-    
+
     this.editVariantForm.patchValue({
-      variantName:edit.variantName,
-      variantPrice:edit.displayPrice
+      variantName: edit.variantName,
+      variantPrice: edit.displayPrice
     });
   }
 
-  editVariantFormSubmit(){
+  editVariantFormSubmit() {
     this.submitted = true;
-    if(this.editVariantForm.invalid){
+    if (this.editVariantForm.invalid) {
       return;
     }
-    else{
+    else {
       const formData = {
-        variantId:this.editVariant.variantId,
-        variantName:this.editVariantForm.value.variantName,
-        variantPrice:this.editVariantForm.value.variantPrice
+        variantId: this.editVariant.variantId,
+        variantName: this.editVariantForm.value.variantName,
+        variantPrice: this.editVariantForm.value.variantPrice
       }
 
-      this.adminService.editVariant(formData).subscribe((data:any) => {
-       
-        
-        if(data.status){
-          this.toastr.success(data.message,"Success");
+      this.adminService.editVariant(formData).subscribe((data: any) => {
+
+
+        if (data.status) {
+          this.toastr.success(data.message, "Success");
           this.getVariation();
         }
-        else{
-          this.toastr.error(data.message,"failed");
+        else {
+          this.toastr.error(data.message, "failed");
           this.getVariation();
-          
+
         }
       })
     }
@@ -240,8 +247,8 @@ constructor(private adminService: AdminService, private modalService: NgbModal, 
       size: 'lg'
     });
     this.customizeById = edit;
-   
-   this.editVariationForm.patchValue({
+
+    this.editVariationForm.patchValue({
       variationName: edit.variationName,
       minSelection: edit.minSelection,
       maxSelection: edit.maxSelection
@@ -259,10 +266,8 @@ constructor(private adminService: AdminService, private modalService: NgbModal, 
         minSelection: this.editVariationForm.value.minSelection,
         maxSelection: this.editVariationForm.value.maxSelection
       }
-
-
       this.adminService.editVariation(this.customizationList.variationId, formData).subscribe((data: any) => {
-       
+
         if (data.status) {
           this.toastr.success(data.message, "Success!");
           this.getVariation();
@@ -275,6 +280,31 @@ constructor(private adminService: AdminService, private modalService: NgbModal, 
     }
   }
 
+  openNestedCustomization(data: any, nestedCustom: any) {
+    this.modalService.open(data, {
+      centered: true,
+      scrollable: true,
+      size: 'xl',
+
+    });
+    console.log(nestedCustom);
+
+    this.nextCustom = nestedCustom
+    this.getNextCustom();
+  
+  }
+
+  getNextCustom() {
+    this.adminService.getProductCustomization(this.nextCustom.variantId).subscribe((data: any) => {
+      this.nextCustomizationList = data.items;
+      this.nextCustomization = []
+      this.nextCustomization.push(this.nextCustomizationList);
+      this.rows2 = this.nextCustomization;
+      this.kitchenSinkRows2 = this.rows2;
+      this.tempData2 = this.rows2;
+      console.log(this.nextCustomization);
+});
+  }
 
   filterUpdate(event: any) {
     const val = event.target.value.toLowerCase();
