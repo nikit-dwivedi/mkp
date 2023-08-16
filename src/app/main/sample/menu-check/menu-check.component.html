@@ -80,7 +80,7 @@
                                         <div class="d-flex align-items-center">
                                           <a href="javascript:void(0)" (click)="openEditProductModal(content, product)"><i data-feather="edit" class="text-primary cursor-pointer"></i></a>
                                           <a href="javascript:void(0)" (click)="openDeleteProductModal(content3,product)"><i data-feather="trash-2" class="ml-1 text-primary cursor-pointer"></i></a>
-                                          <a href="javascript:void(0)" (click)="openEditProductModal(content, product)"><i data-feather="eye" class="ml-1 text-primary cursor-pointer"></i></a>
+                                          <a href="javascript:void(0)" (click)="openViewProductModal(viewProduct, product)"><i data-feather="eye" class="ml-1 text-primary cursor-pointer"></i></a>
                                         </div>
                                       </td>
                                     </tr>
@@ -374,5 +374,64 @@
       <button type="button" class="block-btn btn btn-primary" (click)="modal.close('Accept click')" (click)="deleteCategories()" rippleEffect>
           Confirm
       </button>
+  </div>
+</ng-template>
+
+<!-- open view product modal -->
+<ng-template #viewProduct let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel1">View Product</h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <div class="card">
+      <div class="card-body">
+        <div class="product-view">
+          <div class="product-view-parent">
+            <p>Product Name</p>
+            <p>{{ productDetails?.productName }}</p>
+          </div>
+          <div class="product-view-parent">
+            <p>Product Price</p>
+            <p>{{ productDetails?.productPrice }}</p>
+          </div>
+          <div class="product-view-parent">
+            <p>Is Veg</p>
+            <p>{{ productDetails?.isVeg }}</p>
+          </div>
+          <div class="product-view-parent">
+            <p>in Stock</p>
+            <!-- <p>{{ productDetails?.inStock }}</p> -->
+            <div class="custom-control custom-switch custom-control-inline">
+              <input type="checkbox" class="custom-control-input" id="customSwitch1" [(ngModel)]="switcher"/>
+              <label class="custom-control-label" for="customSwitch1"></label>
+            </div>
+          </div>
+          <div class="product-view-parent">
+            <p>Product Image</p>
+            <p><img src="{{ productDetails?.productImage }}" alt="" /></p>
+          </div>
+
+          <ul ngbNav #navJustified="ngbNav" class="nav-tabs nav-justified">
+            <li ngbNavItem>
+              <a ngbNavLink>Customization</a>
+              <ng-template ngbNavContent>
+                <app-customization *ngIf="productDetails" [productData]="productDetails"></app-customization>
+              </ng-template>
+            </li>
+            <li ngbNavItem>
+              <a ngbNavLink>Add On</a>
+              <ng-template ngbNavContent>
+                <app-add-on [productData]="productDetails"></app-add-on>
+              </ng-template>
+            </li>
+          </ul>
+          <div [ngbNavOutlet]="navJustified" class="mt-2"></div>
+
+        </div>
+      </div>
+    </div>
   </div>
 </ng-template>

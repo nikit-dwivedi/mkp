@@ -29,6 +29,12 @@ export class MenuCheckComponent implements OnInit {
   editCategory:any;
   categoryData:any;
   deleteCategory: any;
+  productDetails: any;
+  producyById: any;
+  view:any;
+  hasCustom:any;
+  hasAddon:any;
+  switcher:any
   constructor(private _route: ActivatedRoute, private modalService: NgbModal, private toastr:ToastrService ,config: NgbModalConfig, private fb: FormBuilder, private _router: Router, private adminService: AdminService) { }
 
   ngOnInit(): void {
@@ -314,5 +320,22 @@ addCategoryFormSubmit(){
     });
   }
 
+}
+
+openViewProductModal(data: any, view: any) {
+  this.modalService.open(data, {
+    ariaLabelledBy: "modal-basic-title",
+    size: "lg",
+    windowClass: "product-detail-modal",
+  });
+  this.view = view.productId;
+
+  this.adminService.viewProduct(this.view).subscribe((data: any) => {
+    this.productDetails = data.items;
+
+    this.hasCustom = this.productDetails.hasCustomization;
+    this.hasAddon = this.productDetails.hasAddOn;
+    this.switcher = this.productDetails.inStock;
+  });
 }
 }
