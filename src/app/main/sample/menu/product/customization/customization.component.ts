@@ -14,11 +14,13 @@ export class CustomizationComponent implements OnInit {
   public rows: any;
   public rows1: any;
   public rows2: any;
+  public rows3: any;
   public sellerOutlet: any;
   public sellerDetail: any;
   private tempData = [];
   private tempData1 = [];
   private tempData2 = [];
+  private tempData3 = [];
   public ColumnMode = ColumnMode;
 
 
@@ -27,6 +29,8 @@ export class CustomizationComponent implements OnInit {
   public kitchenSinkRows = [];
   public kitchenSinkRows1 = [];
   public kitchenSinkRows2 = [];
+  public kitchenSinkRows3 = [];
+
 
   @Input() productData: any;
   @ViewChild(CustomizationComponent) table: CustomizationComponent | any;
@@ -44,12 +48,15 @@ export class CustomizationComponent implements OnInit {
   nextCustom: any
   nextCustomization: any;
   nextCustomizationList: any;
-  NextvariantData:any;
+  NextvariantData: any;
+  productId: any;
+  viewNext: any;
+  variationId: any
+  variationName: any;
   constructor(private adminService: AdminService, private modalService: NgbModal, config: NgbModalConfig, private fb: FormBuilder, private toastr: ToastrService) { }
 
   ngOnInit(): void {
-
-    this.getVariation();
+   this.getVariation();
 
     // add variation form
     this.addVariationForm = this.fb.group({
@@ -76,6 +83,10 @@ export class CustomizationComponent implements OnInit {
     })
   }
 
+  ngOnchange(){
+    this.getVariation();
+    this.getNextCustom();
+  }
   get addVariation() {
     return this.addVariationForm.controls;
   }
@@ -108,9 +119,13 @@ export class CustomizationComponent implements OnInit {
       return;
     }
     else {
-
+      if (this.nextCustom) {
+        this.productId = this.nextCustom.variantId;
+      } else {
+        this.productId = this.productData.productId;
+      }
       const formData = {
-        productId: this.productData.productId,
+        productId: this.productId,
         variationName: this.addVariationForm.value.variationName
       }
       this.adminService.addCustomization(formData).subscribe((data: any) => {
@@ -156,44 +171,49 @@ export class CustomizationComponent implements OnInit {
       return;
     }
     else {
+
+      if (this.nextCustom) {
+        this.variationId = this.nextCustom.variantDetail.variationId
+      } else {
+        this.variationId = this.customizationList.variationId
+      }
+
       const formData = {
-        variationId: this.customizationList.variationId,
+        variationId: this.variationId,
         variantName: this.addVariantForm.value.variantName,
         variantPrice: this.addVariantForm.value.variantPrice
       }
       this.adminService.addVariation(formData).subscribe((data: any) => {
         if (data.status) {
           this.toastr.success(data.message, "Suceess!");
+          this.addVariantForm.reset();
           this.getVariation();
         }
         else {
           this.toastr.error(data.message, "failed");
           this.getVariation();
+          this.addVariantForm.reset();
         }
-
-      })
+       })
     }
   }
 
   // open view variant Modal
   openViewVariantModal(data: any, view: any) {
-    this.modalService.open(data, {
+   this.modalService.open(data, {
       centered: true,
       scrollable: true,
       size: 'xl'
     });
-    console.log(view);
-    
-   this.variantData = view.variantList
-
-
+    this.variantData = [];
+    this.variantData = view.variantList
     this.getVariant();
   }
+
   getVariant() {
     this.rows1 = this.variantData;
     this.kitchenSinkRows1 = this.rows1;
     this.tempData1 = this.rows1;
-
   }
 
   // open open edit variant Modal
@@ -247,6 +267,7 @@ export class CustomizationComponent implements OnInit {
       size: 'lg'
     });
     this.customizeById = edit;
+    console.log("edit", edit);
 
     this.editVariationForm.patchValue({
       variationName: edit.variationName,
@@ -285,13 +306,12 @@ export class CustomizationComponent implements OnInit {
       centered: true,
       scrollable: true,
       size: 'xl',
-
     });
-    console.log(nestedCustom);
+    console.log("nestedCustom", nestedCustom);
 
     this.nextCustom = nestedCustom
     this.getNextCustom();
-  
+
   }
 
   getNextCustom() {
@@ -302,9 +322,11 @@ export class CustomizationComponent implements OnInit {
       this.rows2 = this.nextCustomization;
       this.kitchenSinkRows2 = this.rows2;
       this.tempData2 = this.rows2;
-      console.log(this.nextCustomization);
-});
+    });
   }
+
+
+
 
   filterUpdate(event: any) {
     const val = event.target.value.toLowerCase();
