@@ -12,6 +12,7 @@ export class AdminService {
   private menuUrl = "https://inventory.fablocdn.com";
   private baseUrl = "http://139.59.60.119:9000";
   private paymentUrl = "https://payment.fablocdn.com"
+  private userUrl = "https://user.fablocdn.com"
   constructor(private http: HttpClient) {}
 
   token: any = JSON.parse(localStorage.getItem("authToken")).token;
@@ -45,6 +46,15 @@ export class AdminService {
 
   getAllSeller(): Observable<any> {
     return this.http.get<any>(this.apiUrl + "/v1/seller/all", this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
+  addContract(bodyData: any): Observable<any> {
+    const url = `${this.userUrl}/v1/seller/contract`;
+    return this.http.post<any>(url, bodyData, this.httpOptions).pipe(
       map((data: any) => {
         return data;
       })

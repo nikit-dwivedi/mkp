@@ -83,12 +83,12 @@
                     </a>
                     <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState">
                       <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="navigateToDetail(row)"><i data-feather="file-text" class="mr-50"></i> Details</a>
-                      <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"><i data-feather="archive" class="mr-50"></i> Archive</a>
+                      <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="openContractModal(content, row.sellerId)"><i data-feather="archive" class="mr-50"></i> Add Contract</a>
                       <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"><i data-feather="trash-2" class="mr-50"></i> Delete</a>
                     </div>
                   </div>
-
-                  <i data-feather="edit" class="text-primary cursor-pointer"></i>
+                  <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="openPdf(row.contract)">
+                  <i data-feather="file-text" class="text-primary cursor-pointer"></i></a>
                 </div>
               </ng-template>
             </ngx-datatable-column>
@@ -99,3 +99,32 @@
     </section>
   </div>
 </div>
+
+<ng-template #content let-modal let-c="close">
+  <div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel1">Add Contract</h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <form [formGroup]="addContractForm" class="form form-vertical" (ngSubmit)="submitContractForm()">
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="first-name-vertical">Contract Url</label>
+            <input type="text" id="first-name-vertical" class="form-control" name="contract" formControlName="contract" placeholder="Contract Url" [ngClass]="{ error: isSubmitted && contractFormControls.contract.errors }" />
+            <div *ngIf="isSubmitted && contractFormControls.contract.errors" class="text-danger">
+              <div *ngIf="contractFormControls.contract.errors.required">Contract is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 text-right">
+          <button type="submit" rippleEffect class="block-btn btn btn-primary">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
