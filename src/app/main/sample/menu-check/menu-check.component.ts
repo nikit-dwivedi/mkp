@@ -91,7 +91,6 @@ export class MenuCheckComponent implements OnInit {
       this.menuList = data.items;
       this.currentIndex = 1;
       this.lastIndex = this.menuList.length;
-      console.log(this.menuList);
     });
   }
   changeIndex(add: Boolean) {

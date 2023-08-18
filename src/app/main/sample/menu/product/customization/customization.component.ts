@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { AdminService } from "app/services/admin.service";
-import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ColumnMode } from "@swimlane/ngx-datatable";
 import { FormGroup, FormBuilder, FormControl, } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -35,6 +35,7 @@ export class CustomizationComponent implements OnInit {
   @Input() productData: any;
   @ViewChild(CustomizationComponent) table: CustomizationComponent | any;
   @ViewChild("tableRowDetails") tableRowDetails: any;
+  modalRef: NgbModalRef;
   submitted: Boolean = false;
   editVariationForm: FormGroup;
   addVariationForm: FormGroup;
@@ -53,7 +54,9 @@ export class CustomizationComponent implements OnInit {
   viewNext: any;
   variationId: any
   variationName: any;
-  constructor(private adminService: AdminService, private modalService: NgbModal, config: NgbModalConfig, private fb: FormBuilder, private toastr: ToastrService) { }
+  variant:any;
+  check:any;
+  constructor(private adminService: AdminService, private modalService: NgbModal,  private fb: FormBuilder, private toastr: ToastrService) { }
 
   ngOnInit(): void {
    this.getVariation();
@@ -148,7 +151,6 @@ export class CustomizationComponent implements OnInit {
     this.adminService.getProductCustomization(this.productData.productId).subscribe((data: any) => {
       this.customizationList = data.items;
       this.variationList = []
-
       this.variationList.push(this.customizationList);
       this.rows = this.variationList;
       this.kitchenSinkRows = this.rows;
@@ -200,17 +202,26 @@ export class CustomizationComponent implements OnInit {
 
   // open view variant Modal
   openViewVariantModal(data: any, view: any) {
-   this.modalService.open(data, {
-      centered: true,
+    // this.variantData = [];
+   this.modalRef = this.modalService.open(data, {
+     centered: true,
       scrollable: true,
       size: 'xl'
     });
-    this.variantData = [];
-    this.variantData = view.variantList
-    this.getVariant();
-  }
 
+    this.variant = [];
+    this.variant.push(view)
+    // this.variantData = view.variantList;
+    // console.log(this.variant);
+    
+    this.getVariant();
+   }
+  
   getVariant() {
+    
+    this.check = this.variant;
+    console.log("this.variantData",this.check);
+
     this.rows1 = this.variantData;
     this.kitchenSinkRows1 = this.rows1;
     this.tempData1 = this.rows1;
