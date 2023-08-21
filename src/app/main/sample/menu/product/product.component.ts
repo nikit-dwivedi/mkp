@@ -125,7 +125,7 @@ export class ProductComponent implements OnInit {
       productName: edit.productName,
       productPrice: edit.productPrice,
       productDesc: edit.productDesc,
-      isVeg:edit.isVeg
+      isVeg: edit.isVeg,
     });
   }
 
@@ -136,7 +136,6 @@ export class ProductComponent implements OnInit {
   editProductFormSubmit() {
     this.submitted = true;
     if (this.editProductForm.invalid) {
-
       return;
     } else {
       this.checkveg = JSON.parse(this.editProductForm.value.isVeg);
@@ -146,6 +145,9 @@ export class ProductComponent implements OnInit {
       formData.append("productDesc", this.editProductForm.value.productDesc);
       formData.append("isVeg", this.checkveg);
       if (this.newImage == undefined) {
+        if (!this.previousImage) {
+          this.previousImage = "";
+        }
         formData.append("productImage", this.previousImage);
       } else {
         formData.append("productImage", this.newImage);
