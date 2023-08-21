@@ -220,7 +220,6 @@ export class CustomizationComponent implements OnInit {
   getVariant() {
     
     this.check = this.variant;
-    console.log("this.variantData",this.check);
 
     this.rows1 = this.variantData;
     this.kitchenSinkRows1 = this.rows1;
@@ -278,7 +277,6 @@ export class CustomizationComponent implements OnInit {
       size: 'lg'
     });
     this.customizeById = edit;
-    console.log("edit", edit);
 
     this.editVariationForm.patchValue({
       variationName: edit.variationName,
@@ -318,7 +316,6 @@ export class CustomizationComponent implements OnInit {
       scrollable: true,
       size: 'xl',
     });
-    console.log("nestedCustom", nestedCustom);
 
     this.nextCustom = nestedCustom
     this.getNextCustom();

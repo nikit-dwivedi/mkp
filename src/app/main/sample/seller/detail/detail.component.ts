@@ -152,7 +152,6 @@ export class DetailComponent implements OnInit {
     } else {
       this.cuisineArray.push(cuisine.cuisineId);
     }
-    console.log(this.cuisineArray);
     
   }
 

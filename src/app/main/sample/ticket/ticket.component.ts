@@ -38,7 +38,6 @@ export class TicketComponent implements OnInit {
     // this.table.offset = 0;
   }
   onSelect({ selected }) {
-    console.log('Select Event', selected, this.selected);
 
     this.selected.splice(0, this.selected.length);
     this.selected.push(...selected);

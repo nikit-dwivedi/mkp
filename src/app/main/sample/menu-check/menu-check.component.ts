@@ -42,7 +42,6 @@ export class MenuCheckComponent implements OnInit {
       this._router.navigate(["allOutlet"]);
     }
     this.outletId = this._route.snapshot.queryParams["oId"];
-    console.log("this.outletId======>",this.outletId);
     
     this.getFullMenu();
     // edit product form
@@ -95,7 +94,6 @@ export class MenuCheckComponent implements OnInit {
   }
   changeIndex(add: Boolean) {
     if (!add) {
-      console.log("false triggered");
       this.currentIndex -= 1;
       return
     }
@@ -248,7 +246,6 @@ openeditCategorymodal(data:any,category:any){
     size:'md'
   });
   this.editCategory = category;
-  console.log(this.editCategory);
   
   this.editCategoryForm.patchValue({
     categoryName:category.categoryName
@@ -267,7 +264,6 @@ editCategoryFormSubmit(){
       "categoryName": this.editCategoryForm.value.categoryName
     }
     this.adminService.editcategory(formData).subscribe((data:any) => {
-      console.log(formData);
       
       if(data.status){
         this.toastr.success(data.message,"Success!")

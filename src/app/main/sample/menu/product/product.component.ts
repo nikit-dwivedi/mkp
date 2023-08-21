@@ -45,6 +45,7 @@ export class ProductComponent implements OnInit {
     this.editProductForm = this.fb.group({
       productName: new FormControl(""),
       productPrice: new FormControl(""),
+      productDesc: new FormControl(""),
       productImage: new FormControl(""),
       isVeg: new FormControl(""),
     });
@@ -119,35 +120,34 @@ export class ProductComponent implements OnInit {
       size: "lg",
     });
     this.editProduct = edit.productId;
-    this.previousImage = edit.productImage
+    this.previousImage = edit.productImage;
     this.editProductForm.patchValue({
       productName: edit.productName,
       productPrice: edit.productPrice,
+      productDesc: edit.productDesc,
+      isVeg:edit.isVeg
     });
   }
 
-  changeImage(event:any){
+  changeImage(event: any) {
     this.newImage = event.target.files[0];
   }
   //  edit product form submit
   editProductFormSubmit() {
     this.submitted = true;
     if (this.editProductForm.invalid) {
-      console.log("Not Here");
-      
+
       return;
     } else {
-
-console.log("here");
-this.checkveg = JSON.parse(this.editProductForm.value.isVeg)
+      this.checkveg = JSON.parse(this.editProductForm.value.isVeg);
       const formData = new FormData();
       formData.append("productName", this.editProductForm.value.productName);
       formData.append("productPrice", this.editProductForm.value.productPrice);
-      formData.append("isVeg",this.checkveg);
+      formData.append("productDesc", this.editProductForm.value.productDesc);
+      formData.append("isVeg", this.checkveg);
       if (this.newImage == undefined) {
-        formData.append("productImage", this.previousImage)
-      }
-      else {
+        formData.append("productImage", this.previousImage);
+      } else {
         formData.append("productImage", this.newImage);
       }
 

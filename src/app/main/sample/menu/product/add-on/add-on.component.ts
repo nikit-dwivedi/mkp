@@ -4,7 +4,6 @@ import { NgbModal,NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { AdminService } from 'app/services/admin.service';
 import { FormGroup, FormBuilder,FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { log } from 'console';
 
 
 @Component({
@@ -51,7 +50,6 @@ export class AddOnComponent implements OnInit {
   constructor(private AdminService:AdminService,private modalService: NgbModal, config: NgbModalConfig, private fb:FormBuilder , private toastr:ToastrService) { }
 
   ngOnInit(): void {
-    console.log("this.productData",this.productData.productId);
     
     this.productAddonCategory();
     this.outletAddonCategory();
@@ -131,7 +129,6 @@ export class AddOnComponent implements OnInit {
     });
 
     this.viewByCategoryId = view;
-    console.log("this.viewByCategoryId",this.viewByCategoryId);
     this.viewProductDetails();
    
   }
@@ -167,7 +164,6 @@ export class AddOnComponent implements OnInit {
         maxSelection: this.addAddonCategoryForm.value.maxSelection
       }
 
-      console.log(formData);
       
 
       this.AdminService.addAddonCategory(formData).subscribe((data:any) => {
@@ -233,7 +229,6 @@ openEditAddonProductModal(data:any,editProduct:any){
   });
   this.editAddonProduct =  editProduct
 
-  console.log("Success this.editAddonProduct",this.editAddonProduct);
   
   this.editAddonProductForm.patchValue({
     productName:editProduct.productName,
@@ -351,7 +346,6 @@ unLinkAddon(){
     operation: false
   }
 
-  console.log(formData);
   
   this.AdminService.linkUnlink(formData).subscribe((data:any) => {
     if(data.status){
