@@ -3,7 +3,7 @@ import { AdminService } from "../../../services/admin.service";
 import { ColumnMode } from "@swimlane/ngx-datatable";
 import { Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { FormBuilder, FormControl, Validators } from "@angular/forms";
+import { AbstractControl, FormBuilder, FormControl, ValidatorFn, Validators } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -26,6 +26,7 @@ export class SellerComponent implements OnInit {
   @ViewChild(SellerComponent) table: SellerComponent | any;
   @ViewChild("tableRowDetails") tableRowDetails: any;
   addContractForm: any;
+  isLoading: boolean = false;
   constructor(private adminService: AdminService, private router: Router, private modalService: NgbModal, private fb: FormBuilder, private toastr: ToastrService) {}
 
   /**
@@ -66,7 +67,12 @@ export class SellerComponent implements OnInit {
   openContractModal(data: any, sellerId: any) {
     this.addContractForm = this.fb.group({
       sellerId: [sellerId, Validators.required],
-      contract: ["", Validators.required],
+      seller_zone: ["", Validators.required],
+      start_date: ["", Validators.required],
+      account_holder_name: ["", Validators.required],
+      bank_name: ["", Validators.required],
+      account_no: ["", [Validators.required, accountNoValidator()]],
+      ifsc: ["", [Validators.required, ifscValidator()]],
     });
     this.modalService.open(data, {
       centered: true,
@@ -81,24 +87,34 @@ export class SellerComponent implements OnInit {
 
   submitContractForm() {
     this.isSubmitted = true;
+    this.isLoading = true;
     if (this.addContractForm.invalid) {
+      this.isLoading = false;
       return;
     }
     let bodyData = {
       sellerId: this.addContractForm.value.sellerId,
-      contract: this.addContractForm.value.contract,
+      seller_zone: this.addContractForm.value.seller_zone,
+      start_date: this.addContractForm.value.start_date,
+      account_holder_name: this.addContractForm.value.account_holder_name,
+      bank_name: this.addContractForm.value.bank_name,
+      account_no: this.addContractForm.value.account_no,
+      ifsc: this.addContractForm.value.ifsc,
     };
     this.isSubmitted = false;
     this.addContractToSeller(bodyData);
-    this.modalService.dismissAll();
   }
 
   addContractToSeller(bodyData: any): any {
     this.adminService.addContract(bodyData).subscribe((response) => {
       if (!response.status) {
         this.toastr.error(response.message, "Error");
+        this.isLoading = false;
+        this.modalService.dismissAll();
         return;
       }
+      this.isLoading = false;
+      this.modalService.dismissAll();
       this.toastr.success(response.message, "success");
       this.sellerList();
     });
@@ -107,7 +123,7 @@ export class SellerComponent implements OnInit {
   openPdf(contract: any) {
     if (!contract || contract === "") {
       this.toastr.error("Please upload contract first", "Error");
-      return
+      return;
     }
     window.open(contract, "_blank");
   }
@@ -125,4 +141,28 @@ export class SellerComponent implements OnInit {
   navigateToDetail(sellerDetail: any): any {
     this.router.navigate(["seller/detail"], { state: { sellerDetail } });
   }
+}
+
+function accountNoValidator(): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    const accountNoRegex = /^[0-9]{9,18}$/;
+
+    if (!control.value || !control.value.match(accountNoRegex)) {
+      return { invalidAccountNo: true };
+    }
+
+    return null;
+  };
+}
+
+function ifscValidator(): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    const ifscRegex = /^[A-Za-z]{4}0[A-Za-z0-9]{6}$/;
+
+    if (!control.value || !control.value.match(ifscRegex)) {
+      return { invalidIFSC: true };
+    }
+
+    return null;
+  };
 }

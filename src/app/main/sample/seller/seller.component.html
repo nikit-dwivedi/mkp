@@ -87,8 +87,7 @@
                       <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"><i data-feather="trash-2" class="mr-50"></i> Delete</a>
                     </div>
                   </div>
-                  <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="openPdf(row.contract)">
-                  <i data-feather="file-text" class="text-primary cursor-pointer"></i></a>
+                  <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="openPdf(row.contract)"> <i data-feather="file-text" class="text-primary cursor-pointer"></i></a>
                 </div>
               </ng-template>
             </ngx-datatable-column>
@@ -112,17 +111,64 @@
       <div class="row">
         <div class="col-12">
           <div class="form-group">
-            <label for="first-name-vertical">Contract Url</label>
-            <input type="text" id="first-name-vertical" class="form-control" name="contract" formControlName="contract" placeholder="Contract Url" [ngClass]="{ error: isSubmitted && contractFormControls.contract.errors }" />
-            <div *ngIf="isSubmitted && contractFormControls.contract.errors" class="text-danger">
-              <div *ngIf="contractFormControls.contract.errors.required">Contract is required</div>
+            <label for="first-name-vertical">Seller Zone</label>
+            <input type="text" id="first-name-vertical" class="form-control" name="seller_zone" formControlName="seller_zone" placeholder="Vijay nagar" [ngClass]="{ error: isSubmitted && contractFormControls.seller_zone.errors }" />
+            <div *ngIf="isSubmitted && contractFormControls.seller_zone.errors" class="text-danger">
+              <div *ngIf="contractFormControls.seller_zone.errors.required">Seller zone is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="first-name-vertical">Start Date</label>
+            <input type="text" id="first-name-vertical" class="form-control" name="start_date" formControlName="start_date" placeholder="1-1-2000" [ngClass]="{ error: isSubmitted && contractFormControls.start_date.errors }" />
+            <div *ngIf="isSubmitted && contractFormControls.start_date.errors" class="text-danger">
+              <div *ngIf="contractFormControls.start_date.errors.required">Start date is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="first-name-vertical">Account Holder Name</label>
+            <input type="text" id="first-name-vertical" class="form-control" name="account_holder_name" formControlName="account_holder_name" placeholder="nikit" [ngClass]="{ error: isSubmitted && contractFormControls.account_holder_name.errors }" />
+            <div *ngIf="isSubmitted && contractFormControls.account_holder_name.errors" class="text-danger">
+              <div *ngIf="contractFormControls.account_holder_name.errors.required">Account holder name is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="first-name-vertical">Bank Name</label>
+            <input type="text" id="first-name-vertical" class="form-control" name="bank_name" formControlName="bank_name" placeholder="SBI" [ngClass]="{ error: isSubmitted && contractFormControls.bank_name.errors }" />
+            <div *ngIf="isSubmitted && contractFormControls.bank_name.errors" class="text-danger">
+              <div *ngIf="contractFormControls.bank_name.errors.required">Bank name is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="first-name-vertical">Account No.</label>
+            <input type="text" id="first-name-vertical" class="form-control" name="account_no" formControlName="account_no" placeholder="1234567890455" [ngClass]="{ error: isSubmitted && contractFormControls.account_no.errors }" />
+            <div *ngIf="isSubmitted && contractFormControls.account_no.errors" class="text-danger">
+              <div *ngIf="contractFormControls.account_no.errors.required">Account No. is required</div>
+              <div *ngIf="contractFormControls.account_no.errors.invalidAccountNo">Account No. is invalid</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="first-name-vertical">IFSC</label>
+            <input type="text" id="first-name-vertical" class="form-control" name="ifsc" formControlName="ifsc" placeholder="ifsc" [ngClass]="{ error: isSubmitted && contractFormControls.ifsc.errors }" />
+            <div *ngIf="isSubmitted && contractFormControls.ifsc.errors" class="text-danger">
+              <div *ngIf="contractFormControls.ifsc.errors.required">IFSC is required</div>
+              <div *ngIf="contractFormControls.ifsc.errors.invalidIFSC">IFSC is invalid</div>
             </div>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-12 text-right">
-          <button type="submit" rippleEffect class="block-btn btn btn-primary">Save</button>
+          <button type="submit" rippleEffect class="block-btn btn btn-primary" [disabled]="isLoading">Save</button>
         </div>
       </div>
     </form>
