@@ -69,10 +69,6 @@ export class SellerComponent implements OnInit {
       sellerId: [sellerId, Validators.required],
       seller_zone: ["", Validators.required],
       start_date: ["", Validators.required],
-      account_holder_name: ["", Validators.required],
-      bank_name: ["", Validators.required],
-      account_no: ["", [Validators.required, accountNoValidator()]],
-      ifsc: ["", [Validators.required, ifscValidator()]],
     });
     this.modalService.open(data, {
       centered: true,
@@ -96,10 +92,6 @@ export class SellerComponent implements OnInit {
       sellerId: this.addContractForm.value.sellerId,
       seller_zone: this.addContractForm.value.seller_zone,
       start_date: this.addContractForm.value.start_date,
-      account_holder_name: this.addContractForm.value.account_holder_name,
-      bank_name: this.addContractForm.value.bank_name,
-      account_no: this.addContractForm.value.account_no,
-      ifsc: this.addContractForm.value.ifsc,
     };
     this.isSubmitted = false;
     this.addContractToSeller(bodyData);
@@ -143,26 +135,3 @@ export class SellerComponent implements OnInit {
   }
 }
 
-function accountNoValidator(): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
-    const accountNoRegex = /^[0-9]{9,18}$/;
-
-    if (!control.value || !control.value.match(accountNoRegex)) {
-      return { invalidAccountNo: true };
-    }
-
-    return null;
-  };
-}
-
-function ifscValidator(): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
-    const ifscRegex = /^[A-Za-z]{4}0[A-Za-z0-9]{6}$/;
-
-    if (!control.value || !control.value.match(ifscRegex)) {
-      return { invalidIFSC: true };
-    }
-
-    return null;
-  };
-}

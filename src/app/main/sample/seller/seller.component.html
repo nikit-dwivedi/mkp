@@ -127,44 +127,6 @@
             </div>
           </div>
         </div>
-        <div class="col-12">
-          <div class="form-group">
-            <label for="first-name-vertical">Account Holder Name</label>
-            <input type="text" id="first-name-vertical" class="form-control" name="account_holder_name" formControlName="account_holder_name" placeholder="nikit" [ngClass]="{ error: isSubmitted && contractFormControls.account_holder_name.errors }" />
-            <div *ngIf="isSubmitted && contractFormControls.account_holder_name.errors" class="text-danger">
-              <div *ngIf="contractFormControls.account_holder_name.errors.required">Account holder name is required</div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12">
-          <div class="form-group">
-            <label for="first-name-vertical">Bank Name</label>
-            <input type="text" id="first-name-vertical" class="form-control" name="bank_name" formControlName="bank_name" placeholder="SBI" [ngClass]="{ error: isSubmitted && contractFormControls.bank_name.errors }" />
-            <div *ngIf="isSubmitted && contractFormControls.bank_name.errors" class="text-danger">
-              <div *ngIf="contractFormControls.bank_name.errors.required">Bank name is required</div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12">
-          <div class="form-group">
-            <label for="first-name-vertical">Account No.</label>
-            <input type="text" id="first-name-vertical" class="form-control" name="account_no" formControlName="account_no" placeholder="1234567890455" [ngClass]="{ error: isSubmitted && contractFormControls.account_no.errors }" />
-            <div *ngIf="isSubmitted && contractFormControls.account_no.errors" class="text-danger">
-              <div *ngIf="contractFormControls.account_no.errors.required">Account No. is required</div>
-              <div *ngIf="contractFormControls.account_no.errors.invalidAccountNo">Account No. is invalid</div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12">
-          <div class="form-group">
-            <label for="first-name-vertical">IFSC</label>
-            <input type="text" id="first-name-vertical" class="form-control" name="ifsc" formControlName="ifsc" placeholder="ifsc" [ngClass]="{ error: isSubmitted && contractFormControls.ifsc.errors }" />
-            <div *ngIf="isSubmitted && contractFormControls.ifsc.errors" class="text-danger">
-              <div *ngIf="contractFormControls.ifsc.errors.required">IFSC is required</div>
-              <div *ngIf="contractFormControls.ifsc.errors.invalidIFSC">IFSC is invalid</div>
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-12 text-right">
