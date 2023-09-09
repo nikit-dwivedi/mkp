@@ -11,8 +11,8 @@ export class AdminService {
   private apiUrl = "https://admin.fablocdn.com";
   private menuUrl = "https://inventory.fablocdn.com";
   private baseUrl = "http://139.59.60.119:9000";
-  private paymentUrl = "https://payment.fablocdn.com"
-  private userUrl = "https://user.fablocdn.com"
+  private paymentUrl = "https://payment.fablocdn.com";
+  private userUrl = "https://user.fablocdn.com";
   constructor(private http: HttpClient) {}
 
   token: any = JSON.parse(localStorage.getItem("authToken")).token;
@@ -46,6 +46,14 @@ export class AdminService {
 
   getAllSeller(): Observable<any> {
     return this.http.get<any>(this.apiUrl + "/v1/seller/all", this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
+  editSellerDetails(sellerId: any, bodyData: any): Observable<any> {
+    return this.http.post<any>(this.userUrl + "/v1/seller/update?sellerId=" + sellerId, bodyData, this.httpOptions).pipe(
       map((data: any) => {
         return data;
       })
@@ -99,7 +107,7 @@ export class AdminService {
 
   //verify outlet
   changeVerificationStatusOfOutlet(bodyData: any) {
-    return this.http.post(this.menuUrl + "/v1/outlet/verify",bodyData, this.httpOptions).pipe(
+    return this.http.post(this.menuUrl + "/v1/outlet/verify", bodyData, this.httpOptions).pipe(
       map((data: any) => {
         return data;
       })
@@ -117,9 +125,11 @@ export class AdminService {
 
   // edit outlet by outlet id
   editOutletByOutletId(outletId: any, body: any) {
-    return this.http.post(this.menuUrl + '/v1/outlet/update/' + outletId , body , this.httpOptions).pipe(map((data) => {
-      return data;
-    }));
+    return this.http.post(this.menuUrl + "/v1/outlet/update/" + outletId, body, this.httpOptions).pipe(
+      map((data) => {
+        return data;
+      })
+    );
   }
 
   // get all cuisine
@@ -157,7 +167,7 @@ export class AdminService {
     );
   }
 
-  getFullMenu(outletId:any){
+  getFullMenu(outletId: any) {
     return this.http.get(this.menuUrl + "/v1/menu/full/" + outletId, this.Header()).pipe(
       map((data: any) => {
         return data;
@@ -347,16 +357,20 @@ export class AdminService {
   }
 
   // delete data
-  deleteData(body:any){
-    return this.http.post(this.menuUrl + '/v1/delete' , body,this.httpOptions).pipe(map((data:any) => {
-      return data;
-    }));
+  deleteData(body: any) {
+    return this.http.post(this.menuUrl + "/v1/delete", body, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
   }
 
-  getPaymentDetails(from:any,to:any){
-    return this.http.get(this.paymentUrl + `/payment/transaction?from=${from}&to=${to}` ,this.httpOptions).pipe(map((data:any)=>{
-      console.log(data);
-      return data;
-   }));
+  getPaymentDetails(from: any, to: any) {
+    return this.http.get(this.paymentUrl + `/payment/transaction?from=${from}&to=${to}`, this.httpOptions).pipe(
+      map((data: any) => {
+        console.log(data);
+        return data;
+      })
+    );
   }
 }

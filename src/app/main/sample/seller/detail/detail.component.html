@@ -34,7 +34,7 @@
                       <span class="align-middle">Phone - {{ sellerDetail.basicDetails.phone }}</span>
                     </li>
                   </ul>
-                  <button class="btn btn-primary text-center btn-block" rippleEffect>Edit Basic Detail</button>
+                  <button class="btn btn-primary text-center btn-block" (click)="openBasicModal(basicDetail)" rippleEffect>Edit Basic Detail</button>
                 </div>
               </div>
             </div>
@@ -62,7 +62,7 @@
                       <span class="align-middle">Tenure - {{ sellerDetail.licenseDetails.tenure }}</span>
                     </li>
                   </ul>
-                  <button class="btn btn-primary text-center btn-block" rippleEffect>Edit License Detail</button>
+                  <!-- <button class="btn btn-primary text-center btn-block" rippleEffect>Edit License Detail</button> -->
                 </div>
               </div>
             </div>
@@ -92,7 +92,7 @@
                       <span class="align-middle">Agent Id - {{ sellerDetail.agentId }}</span>
                     </li>
                   </ul>
-                  <button class="btn btn-primary text-center btn-block" rippleEffect>Authorized Person Detail</button>
+                  <button class="btn btn-primary text-center btn-block" (click)="openAuthorizedPersonModal(AuthorizedPersonDetail)" rippleEffect>Authorized Person Detail</button>
                 </div>
               </div>
             </div>
@@ -355,3 +355,98 @@
     <div [ngbNavOutlet]="navJustified" class="mt-2"></div>
   </div>
 </div>
+
+
+<ng-template #basicDetail let-modal let-c="close">
+  <div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel1">Update Basic details</h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <form [formGroup]="basicDetailForm" class="form form-vertical" (ngSubmit)="submitBasicDetailForm()">
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="first-name-vertical">Seller Name</label>
+            <input type="text" id="first-name-vertical" class="form-control" name="sellerName" formControlName="sellerName" placeholder="Seller Name" [ngClass]="{ error: isSubmitted && basicDetailFormControls.sellerName.errors }" />
+            <div *ngIf="isSubmitted && basicDetailFormControls.sellerName.errors" class="text-danger">
+              <div *ngIf="basicDetailFormControls.sellerName.errors.required">Seller name is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="first-name-vertical">Trade Name</label>
+            <input type="text" id="first-name-vertical" class="form-control" name="tradeName" formControlName="tradeName" placeholder="Trade Name" [ngClass]="{ error: isSubmitted && basicDetailFormControls.tradeName.errors }" />
+            <div *ngIf="isSubmitted && basicDetailFormControls.tradeName.errors" class="text-danger">
+              <div *ngIf="basicDetailFormControls.tradeName.errors.required">Trade name is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="first-name-vertical">Phone number</label>
+            <input type="text" id="first-name-vertical" class="form-control" name="phone" formControlName="phone" placeholder="1234567890" [ngClass]="{ error: isSubmitted && basicDetailFormControls.phone.errors }" />
+            <div *ngIf="isSubmitted && basicDetailFormControls.phone.errors" class="text-danger">
+              <div *ngIf="basicDetailFormControls.phone.errors.required">Phone number is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 text-right">
+          <button type="submit" rippleEffect class="block-btn btn btn-primary" [disabled]="isLoading">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #AuthorizedPersonDetail let-modal let-c="close">
+  <div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel11">Update Authorized Person details</h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <form [formGroup]="authorizedPersonDetailForm" class="form form-vertical" (ngSubmit)="submitAuthorizedPersonDetailForm()">
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="first-name-vertical">Name</label>
+            <input type="text" id="first-name-vertical" class="form-control" name="name" formControlName="name" placeholder="Name" [ngClass]="{ error: isSubmitted && authorizedPersonDetailFormControls.name.errors }" />
+            <div *ngIf="isSubmitted && authorizedPersonDetailFormControls.name.errors" class="text-danger">
+              <div *ngIf="authorizedPersonDetailFormControls.name.errors.required">Seller name is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="first-name-vertical">Email</label>
+            <input type="text" id="first-name-vertical" class="form-control" name="email" formControlName="email" placeholder="Email@gmail.com" [ngClass]="{ error: isSubmitted && authorizedPersonDetailFormControls.email.errors }" />
+            <div *ngIf="isSubmitted && authorizedPersonDetailFormControls.email.errors" class="text-danger">
+              <div *ngIf="authorizedPersonDetailFormControls.email.errors.required">Trade name is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="first-name-vertical">Phone number</label>
+            <input type="text" id="first-name-vertical" class="form-control" name="phone" formControlName="phone" placeholder="1234567890" [ngClass]="{ error: isSubmitted && authorizedPersonDetailFormControls.phone.errors }" />
+            <div *ngIf="isSubmitted && authorizedPersonDetailFormControls.phone.errors" class="text-danger">
+              <div *ngIf="authorizedPersonDetailFormControls.phone.errors.required">Phone number is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 text-right">
+          <button type="submit" rippleEffect class="block-btn btn btn-primary" [disabled]="isLoading">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
