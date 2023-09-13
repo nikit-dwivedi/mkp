@@ -143,7 +143,7 @@ export class SellerComponent implements OnInit {
     this.isLoading = true;
     const bodyData = {
       sellerId: this.sellerDetail.sellerId,
-      status,
+      verify:status,
     };
 
     this.adminService.changeSellerVerification(bodyData).subscribe((response) => {
