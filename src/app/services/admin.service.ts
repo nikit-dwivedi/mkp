@@ -52,6 +52,14 @@ export class AdminService {
     );
   }
 
+  changeSellerVerification(bodyData: any): Observable<any> {
+    return this.http.post<any>(this.userUrl + "/v1/seller/verify", bodyData, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
   editSellerDetails(sellerId: any, bodyData: any): Observable<any> {
     return this.http.post<any>(this.userUrl + "/v1/seller/update?sellerId=" + sellerId, bodyData, this.httpOptions).pipe(
       map((data: any) => {

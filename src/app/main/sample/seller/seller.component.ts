@@ -77,6 +77,15 @@ export class SellerComponent implements OnInit {
     });
   }
 
+  openVerificationModal(data: any, sellerData: any) {
+    this.sellerDetail = sellerData;
+    this.modalService.open(data, {
+      centered: true,
+      scrollable: true,
+      size: "sm",
+    });
+  }
+
   get contractFormControls() {
     return this.addContractForm.controls;
   }
@@ -130,8 +139,26 @@ export class SellerComponent implements OnInit {
     });
   }
 
+  changeStatusOfSeller(status: Boolean): any {
+    this.isLoading = true;
+    const bodyData = {
+      sellerId: this.sellerDetail.sellerId,
+      status,
+    };
+
+    this.adminService.changeSellerVerification(bodyData).subscribe((response) => {
+      this.isLoading = false;
+      this.modalService.dismissAll();
+      if (response.status) {
+        this.toastr.success(response.message, "Success");
+        this.sellerList();
+        return
+      }
+      this.toastr.error(response.message, "Error");
+    });
+  }
+
   navigateToDetail(sellerDetail: any): any {
     this.router.navigate(["seller/detail"], { state: { sellerDetail } });
   }
 }
-
