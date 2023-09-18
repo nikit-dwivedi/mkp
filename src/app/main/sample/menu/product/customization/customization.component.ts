@@ -1,13 +1,13 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from "@angular/core";
 import { AdminService } from "app/services/admin.service";
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { ColumnMode } from "@swimlane/ngx-datatable";
-import { FormGroup, FormBuilder, FormControl, } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
+import { ToastrService } from "ngx-toastr";
 @Component({
-  selector: 'app-customization',
-  templateUrl: './customization.component.html',
-  styleUrls: ['./customization.component.scss']
+  selector: "app-customization",
+  templateUrl: "./customization.component.html",
+  styleUrls: ["./customization.component.scss"],
 })
 export class CustomizationComponent implements OnInit {
   public contentHeader: object;
@@ -23,14 +23,12 @@ export class CustomizationComponent implements OnInit {
   private tempData3 = [];
   public ColumnMode = ColumnMode;
 
-
   public basicSelectedOption: number = 5;
   public basicSelectedOption1: number = 5;
   public kitchenSinkRows = [];
   public kitchenSinkRows1 = [];
   public kitchenSinkRows2 = [];
   public kitchenSinkRows3 = [];
-
 
   @Input() productData: any;
   @ViewChild(CustomizationComponent) table: CustomizationComponent | any;
@@ -46,47 +44,47 @@ export class CustomizationComponent implements OnInit {
   variationList: any[];
   variantData: any;
   editVariant: any;
-  nextCustom: any
+  nextCustom: any;
   nextCustomization: any;
   nextCustomizationList: any;
   NextvariantData: any;
   productId: any;
   viewNext: any;
-  variationId: any
+  variationId: any;
   variationName: any;
-  variant:any;
-  check:any;
-  constructor(private adminService: AdminService, private modalService: NgbModal,  private fb: FormBuilder, private toastr: ToastrService) { }
+  variant: any;
+  check: any;
+  constructor(private adminService: AdminService, private modalService: NgbModal, private fb: FormBuilder, private toastr: ToastrService) {}
 
   ngOnInit(): void {
-   this.getVariation();
+    this.getVariation();
 
     // add variation form
     this.addVariationForm = this.fb.group({
-      variationName: new FormControl('')
+      variationName: new FormControl(""),
     });
 
     // edit variation form
     this.editVariationForm = this.fb.group({
-      variationName: new FormControl(''),
-      minSelection: new FormControl(''),
-      maxSelection: new FormControl('')
+      variationName: new FormControl(""),
+      minSelection: new FormControl(""),
+      maxSelection: new FormControl(""),
     });
 
     // add variant form
     this.addVariantForm = this.fb.group({
-      variantName: new FormControl(''),
-      variantPrice: new FormControl('')
-    })
+      variantName: new FormControl(""),
+      variantPrice: new FormControl(""),
+    });
 
     // edit variant form
     this.editVariantForm = this.fb.group({
-      variantName: new FormControl(''),
-      variantPrice: new FormControl('')
-    })
+      variantName: new FormControl(""),
+      variantPrice: new FormControl(""),
+    });
   }
 
-  ngOnchange(){
+  ngOnchange() {
     this.getVariation();
     this.getNextCustom();
   }
@@ -99,29 +97,26 @@ export class CustomizationComponent implements OnInit {
   }
 
   get addVariant() {
-    return this.addVariantForm.controls
+    return this.addVariantForm.controls;
   }
 
   get editVariantById() {
-    return this.editVariantForm.controls
+    return this.editVariantForm.controls;
   }
-
 
   openAddCustomizationModal(data: any) {
     this.modalService.open(data, {
       centered: true,
       scrollable: true,
-      size: 'lg'
-    })
-
+      size: "lg",
+    });
   }
 
   addCustomizationFormSubmit() {
     this.submitted = true;
     if (this.addVariationForm.invalid) {
       return;
-    }
-    else {
+    } else {
       if (this.nextCustom) {
         this.productId = this.nextCustom.variantId;
       } else {
@@ -129,20 +124,17 @@ export class CustomizationComponent implements OnInit {
       }
       const formData = {
         productId: this.productId,
-        variationName: this.addVariationForm.value.variationName
-      }
+        variationName: this.addVariationForm.value.variationName,
+      };
       this.adminService.addCustomization(formData).subscribe((data: any) => {
-
-
         if (data.status) {
           this.toastr.success(data.message, "Success");
           this.getVariation();
-        }
-        else {
+        } else {
           this.toastr.error(data.message, "failed");
           this.getVariation();
         }
-      })
+      });
     }
   }
 
@@ -150,11 +142,12 @@ export class CustomizationComponent implements OnInit {
   getVariation() {
     this.adminService.getProductCustomization(this.productData.productId).subscribe((data: any) => {
       this.customizationList = data.items;
-      this.variationList = []
+      this.variationList = [];
       this.variationList.push(this.customizationList);
       this.rows = this.variationList;
       this.kitchenSinkRows = this.rows;
       this.tempData = this.rows;
+      console.log(data);
     });
   }
 
@@ -163,7 +156,7 @@ export class CustomizationComponent implements OnInit {
     this.modalService.open(data, {
       centered: true,
       scrollable: true,
-      size: 'lg'
+      size: "lg",
     });
   }
 
@@ -171,54 +164,50 @@ export class CustomizationComponent implements OnInit {
     this.submitted = true;
     if (this.addVariantForm.invalid) {
       return;
-    }
-    else {
-
+    } else {
       if (this.nextCustom) {
-        this.variationId = this.nextCustom.variantDetail.variationId
+        this.variationId = this.nextCustom.variantDetail.variationId;
       } else {
-        this.variationId = this.customizationList.variationId
+        this.variationId = this.customizationList.variationId;
       }
 
       const formData = {
         variationId: this.variationId,
         variantName: this.addVariantForm.value.variantName,
-        variantPrice: this.addVariantForm.value.variantPrice
-      }
+        variantPrice: this.addVariantForm.value.variantPrice,
+      };
       this.adminService.addVariation(formData).subscribe((data: any) => {
         if (data.status) {
           this.toastr.success(data.message, "Suceess!");
           this.addVariantForm.reset();
           this.getVariation();
-        }
-        else {
+        } else {
           this.toastr.error(data.message, "failed");
           this.getVariation();
           this.addVariantForm.reset();
         }
-       })
+      });
     }
   }
 
   // open view variant Modal
   openViewVariantModal(data: any, view: any) {
     // this.variantData = [];
-   this.modalRef = this.modalService.open(data, {
-     centered: true,
+    this.modalRef = this.modalService.open(data, {
+      centered: true,
       scrollable: true,
-      size: 'xl'
+      size: "xl",
     });
 
     this.variant = [];
-    this.variant.push(view)
-    // this.variantData = view.variantList;
+    this.variant.push(view);
+    this.variantData = view.variantList;
     // console.log(this.variant);
-    
+
     this.getVariant();
-   }
-  
+  }
+
   getVariant() {
-    
     this.check = this.variant;
 
     this.rows1 = this.variantData;
@@ -231,13 +220,13 @@ export class CustomizationComponent implements OnInit {
     this.modalService.open(data, {
       centered: true,
       scrollable: true,
-      size: 'lg'
+      size: "lg",
     });
-    this.editVariant = edit
+    this.editVariant = edit;
 
     this.editVariantForm.patchValue({
       variantName: edit.variantName,
-      variantPrice: edit.displayPrice
+      variantPrice: edit.displayPrice,
     });
   }
 
@@ -245,27 +234,22 @@ export class CustomizationComponent implements OnInit {
     this.submitted = true;
     if (this.editVariantForm.invalid) {
       return;
-    }
-    else {
+    } else {
       const formData = {
         variantId: this.editVariant.variantId,
         variantName: this.editVariantForm.value.variantName,
-        variantPrice: this.editVariantForm.value.variantPrice
-      }
+        variantPrice: this.editVariantForm.value.variantPrice,
+      };
 
       this.adminService.editVariant(formData).subscribe((data: any) => {
-
-
         if (data.status) {
           this.toastr.success(data.message, "Success");
           this.getVariation();
-        }
-        else {
+        } else {
           this.toastr.error(data.message, "failed");
           this.getVariation();
-
         }
-      })
+      });
     }
   }
 
@@ -274,39 +258,36 @@ export class CustomizationComponent implements OnInit {
     this.modalService.open(data, {
       centered: true,
       scrollable: true,
-      size: 'lg'
+      size: "lg",
     });
     this.customizeById = edit;
 
     this.editVariationForm.patchValue({
       variationName: edit.variationName,
       minSelection: edit.minSelection,
-      maxSelection: edit.maxSelection
-    })
+      maxSelection: edit.maxSelection,
+    });
   }
 
   editVariationFormSubmit() {
     this.submitted = true;
     if (this.editVariationForm.invalid) {
       return;
-    }
-    else {
+    } else {
       const formData = {
         variationName: this.editVariationForm.value.variationName,
         minSelection: this.editVariationForm.value.minSelection,
-        maxSelection: this.editVariationForm.value.maxSelection
-      }
+        maxSelection: this.editVariationForm.value.maxSelection,
+      };
       this.adminService.editVariation(this.customizationList.variationId, formData).subscribe((data: any) => {
-
         if (data.status) {
           this.toastr.success(data.message, "Success!");
           this.getVariation();
-        }
-        else {
+        } else {
           this.toastr.error(data.message, "failed");
           this.getVariation();
         }
-      })
+      });
     }
   }
 
@@ -314,27 +295,23 @@ export class CustomizationComponent implements OnInit {
     this.modalService.open(data, {
       centered: true,
       scrollable: true,
-      size: 'xl',
+      size: "xl",
     });
 
-    this.nextCustom = nestedCustom
+    this.nextCustom = nestedCustom;
     this.getNextCustom();
-
   }
 
   getNextCustom() {
     this.adminService.getProductCustomization(this.nextCustom.variantId).subscribe((data: any) => {
       this.nextCustomizationList = data.items;
-      this.nextCustomization = []
+      this.nextCustomization = [];
       this.nextCustomization.push(this.nextCustomizationList);
       this.rows2 = this.nextCustomization;
       this.kitchenSinkRows2 = this.rows2;
       this.tempData2 = this.rows2;
     });
   }
-
-
-
 
   filterUpdate(event: any) {
     const val = event.target.value.toLowerCase();
@@ -347,7 +324,5 @@ export class CustomizationComponent implements OnInit {
     // update the rows
     this.kitchenSinkRows = temp;
     // Whenever the filter changes, always go back to the first page
-
   }
-
 }
