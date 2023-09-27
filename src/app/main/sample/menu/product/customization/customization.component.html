@@ -46,7 +46,7 @@
                       <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState">
                         <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="openViewVariantModal(content1,row)"><i data-feather="file-text" class="mr-50"></i> Details</a>
                         <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="changeOutletStatus(content,row)"><i data-feather="archive" class="mr-50"></i> Change Status</a>
-                        <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"><i data-feather="trash-2" class="mr-50"></i> Delete</a>
+                        <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="deleteVariation(row)"><i data-feather="trash-2" class="mr-50"></i> Delete</a>
                       </div>
                     </div>
   
@@ -188,7 +188,7 @@
                       <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState">
                         <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="openNestedCustomization(content5,row)"><i data-feather="file-text" class="mr-50"></i> Details</a>
                         <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="changeOutletStatus(content,row)"><i data-feather="archive" class="mr-50"></i> Change Status</a>
-                        <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"><i data-feather="trash-2" class="mr-50"></i> Delete</a>
+                        <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center" (click)="deleteVariant(row)"><i data-feather="trash-2" class="mr-50"></i> Delete</a>
                       </div>
                     </div>
   

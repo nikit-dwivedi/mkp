@@ -113,6 +113,8 @@ export class CustomizationComponent implements OnInit {
   }
 
   addCustomizationFormSubmit() {
+    console.log(this.productData.productId);
+
     this.submitted = true;
     if (this.addVariationForm.invalid) {
       return;
@@ -144,6 +146,8 @@ export class CustomizationComponent implements OnInit {
       this.customizationList = data.items;
       this.variationList = [];
       this.variationList.push(this.customizationList);
+      console.log(this.variationList);
+
       this.rows = this.variationList;
       this.kitchenSinkRows = this.rows;
       this.tempData = this.rows;
@@ -181,13 +185,47 @@ export class CustomizationComponent implements OnInit {
           this.toastr.success(data.message, "Suceess!");
           this.addVariantForm.reset();
           this.getVariation();
+          this.getVariant()
         } else {
           this.toastr.error(data.message, "failed");
-          this.getVariation();
+          this.getVariation()
           this.addVariantForm.reset();
         }
       });
     }
+  }
+
+  deleteVariation(variationDetail: any) {
+    console.log(variationDetail);
+
+    const body = {
+      variationId: variationDetail.variationId,
+    };
+    this.adminService.deleteData(body).subscribe((data: any) => {
+      if (data.status) {
+        this.toastr.success(data.message, "Success!");
+        this.getVariation();
+      } else {
+        this.toastr.error(data.message, "error!");
+      }
+    });
+  }
+
+  deleteVariant(variantDetail: any) {
+    console.log(variantDetail);
+
+    const body = {
+      variantId: variantDetail.variantId,
+    };
+    this.adminService.deleteData(body).subscribe((data: any) => {
+      if (data.status) {
+        this.toastr.success(data.message, "Success!");
+        this.getVariation();
+        this.getVariant();
+      } else {
+        this.toastr.error(data.message, "error!");
+      }
+    });
   }
 
   // open view variant Modal
@@ -198,6 +236,7 @@ export class CustomizationComponent implements OnInit {
       scrollable: true,
       size: "xl",
     });
+    console.log("view", view);
 
     this.variant = [];
     this.variant.push(view);
@@ -208,6 +247,9 @@ export class CustomizationComponent implements OnInit {
   }
 
   getVariant() {
+    this.variant = [];
+    this.variant.push(this.customizationList);
+    this.variantData = this.customizationList.variantList;
     this.check = this.variant;
 
     this.rows1 = this.variantData;
