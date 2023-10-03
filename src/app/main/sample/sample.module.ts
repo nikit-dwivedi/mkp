@@ -1,5 +1,5 @@
-import { AuthGuard } from './../../auth/helpers/auth.guards';
-import { ReactiveFormsModule } from '@angular/forms';
+import { AuthGuard } from "./../../auth/helpers/auth.guards";
+import { ReactiveFormsModule } from "@angular/forms";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { TranslateModule } from "@ngx-translate/core";
@@ -15,19 +15,20 @@ import { SellerComponent } from "./seller/seller.component";
 
 import { OrderComponent } from "./order/order.component";
 import { DetailComponent } from "./seller/detail/detail.component";
-import { TicketComponent } from './ticket/ticket.component';
-import { CommonModule } from '@angular/common';
-import { AllOutletComponent } from './all-outlet/all-outlet.component';
-import { MenuComponent } from './menu/menu.component';
-import { CategoryComponent } from './menu/category/category.component';
-import { ProductComponent } from './menu/product/product.component';
-import { AddOnComponent } from './menu/product/add-on/add-on.component';
-import { CustomizationComponent } from './menu/product/customization/customization.component';
-import { PaymentComponent } from './payment/payment.component';
-import { MenuCheckComponent } from './menu-check/menu-check.component';
+import { TicketComponent } from "./ticket/ticket.component";
+import { CommonModule } from "@angular/common";
+import { AllOutletComponent } from "./all-outlet/all-outlet.component";
+import { MenuComponent } from "./menu/menu.component";
+import { CategoryComponent } from "./menu/category/category.component";
+import { ProductComponent } from "./menu/product/product.component";
+import { AddOnComponent } from "./menu/product/add-on/add-on.component";
+import { CustomizationComponent } from "./menu/product/customization/customization.component";
+import { PaymentComponent } from "./payment/payment.component";
+import { MenuCheckComponent } from "./menu-check/menu-check.component";
+import { NewMenuComponent } from "./new-menu/new-menu.component";
+import { SwiperModule } from "ngx-swiper-wrapper";
+
 // import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
-
-
 
 const routes = [
   {
@@ -99,8 +100,8 @@ const routes = [
 ];
 
 @NgModule({
-  declarations: [SampleComponent, HomeComponent, SellerComponent,  OrderComponent, DetailComponent, TicketComponent, AllOutletComponent, MenuComponent, CategoryComponent, ProductComponent, AddOnComponent, CustomizationComponent, PaymentComponent, MenuCheckComponent],
-  imports: [RouterModule.forChild(routes), ContentHeaderModule, TranslateModule, NgxDatatableModule, NgbModule, CoreCommonModule,ReactiveFormsModule,CommonModule],
-  exports: [SellerComponent, HomeComponent,  DetailComponent,TicketComponent,OrderComponent],
+  declarations: [SampleComponent, HomeComponent, SellerComponent, OrderComponent, DetailComponent, TicketComponent, AllOutletComponent, MenuComponent, CategoryComponent, ProductComponent, AddOnComponent, CustomizationComponent, PaymentComponent, MenuCheckComponent, NewMenuComponent],
+  imports: [RouterModule.forChild(routes), ContentHeaderModule, TranslateModule, NgxDatatableModule, NgbModule, CoreCommonModule, ReactiveFormsModule, CommonModule, SwiperModule],
+  exports: [SellerComponent, HomeComponent, DetailComponent, TicketComponent, OrderComponent, SwiperModule],
 })
 export class SampleModule {}
