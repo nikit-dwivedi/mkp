@@ -95,6 +95,15 @@ export class AdminService {
     );
   }
 
+  getOrderDetail(orderId: any): Observable<any> {
+    const url = `${this.apiUrl}/v1/order/detail/${orderId}` ;
+    return this.http.get<any>(url, this.httpOptions).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
   changeOrderStatus(bodyData: any, from?: any, to?: any): Observable<any> {
     const url = `${this.apiUrl}/v1/order/status`;
     return this.http.post<any>(url, bodyData, this.httpOptions).pipe(
