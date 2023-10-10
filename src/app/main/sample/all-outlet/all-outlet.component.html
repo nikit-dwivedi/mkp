@@ -32,11 +32,12 @@
           <!-- ngx-datatables responsive -->
           <ngx-datatable #table class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force" [headerHeight]="40" [rowHeight]="58" [footerHeight]="50" rowHeight="auto" [limit]="basicSelectedOption" [rows]="kitchenSinkRows" [scrollbarH]="true">
             <ngx-datatable-column name="Seller Id" prop="sellerId" [width]="50"></ngx-datatable-column>
+            <ngx-datatable-column name="Outlet Id" prop="outletId" [width]="50"></ngx-datatable-column>
             <ngx-datatable-column name="Outlet Name" prop="outletName" [width]="50"></ngx-datatable-column>
-            <ngx-datatable-column name="Is Closed" prop="isClosed" [width]="50">
+            <ngx-datatable-column name="Open status" prop="isClosed" [width]="50">
               <ng-template let-closeStatus="value" ngx-datatable-cell-template>
                 <div class="badge badge-pill" [ngClass]="selectButtonClass(closeStatus)">
-                  {{ closeStatus }}
+                  {{ openClose(!closeStatus) }}
                 </div>
               </ng-template>
             </ngx-datatable-column>
@@ -244,7 +245,7 @@
                   </button>
                 </div>
               </div>
-              <hr class="col-12"/>
+              <hr class="col-12" />
             </div>
             <div class="d-flex flex-row-reverse mb-2">
               <button (click)="addHour(dayIndex)" class="btn btn-outline-primary tabs" rippleEffect>
