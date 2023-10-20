@@ -66,7 +66,6 @@ export class PaymentComponent implements OnInit {
       this.paymentList = data.items;
       this.kitchenSinkRows = this.paymentList;
       this.tempData = this.paymentList;
-      console.log("Payment List========>", this.paymentList);
     });
   }
 }

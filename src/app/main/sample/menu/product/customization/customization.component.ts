@@ -113,7 +113,6 @@ export class CustomizationComponent implements OnInit {
   }
 
   addCustomizationFormSubmit() {
-    console.log(this.productData.productId);
 
     this.submitted = true;
     if (this.addVariationForm.invalid) {
@@ -146,12 +145,10 @@ export class CustomizationComponent implements OnInit {
       this.customizationList = data.items;
       this.variationList = [];
       this.variationList.push(this.customizationList);
-      console.log(this.variationList);
 
       this.rows = this.variationList;
       this.kitchenSinkRows = this.rows;
       this.tempData = this.rows;
-      console.log(data);
     });
   }
 
@@ -196,7 +193,6 @@ export class CustomizationComponent implements OnInit {
   }
 
   deleteVariation(variationDetail: any) {
-    console.log(variationDetail);
 
     const body = {
       variationId: variationDetail.variationId,
@@ -212,7 +208,6 @@ export class CustomizationComponent implements OnInit {
   }
 
   deleteVariant(variantDetail: any) {
-    console.log(variantDetail);
 
     const body = {
       variantId: variantDetail.variantId,
@@ -236,12 +231,10 @@ export class CustomizationComponent implements OnInit {
       scrollable: true,
       size: "xl",
     });
-    console.log("view", view);
 
     this.variant = [];
     this.variant.push(view);
     this.variantData = view.variantList;
-    // console.log(this.variant);
 
     this.getVariant();
   }

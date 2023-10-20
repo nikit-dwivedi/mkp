@@ -1,30 +1,26 @@
 <section class="category-display">
- <div class="page">
-<div class="card-body">
-  <div class=" categories card-text">
-   <p> {{ outletData?.outletName ?? categoryData.categoryName }} (Category List)</p>
-    <button class="block-btn btn btn-primary" (click)="openAddCategoryModal(content1)">Add New</button>
+  <div class="page">
+    <div class="card-body">
+      <div class="categories card-text">
+        <p>{{ outletData?.outletName ?? categoryData.categoryName }} (Category List)</p>
+        <button class="block-btn btn btn-primary" (click)="openAddCategoryModal(content1)">Add New</button>
+      </div>
+      <div class="list-group" [dragula]="'categoryList'" [dragulaModel]="categoryList">
+        <div class="edit-text" [ngClass]="category.parentCategoryId" *ngFor="let category of categoryList">
+          <a class="list-group-item draggable" ><i data-feather="move" class="text-primary"></i></a>
+          <a href="javascript:void(0)" class="list-group-item list-group-item-action" (click)="subCategory(category)">{{ category.categoryName }} </a>
+          <a href="javascript:void(0)" class="list-group-item edit-icon" (click)="openeditCategorymodal(content, category)"><i data-feather="edit" class="text-primary cursor-pointer"></i></a>
+          <a href="javascript:void(0)" class="list-group-item edit-icon" (click)="openDeleteCategoryModal(content2, category)"><i data-feather="trash-2" class="text-primary cursor-pointer"></i></a>
+        </div>
+      </div>
+    </div>
   </div>
-  
-  
+  <div class="page2">
+    <app-category *ngIf="hasSubCheck || hasNothing" [categoryData]="tempCategory"></app-category>
+    <!-- <app-category *ngIf="hasProdCheck"   [categoryData]="tempCategory"></app-category> -->
+    <app-product class="product-list" *ngIf="hasProdCheck || hasNothing" [categoryData]="tempCategory"></app-product>
 
-  <div class="list-group" *ngFor="let category of categoryList">
-    <div class="edit-text">
-    <a href="javascript:void(0)"  class="list-group-item list-group-item-action" (click)="subCategory(category)">{{ category.categoryName }} </a>
-    <a href="javascript:void(0)"   class="list-group-item edit-icon" (click)="openeditCategorymodal(content,category)"><i data-feather="edit" class="text-primary cursor-pointer"></i></a>
-    <a href="javascript:void(0)"   class="list-group-item edit-icon" (click)="openDeleteCategoryModal(content2,category)"><i data-feather="trash-2" class="text-primary cursor-pointer"></i></a>
-  </div>
-    
-  </div>
-</div>
-</div>
-<div class="page2">
-  
-  <app-category *ngIf="hasSubCheck" [categoryData]="tempCategory"></app-category>
-  <app-category *ngIf="hasProdCheck"   [categoryData]="tempCategory"></app-category>
-  <app-product class="product-list" *ngIf="hasProdCheck" [categoryData]="tempCategory"></app-product>
-
-  <!-- <ng-container *ngIf="hasNothing;else second">
+    <!-- <ng-container *ngIf="hasNothing;else second">
     <app-category [categoryData]="tempCategory"></app-category>
     <app-product class="product-list" [categoryData]="tempCategory"></app-product>
  </ng-container>
@@ -36,91 +32,77 @@
      <app-product class="product-list" [categoryData]="tempCategory"></app-product>
     </ng-template>
  </ng-template> -->
-  
-</div>
+  </div>
 
-<!-- <div *ngIf="hasNothing" class="page2"> -->
+  <!-- <div *ngIf="hasNothing" class="page2"> -->
   <!-- <app-category  [categoryData]="tempCategory"></app-category> -->
   <!-- <app-product class="product-list"  [categoryData]="tempCategory"></app-product> -->
-<!-- </div> -->
-
+  <!-- </div> -->
 </section>
 
 <!-- edit category modal -->
 <ng-template #content let-modal>
   <div class="modal-header">
-      <h4 class="modal-title" id="myModalLabel1">Edit Category</h4>
-      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
+    <h4 class="modal-title" id="myModalLabel1">Edit Category</h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
   <div class="modal-body" tabindex="0" ngbAutofocus>
     <form [formGroup]="editCategoryForm" class="form form-vertical" (ngSubmit)="editCategoryFormSubmit()">
       <div class="row">
-          <div class="col-8">
-              <div class="form-group">
-                  <label for="first-name-vertical">Category Name</label>
-                  <input type="text" id="first-name-vertical" class="form-control" name="categoryName"
-                      formControlName="categoryName" placeholder="Category Name" />
-              </div>
+        <div class="col-8">
+          <div class="form-group">
+            <label for="first-name-vertical">Category Name</label>
+            <input type="text" id="first-name-vertical" class="form-control" name="categoryName" formControlName="categoryName" placeholder="Category Name" />
           </div>
-          <div class="col-4">
-            <button type="submit" rippleEffect class="block-btn btn btn-primary">Save</button>
-          </div>
+        </div>
+        <div class="col-4">
+          <button type="submit" rippleEffect class="block-btn btn btn-primary">Save</button>
+        </div>
       </div>
-      
-  </form>
+    </form>
   </div>
-  
 </ng-template>
 
 <!-- add category modal -->
 <ng-template #content1 let-modal>
   <div class="modal-header">
-      <h4 class="modal-title" id="myModalLabel1">Add Category</h4>
-      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
+    <h4 class="modal-title" id="myModalLabel1">Add Category</h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
   <div class="modal-body" tabindex="0" ngbAutofocus>
     <form [formGroup]="addCategoryForm" class="form form-vertical" (ngSubmit)="addCategoryFormSubmit()">
       <div class="row">
-          <div class="col-8">
-              <div class="form-group">
-                  <label for="first-name-vertical">Category Name</label>
-                  <input type="text" id="first-name-vertical" class="form-control" name="categoryName"
-                      formControlName="categoryName" placeholder="Category Name" />
-              </div>
+        <div class="col-8">
+          <div class="form-group">
+            <label for="first-name-vertical">Category Name</label>
+            <input type="text" id="first-name-vertical" class="form-control" name="categoryName" formControlName="categoryName" placeholder="Category Name" />
           </div>
-          <div class="col-4">
-            <button type="submit" rippleEffect class="block-btn btn btn-primary">Save</button>
-          </div>
+        </div>
+        <div class="col-4">
+          <button type="submit" rippleEffect class="block-btn btn btn-primary">Save</button>
+        </div>
       </div>
-      
-  </form>
+    </form>
   </div>
-  
 </ng-template>
 
 <!-- delete category Modal -->
 <ng-template #content2 let-modal>
   <div class="modal-header">
-      <h4 class="modal-title" id="myModalLabel1">Delete Category</h4>
-      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
+    <h4 class="modal-title" id="myModalLabel1">Delete Category</h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
   <div class="modal-body" tabindex="0" ngbAutofocus>
-      <p>
-          Are you sure you want to Delete ?
-      </p>
+    <p>Are you sure you want to Delete ?</p>
   </div>
   <div class="modal-footer">
-      <button type="button" class="block-btn btn btn-primary" (click)="modal.close('Cross click')" rippleEffect>
-          Cancel
-      </button>
-      <button type="button" class="block-btn btn btn-primary" (click)="modal.close('Accept click')" (click)="deleteCategory()" rippleEffect>
-          Confirm
-      </button>
+    <button type="button" class="block-btn btn btn-primary" (click)="modal.close('Cross click')" rippleEffect>Cancel</button>
+    <button type="button" class="block-btn btn btn-primary" (click)="modal.close('Accept click')" (click)="deleteCategory()" rippleEffect>Confirm</button>
   </div>
 </ng-template>

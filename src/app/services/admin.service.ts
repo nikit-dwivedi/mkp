@@ -385,7 +385,6 @@ export class AdminService {
   getPaymentDetails(from: any, to: any) {
     return this.http.get(this.paymentUrl + `/payment/transaction?from=${from}&to=${to}`, this.httpOptions).pipe(
       map((data: any) => {
-        console.log(data);
         return data;
       })
     );

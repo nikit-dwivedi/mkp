@@ -27,7 +27,7 @@ import { PaymentComponent } from "./payment/payment.component";
 import { MenuCheckComponent } from "./menu-check/menu-check.component";
 import { NewMenuComponent } from "./new-menu/new-menu.component";
 import { SwiperModule } from "ngx-swiper-wrapper";
-
+import { DragulaModule } from 'ng2-dragula';
 // import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 
 const routes = [
@@ -101,7 +101,7 @@ const routes = [
 
 @NgModule({
   declarations: [SampleComponent, HomeComponent, SellerComponent, OrderComponent, DetailComponent, TicketComponent, AllOutletComponent, MenuComponent, CategoryComponent, ProductComponent, AddOnComponent, CustomizationComponent, PaymentComponent, MenuCheckComponent, NewMenuComponent],
-  imports: [RouterModule.forChild(routes), ContentHeaderModule, TranslateModule, NgxDatatableModule, NgbModule, CoreCommonModule, ReactiveFormsModule, CommonModule, SwiperModule],
+  imports: [RouterModule.forChild(routes), ContentHeaderModule, TranslateModule, NgxDatatableModule, NgbModule, CoreCommonModule, ReactiveFormsModule, CommonModule, SwiperModule,DragulaModule.forRoot()],
   exports: [SellerComponent, HomeComponent, DetailComponent, TicketComponent, OrderComponent, SwiperModule],
 })
 export class SampleModule {}
