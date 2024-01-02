@@ -8,11 +8,11 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class AdminService {
-  private apiUrl = "https://admin.fablocdn.com";
-  private menuUrl = "https://inventory.fablocdn.com";
-  private baseUrl = "http://139.59.60.119:9000";
-  private paymentUrl = "https://payment.fablocdn.com";
-  private userUrl = "https://user.fablocdn.com";
+  private apiUrl = "";
+  private menuUrl = "";
+  private baseUrl = "";
+  private paymentUrl = "";
+  private userUrl = "";
   constructor(private http: HttpClient) {}
 
   token: any = JSON.parse(localStorage.getItem("authToken")).token;

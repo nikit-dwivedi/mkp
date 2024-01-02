@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   hmr: false,
-  apiUrl: 'https://admin.fablocdn.com'
+  apiUrl: ''
 };
 
 /*
